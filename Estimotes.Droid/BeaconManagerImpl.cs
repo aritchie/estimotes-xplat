@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
+using Android.Content;
 using EstimoteSdk;
 
 
@@ -46,7 +47,7 @@ namespace Estimotes {
             //    if (this.isAvailable != null)
             //        return this.isAvailable.Value;
 
-                //Application.Context.StartService(new Intent("com.estimote.sdk.service.BeaconService"));
+                //Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Connection.BeaconService)));
                 if (!this.beaconManager.CheckPermissionsAndService())
                     return false;
 

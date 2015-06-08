@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="estimotesdk">
+  <name>EstimoteSDK</name>
+  <publisher>Tom Opgenorth</publisher>
+  <publisher-url>https://github.com/topgenorth/Estimotes-Xamarin</publisher-url>
+  <src-url>https://github.com/topgenorth/Estimotes-Xamarin</src-url>
+  <version>1.0.20141223</version>
+  <summary>Estimote SDK for Xamarin.Android. A binding for the Estimote SDK for Android.</summary>
+  <packages>
+    <package id="Estimotes-Xamarin" version="1.0.20141223" framework="android" />
+  </packages>
+  <samples>
+    <sample id="Estimotes-Example">
+      <name>EstimoteSDK</name>
+      <summary>EstimoteSDK</summary>
+    </sample>
+  </samples>
+</component>

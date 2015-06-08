@@ -32,20 +32,15 @@ namespace Samples {
        protected override void OnStart() {
             base.OnStart();
             App.IsBackgrounded = false;
-            //try {
-            //    EstimoteManager
-            //        .Instance
-            //        .IsAvailable()
-            //        .ContinueWith(x => {
-            //            if (x.Result) {
-            //                EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);
-            //                EstimoteManager.Instance.ExitedRegion += (sender, region) => Notify("Exited Region", "You have moved out of range of {0}", region);
-            //            }
-            //        });
-            //}
-            //catch (Exception ex) {
-            //    Debug.WriteLine("Error starting estimote manager: " + ex);
-            //}
+            EstimoteManager
+                .Instance
+                .IsAvailable()
+                .ContinueWith(x => {
+                    if (x.Result) {
+                        EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);
+                        EstimoteManager.Instance.ExitedRegion += (sender, region) => Notify("Exited Region", "You have moved out of range of {0}", region);
+                    }
+                });
         }
 
 

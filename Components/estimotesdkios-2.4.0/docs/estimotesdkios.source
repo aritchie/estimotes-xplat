@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<monodoc>
+  <node label="Xamarin Components" name="components" parent="libraries" />
+  <node label="Estimote SDK for iOS" name="estimotesdkios" parent="components" />
+  <source provider="ecma" basefile="estimotesdkios" path="estimotesdkios" />
+</monodoc>
