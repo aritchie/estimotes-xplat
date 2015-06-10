@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{EEE78647-0789-4CE5-BDBE-43A1A9256457}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -35,15 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Estimotes.Xamarin.Android, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Estimotes-Xamarin.1.0.20141223.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
+    <Reference Include="Estimotes.Xamarin.Android, Version=1.0.4.2, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Estimotes-Xamarin.1.0.20141223.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BeaconManagerImpl.cs" />
@@ -56,13 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="estimotesdk">
-      <Visible>False</Visible>
       <Version>1.0.20141223</Version>
+      <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Estimotes.Interface\Estimotes.Interface.csproj">
-      <Project>{5b2339d1-65d5-4483-aca9-997350a30e5b}</Project>
+      <Project>{5B2339D1-65D5-4483-ACA9-997350A30E5B}</Project>
       <Name>Estimotes.Interface</Name>
     </ProjectReference>
   </ItemGroup>

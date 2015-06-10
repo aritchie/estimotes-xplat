@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using CoreLocation;
-using Estimote;
 using Foundation;
 using UIKit;
+using Estimote;
 
 
 namespace Estimotes {
@@ -19,42 +20,65 @@ namespace Estimotes {
             };
 
             this.beaconManager.EnteredRegion += (sender, args) => {
+				Debug.WriteLine("Entering Region: " + args.Region.Identifier);
                 var region = this.FromNative(args.Region);
                 this.OnEnteredRegion(region);
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
-                var region = this.FromNative(args.Region);
+				Debug.WriteLine("Exiting Region: " + args.Region.Identifier);
+				var region = this.FromNative(args.Region);
                 this.OnExitedRegion(region);
             };
             this.beaconManager.RangedBeacons += (sender, args) => {
-                var region = this.FromNative(args.Region);
-                var beacons = args.Beacons.Select(x => {
-                    var prox = this.FromNative(x.Proximity);
-                    var beacon = new Beacon(region, prox, x.Minor, x.Major);
-                    return beacon;
-                });
-                this.OnRanged(beacons);
+                var beacons = args.Beacons
+					.Select(x => {
+                    	var prox = this.FromNative(x.Proximity);
+						var region = new BeaconRegion(x.ProximityUUID.AsString(), x.Name);
+						var beacon = new Beacon(region, prox, x.Minor, x.Major);
+                    	return beacon;
+                	})
+					.ToList();
+				
+				Debug.WriteLine("Beacons Ranged: " + beacons.Count);
+				this.OnRanged(beacons);
             };
         }
+
 
 
         public override async Task<bool> IsAvailable() {
             if (!UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
                 return true;
 
-            var tcs = new TaskCompletionSource<bool>();
-            var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
-                Console.WriteLine("[BeaconManager Authorization Status]: {0}", args.Status.ToString());
-                tcs.TrySetResult(args.Status == CLAuthorizationStatus.Authorized);
-            });
-            this.beaconManager.AuthorizationStatusChanged += funcPnt;
-            this.beaconManager.RequestAlwaysAuthorization();
+			var good = false;
+			var authStatus = BeaconManager.AuthorizationStatus();
 
-            var result = await tcs.Task;
-
-            this.beaconManager.AuthorizationStatusChanged -= funcPnt;
-            return result;
+			if (authStatus != CLAuthorizationStatus.NotDetermined)
+				good = this.IsGoodStatus(authStatus);
+			
+			else {
+				var tcs = new TaskCompletionSource<bool>();
+				var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
+					Console.WriteLine("[BeaconManager Authorization Status]: {0}", args.Status.ToString());
+					var status = this.IsGoodStatus(args.Status);
+					tcs.TrySetResult(status);
+				});
+				this.beaconManager.AuthorizationStatusChanged += funcPnt;
+				this.beaconManager.RequestAlwaysAuthorization();
+				good = await tcs.Task;
+				this.beaconManager.AuthorizationStatusChanged -= funcPnt;
+			}
+			return good;
         }
+
+
+		private bool IsGoodStatus(CLAuthorizationStatus status) {
+			return (
+			    status == CLAuthorizationStatus.Authorized ||
+			    status == CLAuthorizationStatus.AuthorizedAlways ||
+			    status == CLAuthorizationStatus.AuthorizedWhenInUse
+			);
+		}
 
 
         public override void StartMonitoring(params BeaconRegion[] regions) {
