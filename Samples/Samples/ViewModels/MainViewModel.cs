@@ -15,7 +15,7 @@ namespace Samples.ViewModels {
 
         public override async void OnStart() {
             base.OnStart();
-            this.IsBeaconFunctionalityAvailable = await EstimoteManager.Instance.IsAvailable();
+            this.IsBeaconFunctionalityAvailable = await EstimoteManager.Instance.Initialize();
             if (!this.IsBeaconFunctionalityAvailable)
 				UserDialogs.Instance.Alert("Beacon functionality not enabled in app permissions");
         }
@@ -68,7 +68,7 @@ namespace Samples.ViewModels {
 			get {
 				this.gotoRegions = this.gotoRegions ?? new Command(async () => {
 					if (this.IsBeaconFunctionalityAvailable)
-						await App.Current.MainPage.Navigation.PushAsync(new RegionListPage());					
+						await App.Current.MainPage.Navigation.PushAsync(new RegionListPage());
 				});
 				return this.gotoRegions;
 			}

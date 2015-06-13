@@ -14,7 +14,7 @@ namespace Samples {
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; private set; }
 
-        static App() {			
+        static App() {
             Regions = new List<BeaconRegion> {
 			    new BeaconRegion("AE189F8B-9011-4859-B53E-C65314880E22", "ice"),
 			    new BeaconRegion("AE189F8B-9011-4859-B53E-C65314880E22", "fire"),
@@ -35,7 +35,7 @@ namespace Samples {
             App.IsBackgrounded = false;
             EstimoteManager
                 .Instance
-                .IsAvailable()
+                .Initialize()
                 .ContinueWith(x => {
                     if (x.Result) {
                         EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);

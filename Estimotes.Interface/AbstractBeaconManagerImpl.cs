@@ -7,7 +7,7 @@ namespace Estimotes {
 
     public abstract class AbstractBeaconManagerImpl : IBeaconManager {
 
-        public abstract Task<bool> IsAvailable();
+        public abstract Task<bool> Initialize();
         public abstract void StartMonitoring(params BeaconRegion[] regions);
         public abstract void StopMonitoring(params BeaconRegion[] regions);
         public abstract void StartRanging(params BeaconRegion[] regions);

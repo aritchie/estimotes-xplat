@@ -34,16 +34,16 @@ namespace Estimotes {
 					.Select(x => {
                     	var prox = this.FromNative(x.Proximity);
 						var beacon = new Beacon(
-							x.ProximityUUID.AsString(), 
-							x.Name, 
-							prox, 
-							x.Minor, 
+							x.ProximityUUID.AsString(),
+							x.Name,
+							prox,
+							x.Minor,
 							x.Major
 						);
                     	return beacon;
                 	})
 					.ToList();
-				
+
 				Debug.WriteLine("Beacons Ranged: " + beacons.Count);
 				this.OnRanged(beacons);
             };
@@ -51,7 +51,7 @@ namespace Estimotes {
 
 
 
-        public override async Task<bool> IsAvailable() {
+        public override async Task<bool> Initialize() {
             if (!UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
                 return true;
 
@@ -60,7 +60,7 @@ namespace Estimotes {
 
 			if (authStatus != CLAuthorizationStatus.NotDetermined)
 				good = this.IsGoodStatus(authStatus);
-			
+
 			else {
 				var tcs = new TaskCompletionSource<bool>();
 				var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {

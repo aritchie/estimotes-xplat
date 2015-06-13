@@ -30,9 +30,9 @@ namespace Estimotes {
                     var prox = this.FromNative(Utils.ComputeProximity(x));
                     var beacon = new Beacon(
 						args.Region.ProximityUUID,
-						args.Region.Identifier, 
-						prox, 
-						(ushort)x.Minor, 
+						args.Region.Identifier,
+						prox,
+						(ushort)x.Minor,
 						(ushort)x.Major
 					);
                     return beacon;
@@ -42,18 +42,18 @@ namespace Estimotes {
         }
 
 
-        public override async Task<bool> IsAvailable() {
+        public override async Task<bool> Initialize() {
             if (this.isAvailable != null)
                 return this.isAvailable.Value;
 
 			if (!this.beaconManager.CheckPermissionsAndService())
 				return false;
-			
+
             var tcs = new TaskCompletionSource<object>();
 			lock (this.syncLock) {
 				if (this.isAvailable != null)
 					tcs.TrySetResult(null);
-				
+
 				//Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Connection.BeaconService)));
 				var ready = new ServiceReadyCallbackImpl(() => tcs.TrySetResult(null));
 				this.beaconManager.Connect(ready);
