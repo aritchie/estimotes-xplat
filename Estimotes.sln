@@ -21,6 +21,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.iOS", "Samples\Samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Droid", "Samples\Samples.Droid\Samples.Droid.csproj", "{1AAB2C97-82A0-4BD1-A9EF-CC7DD04CA8BC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuspec", "nuspec", "{4E576A63-F98F-4856-A5AF-80D05A2F9745}"
+	ProjectSection(SolutionItems) = preProject
+		nuspec\Estimotes.Xplat.nuspec = nuspec\Estimotes.Xplat.nuspec
+		nuspec\nuget.exe = nuspec\nuget.exe
+		nuspec\pack.cmd = nuspec\pack.cmd
+		nuspec\push.cmd = nuspec\push.cmd
+		readme.md = readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Estimotes.Shared\Estimotes.Shared.projitems*{eee78647-0789-4ce5-bdbe-43a1a9256457}*SharedItemsImports = 4

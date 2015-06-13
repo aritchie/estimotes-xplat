@@ -7,7 +7,7 @@ namespace Estimotes {
 
     public class VoidBeaconManager : IBeaconManager {
 
-        public async Task<bool> IsAvailable() { return false; }
+        public async Task<bool> Initialize() { return false; }
         public void StartMonitoring(params BeaconRegion[] regions) {}
         public void StartRanging(params BeaconRegion[] regions) {}
         public void StopMonitoring(params BeaconRegion[] regions) {}
