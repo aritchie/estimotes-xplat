@@ -8,11 +8,13 @@ namespace Estimotes {
         public Proximity Proximity { get; private set; }
         public ushort? Minor { get; private set; }
         public ushort? Major { get; private set; }
-        public BeaconRegion Region { get; private set; }
+		public string Identifier { get; private set; }
+		public string Uuid { get; private set; }
 
 
-        public Beacon(BeaconRegion region, Proximity proximity, ushort minor, ushort major) {
-            this.Region = region;
+		public Beacon(string uuid, string identifier, Proximity proximity, ushort minor, ushort major) {
+			this.Uuid = uuid;
+			this.Identifier = identifier;
             this.Proximity = proximity;
             this.Minor = minor;
             this.Major = major;

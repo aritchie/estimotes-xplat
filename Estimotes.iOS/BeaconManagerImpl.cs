@@ -33,8 +33,13 @@ namespace Estimotes {
                 var beacons = args.Beacons
 					.Select(x => {
                     	var prox = this.FromNative(x.Proximity);
-						var region = new BeaconRegion(x.ProximityUUID.AsString(), x.Name);
-						var beacon = new Beacon(region, prox, x.Minor, x.Major);
+						var beacon = new Beacon(
+							x.ProximityUUID.AsString(), 
+							x.Name, 
+							prox, 
+							x.Minor, 
+							x.Major
+						);
                     	return beacon;
                 	})
 					.ToList();

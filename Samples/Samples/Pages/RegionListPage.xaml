@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<acr:ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:acr="clr-namespace:Acr.XamForms;assembly=Acr.XamForms"
+	x:Class="Samples.Pages.RegionListPage"
+	Title="Regions">
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Add" Command="{Binding Add}"/>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<acr:ListView ItemsSource="{Binding List}" ItemClickCommand="{Binding Remove}">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<TextCell Text="{Binding Identifier}" Detail="{Binding Uuid}" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</acr:ListView>
+	</ContentPage.Content>
+</acr:ContentPage>
