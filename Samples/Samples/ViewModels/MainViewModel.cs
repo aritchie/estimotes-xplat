@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Acr;
 using Acr.UserDialogs;
 using Estimotes;
+using Samples.Pages;
 
 
 namespace Samples.ViewModels {
@@ -39,7 +41,9 @@ namespace Samples.ViewModels {
 
 
 		private void OnRanged(object sender, IEnumerable<Beacon> beacons) {
-            this.List = beacons.ToList();
+			var list = beacons.ToList();
+            this.List = list;
+			this.OnPropertyChanged("List");
             //if (beacon.Proximity == Proximity.Unknown) {
             //    Debug.WriteLine("Removing " + beacon.Region.Identifier);
             //    this.List.Remove(beacon);
@@ -56,6 +60,18 @@ namespace Samples.ViewModels {
             //    this.List.Add(beacon);
             //    this.OnPropertyChanged("List");
             //}
+		}
+
+
+		private ICommand gotoRegions;
+		public ICommand GotoRegions {
+			get {
+				this.gotoRegions = this.gotoRegions ?? new Command(async () => {
+					if (this.IsBeaconFunctionalityAvailable)
+						await App.Current.MainPage.Navigation.PushAsync(new RegionListPage());					
+				});
+				return this.gotoRegions;
+			}
 		}
 
 

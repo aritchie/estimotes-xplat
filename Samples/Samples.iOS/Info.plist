@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>RequestWhenInUseAuthorization</key>
+	<string>The beacons have you now!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The beacons always have you!</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -46,5 +50,10 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+	</array>
 </dict>
 </plist>

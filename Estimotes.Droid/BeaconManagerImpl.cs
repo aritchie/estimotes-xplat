@@ -11,7 +11,7 @@ namespace Estimotes {
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
 
         private readonly BeaconManager beaconManager;
-        private readonly object syncLock = new object();
+		private readonly object syncLock = new object();
         private bool? isAvailable;
 
 
@@ -26,10 +26,15 @@ namespace Estimotes {
                 this.OnExitedRegion(region);
             };
             this.beaconManager.Ranging += (sender, args) => {
-                var region = this.FromNative(args.Region);
                 var beacons = args.Beacons.Select(x => {
                     var prox = this.FromNative(Utils.ComputeProximity(x));
-                    var beacon = new Beacon(region, prox, (ushort)x.Minor, (ushort)x.Major);
+                    var beacon = new Beacon(
+						args.Region.ProximityUUID,
+						args.Region.Identifier, 
+						prox, 
+						(ushort)x.Minor, 
+						(ushort)x.Major
+					);
                     return beacon;
                 });
                 this.OnRanged(beacons);
@@ -41,21 +46,20 @@ namespace Estimotes {
             if (this.isAvailable != null)
                 return this.isAvailable.Value;
 
+			if (!this.beaconManager.CheckPermissionsAndService())
+				return false;
+			
             var tcs = new TaskCompletionSource<object>();
+			lock (this.syncLock) {
+				if (this.isAvailable != null)
+					tcs.TrySetResult(null);
+				
+				//Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Connection.BeaconService)));
+				var ready = new ServiceReadyCallbackImpl(() => tcs.TrySetResult(null));
+				this.beaconManager.Connect(ready);
+				this.isAvailable = true;
+			}
 
-            //lock (this.syncLock) {
-            //    if (this.isAvailable != null)
-            //        return this.isAvailable.Value;
-
-                //Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Connection.BeaconService)));
-                if (!this.beaconManager.CheckPermissionsAndService())
-                    return false;
-
-                var ready = new ServiceReadyCallbackImpl(() => tcs.TrySetResult(null));
-                this.beaconManager.Connect(ready);
-                this.isAvailable = true;
-
-            // TODO: timeout?
             await tcs.Task;
             return this.isAvailable.Value;
         }
