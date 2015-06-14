@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Acr.Notifications;
 using Acr.UserDialogs;
 using Estimotes;
@@ -13,6 +14,7 @@ namespace Samples {
     public class App : Application {
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; private set; }
+
 
         static App() {
             Regions = new List<BeaconRegion> {
@@ -33,14 +35,15 @@ namespace Samples {
        protected override void OnStart() {
             base.OnStart();
             App.IsBackgrounded = false;
+            EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);
+            EstimoteManager.Instance.ExitedRegion += (sender, region) => Notify("Exited Region", "You have moved out of range of {0}", region);
+
             EstimoteManager
                 .Instance
                 .Initialize()
                 .ContinueWith(x => {
-                    if (x.Result) {
-                        EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);
-                        EstimoteManager.Instance.ExitedRegion += (sender, region) => Notify("Exited Region", "You have moved out of range of {0}", region);
-                    }
+                    if (x.Result)
+                        EstimoteManager.Instance.StartMonitoring(App.Regions.ToArray());
                 });
         }
 
