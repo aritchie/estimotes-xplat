@@ -13,18 +13,15 @@ namespace Samples.ViewModels {
 
     public class MainViewModel : LifecycleViewModel {
 
-        public override async void OnStart() {
-            base.OnStart();
+        public override async void OnActivate() {
+			base.OnActivate();
+            this.List = new List<Beacon>();
+
             this.IsBeaconFunctionalityAvailable = await EstimoteManager.Instance.Initialize();
             if (!this.IsBeaconFunctionalityAvailable)
 				UserDialogs.Instance.Alert("Beacon functionality not enabled in app permissions");
-        }
 
-
-        public override void OnActivate() {
-			base.OnActivate();
-            this.List = new List<Beacon>();
-            if (this.IsBeaconFunctionalityAvailable) {
+            else {
                 EstimoteManager.Instance.Ranged += this.OnRanged;
                 EstimoteManager.Instance.StartRanging(App.Regions.ToArray());
             }

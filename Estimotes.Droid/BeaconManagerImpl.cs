@@ -12,7 +12,7 @@ namespace Estimotes {
 
         private readonly BeaconManager beaconManager;
 		private readonly object syncLock = new object();
-        private bool? isAvailable;
+        private bool isConnected;
 
 
         public BeaconManagerImpl() {
@@ -43,25 +43,27 @@ namespace Estimotes {
 
 
         public override async Task<bool> Initialize() {
-            if (this.isAvailable != null)
-                return this.isAvailable.Value;
+            if (this.isConnected)
+                return true;
 
 			if (!this.beaconManager.CheckPermissionsAndService())
 				return false;
 
             var tcs = new TaskCompletionSource<object>();
 			lock (this.syncLock) {
-				if (this.isAvailable != null)
+				if (this.isConnected)
 					tcs.TrySetResult(null);
 
 				//Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Connection.BeaconService)));
-				var ready = new ServiceReadyCallbackImpl(() => tcs.TrySetResult(null));
+				var ready = new ServiceReadyCallbackImpl(() => {
+				    this.isConnected = true;
+                    tcs.TrySetResult(null);
+				});
 				this.beaconManager.Connect(ready);
-				this.isAvailable = true;
 			}
 
             await tcs.Task;
-            return this.isAvailable.Value;
+            return this.isConnected;
         }
 
 

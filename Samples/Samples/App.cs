@@ -35,16 +35,16 @@ namespace Samples {
        protected override void OnStart() {
             base.OnStart();
             App.IsBackgrounded = false;
-            EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);
-            EstimoteManager.Instance.ExitedRegion += (sender, region) => Notify("Exited Region", "You have moved out of range of {0}", region);
+            //EstimoteManager.Instance.EnteredRegion += (sender, region) => Notify("Entered Region", "You are near {0}", region);
+            //EstimoteManager.Instance.ExitedRegion += (sender, region) => Notify("Exited Region", "You have moved out of range of {0}", region);
 
-            EstimoteManager
-                .Instance
-                .Initialize()
-                .ContinueWith(x => {
-                    if (x.Result)
-                        EstimoteManager.Instance.StartMonitoring(App.Regions.ToArray());
-                });
+            //EstimoteManager
+            //    .Instance
+            //    .Initialize()
+            //    .ContinueWith(x => {
+            //        if (x.Result)
+            //            EstimoteManager.Instance.StartMonitoring(App.Regions.ToArray());
+            //    });
         }
 
 
@@ -66,8 +66,8 @@ namespace Samples {
             try {
                 if (App.IsBackgrounded)
                     Notifications.Instance.Send(title, msg);
-                else
-                    UserDialogs.Instance.Alert(title, msg);
+                //else
+                //    UserDialogs.Instance.Alert(title, msg);
             }
             catch (Exception ex) {
                 Debug.WriteLine("Notification Error: " + ex);
