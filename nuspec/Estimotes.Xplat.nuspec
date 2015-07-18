@@ -15,6 +15,7 @@
 1.1.0
 [android] update estimote sdk libraries
 update libraries to use uuid, major, and minor in scanning
+many other minor bugfixes
 
 1.0.1
 [android] fix initialization issues
@@ -23,7 +24,7 @@ update libraries to use uuid, major, and minor in scanning
 Initial Release
         </releaseNotes>
         <dependencies>
-        	<dependency id="" version="[4.2.5, 5)" />
+        	<dependency id="Acr.Settings" version="[4.2.5, 5)" />
         </dependencies>
     </metadata>
     <files>
@@ -33,8 +34,8 @@ Initial Release
 
         <!-- android -->
         <file src="..\Estimotes.Droid\bin\Release\Estimotes.dll" target="lib\MonoAndroid10\Estimotes.dll" />
+        <file src="..\Estimotes.Droid\bin\Release\Estimotes.Android.Binding.dll" target="lib\MonoAndroid10\Estimotes.Android.Binding.dll" />
         <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\MonoAndroid10\Estimotes.Interface.dll" />
-        <file src="..\Estimotes.Interface\bin\Release\Estimotes.Android.Binding.dll" target="lib\MonoAndroid10\Estimotes.Android.Binding.dll" />
         <!--<file src="..\Estimotes.Droid\bin\Release\Estimotes.Xamarin.Android.dll" target="lib\MonoAndroid10\Estimotes.Xamarin.Android.dll" />-->
 
         <!-- ios -->

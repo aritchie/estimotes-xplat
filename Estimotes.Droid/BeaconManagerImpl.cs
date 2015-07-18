@@ -103,7 +103,6 @@ namespace Estimotes {
             var prox = this.FromNative(Utils.ComputeProximity(native));
             var beacon = new Beacon(
                 native.ProximityUUID,
-				region.Identifier,
                 prox,
 				(ushort)native.Major,
 				(ushort)native.Minor
