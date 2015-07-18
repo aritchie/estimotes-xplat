@@ -11,7 +11,7 @@ namespace Estimotes {
         public ushort? Minor { get; }
 
 
-        public BeaconRegion(string identifier, string uuid, ushort? major = null, ushort? minor = null) {
+		public BeaconRegion(string identifier, string uuid, ushort? major = null, ushort? minor = null) {
             this.Identifier = identifier;
             this.Uuid = uuid;
             this.Major = major;
@@ -41,7 +41,13 @@ namespace Estimotes {
 
 
         public override int GetHashCode() {
-            var hash = this.Uuid.GetHashCode() + this.Identifier.GetHashCode();
+			var hash = this.Uuid.GetHashCode() + this.Identifier.GetHashCode();
+			if (this.Major != null)
+				hash += this.Major.Value.GetHashCode();
+
+			if (this.Minor != null)
+				hash += this.Minor.Value.GetHashCode();
+			
             return hash;
         }
     }

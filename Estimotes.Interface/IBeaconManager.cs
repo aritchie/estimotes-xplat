@@ -14,9 +14,13 @@ namespace Estimotes {
         event EventHandler<BeaconRegion> EnteredRegion;
         event EventHandler<BeaconRegion> ExitedRegion;
 
-
         void StartRanging(BeaconRegion region);
         void StopRanging(BeaconRegion region);
         event EventHandler<IEnumerable<Beacon>> Ranged;
+
+		IReadOnlyList<BeaconRegion> MonitoringRegions { get; }
+		IReadOnlyList<BeaconRegion> RangingRegions { get; }
+		void StopAllMonitoring();
+		void StopAllRanging();
     }
 }

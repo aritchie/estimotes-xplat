@@ -22,6 +22,9 @@ update libraries to use uuid, major, and minor in scanning
 1.0.0
 Initial Release
         </releaseNotes>
+        <dependencies>
+        	<dependency id="" version="[4.2.5, 5)" />
+        </dependencies>
     </metadata>
     <files>
         <!-- PCL -->

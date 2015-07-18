@@ -60,24 +60,28 @@ namespace Estimotes {
 		public override void StartMonitoring(BeaconRegion region) {
 			var native = this.ToNative(region);
 			this.beaconManager.StartMonitoring(native);
+			base.StartMonitoring(region);
         }
 
 
 		public override void StopMonitoring(BeaconRegion region) {
 			var native = this.ToNative(region);
 			this.beaconManager.StopMonitoring(native);
+			base.StopMonitoring(region);
         }
 
 
         public override void StartRanging(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StartRanging(native);
+			base.StartRanging(region);
         }
 
 
         public override void StopRanging(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StopRanging(native);
+			base.StopRanging(region);
         }
 
 
@@ -108,24 +112,24 @@ namespace Estimotes {
             return beacon;
         }
 
+
         protected virtual BeaconRegion FromNative(Region native) {
             return new BeaconRegion(
                 native.Identifier,
                 native.ProximityUUID,
-                this.JavaToNumber(native.Major),
-                this.JavaToNumber(native.Minor)
+				(ushort)native.Major.IntValue(),
+				(ushort)native.Minor.IntValue()
             );
         }
 
 
         protected virtual Region ToNative(BeaconRegion region) {
-            var native = new Region(
+			return new Region(
 				region.Identifier, 
 				region.Uuid,
-				this.ToInteger(region.Major), 
+				this.ToInteger(region.Major),
 				this.ToInteger(region.Minor)
 			);
-            return native;
         }
 
 
@@ -135,13 +139,5 @@ namespace Estimotes {
 
 			return new Integer(num.Value);
 		}
-
-
-        protected virtual ushort? JavaToNumber(Integer integer) {
-            if (integer == null || integer.IntValue() == 0)
-                return null;
-
-            return (ushort)integer.IntValue();
-        }
     }
 }

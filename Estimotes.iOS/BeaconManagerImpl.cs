@@ -20,21 +20,15 @@ namespace Estimotes {
             };
 
             this.beaconManager.EnteredRegion += (sender, args) => {
-				Debug.WriteLine("Entering Region: " + args.Region.Identifier);
                 var region = this.FromNative(args.Region);
                 this.OnEnteredRegion(region);
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
-				Debug.WriteLine("Exiting Region: " + args.Region.Identifier);
 				var region = this.FromNative(args.Region);
                 this.OnExitedRegion(region);
             };
-            this.beaconManager.RangedBeacons += (sender, args) => {
-                var beacons = args.Beacons
-					.Select(x => this.FromNative(args.Region, x))
-					.ToList();
-
-				Debug.WriteLine("Beacons Ranged: " + beacons.Count);
+			this.beaconManager.RangedBeacons += (sender, args) => {
+				var beacons = args.Beacons.Select(this.FromNative);
 				this.OnRanged(beacons);
             };
         }
@@ -42,8 +36,8 @@ namespace Estimotes {
 
 
         public override async Task<bool> Initialize() {
-            if (!UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
-                return true;
+            if (!UIDevice.CurrentDevice.CheckSystemVersion(7, 0))
+                return false;
 
 			var good = false;
 			var authStatus = BeaconManager.AuthorizationStatus();
@@ -54,7 +48,9 @@ namespace Estimotes {
 			else {
 				var tcs = new TaskCompletionSource<bool>();
 				var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
-					Console.WriteLine("[BeaconManager Authorization Status]: {0}", args.Status.ToString());
+					if (args.Status == CLAuthorizationStatus.NotDetermined)
+						return; // not done yet
+					
 					var status = this.IsGoodStatus(args.Status);
 					tcs.TrySetResult(status);
 				});
@@ -79,24 +75,28 @@ namespace Estimotes {
 		public override void StartMonitoring(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
+			base.StartMonitoring(region);
         }
 
 
         public override void StartRanging(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StartRangingBeacons(native);
+			base.StartRanging(region);
         }
 
 
 		public override void StopMonitoring(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StopMonitoring(native);
+			base.StopMonitoring(region);
         }
 
 
         public override void StopRanging(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StopRangingBeacons(native);
+			base.StopRanging(region);
         }
 
 
@@ -118,12 +118,14 @@ namespace Estimotes {
         }
 
 
-		protected virtual Beacon FromNative(Estimote.BeaconRegion region, Estimote.Beacon native) {
+		protected virtual Beacon FromNative(Estimote.Beacon native) {
 			var prox = this.FromNative(native.Proximity);
 			var beacon = new Beacon(
 				native.ProximityUUID.AsString(),
-				native.Name,
-				region.Identifier,
+				String.Empty,
+				String.Empty,
+//				native.Name,
+//				region.Identifier,
 				prox,
 				native.Minor,
 				native.Major
@@ -132,28 +134,25 @@ namespace Estimotes {
 		}
 
 
-        protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
+		protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
             return new BeaconRegion(
 				native.Identifier,
 				native.ProximityUuid.AsString(),
-                this.NSNumberToNumber(native.Major),
-                this.NSNumberToNumber(native.Minor)
+				native.Major.UInt16Value,
+				native.Minor.UInt16Value
         	);
         }
 
 
         protected virtual Estimote.BeaconRegion ToNative(BeaconRegion region) {
-            var uuid = new NSUuid(region.Uuid);
-            var native = new Estimote.BeaconRegion(uuid, region.Identifier);
-            return native;
-        }
+			var uuid = new NSUuid(region.Uuid);
+			if (region.Minor != null)
+				return new Estimote.BeaconRegion(uuid, region.Major.Value, region.Minor.Value, region.Identifier);
 
+			if (region.Major != null)
+				return new Estimote.BeaconRegion(uuid, region.Major.Value, region.Identifier);
 
-        protected virtual ushort? NSNumberToNumber(NSNumber num) {
-            if (num == null || num.UInt16Value == 0)
-                return null;
-
-            return num.UInt16Value;
+			return new Estimote.BeaconRegion(uuid, region.Identifier);
         }
     }
 }
