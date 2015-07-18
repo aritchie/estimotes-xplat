@@ -26,7 +26,7 @@ namespace Estimotes {
                 this.OnExitedRegion(region);
             };
             this.beaconManager.Ranging += (sender, args) => {
-                var beacons = args.Beacons.Select(this.FromNative);
+				var beacons = args.Beacons.Select(x => this.FromNative(args.Region, x));
                 this.OnRanged(beacons);
             };
         }
@@ -57,13 +57,15 @@ namespace Estimotes {
         }
 
 
-        public override void StartMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
-            this.beaconManager.StartMonitoring(new Region(null, uuid, new Integer(major ?? 0), new Integer(minor ?? 0)));
+		public override void StartMonitoring(BeaconRegion region) {
+			var native = this.ToNative(region);
+			this.beaconManager.StartMonitoring(native);
         }
 
 
-        public override void StopMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
-            this.beaconManager.StopMonitoring(new Region(null, uuid, new Integer(major ?? 0), new Integer(minor ?? 0)));
+		public override void StopMonitoring(BeaconRegion region) {
+			var native = this.ToNative(region);
+			this.beaconManager.StopMonitoring(native);
         }
 
 
@@ -93,14 +95,15 @@ namespace Estimotes {
         }
 
 
-        protected virtual Beacon FromNative(EstimoteSdk.Beacon native) {
+        protected virtual Beacon FromNative(EstimoteSdk.Region region, EstimoteSdk.Beacon native) {
             var prox = this.FromNative(Utils.ComputeProximity(native));
             var beacon = new Beacon(
                 native.ProximityUUID,
                 native.Name,
+				region.Identifier,
                 prox,
-				(ushort)native.Minor,
-				(ushort)native.Major
+				(ushort)native.Major,
+				(ushort)native.Minor
 			);
             return beacon;
         }
@@ -116,9 +119,22 @@ namespace Estimotes {
 
 
         protected virtual Region ToNative(BeaconRegion region) {
-            var native = new Region(region.Identifier, region.Uuid, null, null);
+            var native = new Region(
+				region.Identifier, 
+				region.Uuid,
+				this.ToInteger(region.Major), 
+				this.ToInteger(region.Minor)
+			);
             return native;
         }
+
+
+		protected virtual Integer ToInteger(ushort? num) {
+			if (num == null || num == 0)
+				return null;
+
+			return new Integer(num.Value);
+		}
 
 
         protected virtual ushort? JavaToNumber(Integer integer) {

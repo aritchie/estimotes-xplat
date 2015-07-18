@@ -31,17 +31,7 @@ namespace Estimotes {
             };
             this.beaconManager.RangedBeacons += (sender, args) => {
                 var beacons = args.Beacons
-					.Select(x => {
-                    	var prox = this.FromNative(x.Proximity);
-						var beacon = new Beacon(
-							x.ProximityUUID.AsString(),
-							x.Name,
-							prox,
-							x.Minor,
-							x.Major
-						);
-                    	return beacon;
-                	})
+					.Select(x => this.FromNative(args.Region, x))
 					.ToList();
 
 				Debug.WriteLine("Beacons Ranged: " + beacons.Count);
@@ -86,8 +76,8 @@ namespace Estimotes {
 		}
 
 
-        public override void StartMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
-            var native = this.ToNative(new BeaconRegion(null, uuid, major, minor));
+		public override void StartMonitoring(BeaconRegion region) {
+			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
         }
 
@@ -98,8 +88,8 @@ namespace Estimotes {
         }
 
 
-        public override void StopMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
-            var native = this.ToNative(new BeaconRegion(null, uuid, major, minor));
+		public override void StopMonitoring(BeaconRegion region) {
+			var native = this.ToNative(region);
             this.beaconManager.StopMonitoring(native);
         }
 
@@ -128,13 +118,27 @@ namespace Estimotes {
         }
 
 
+		protected virtual Beacon FromNative(Estimote.BeaconRegion region, Estimote.Beacon native) {
+			var prox = this.FromNative(native.Proximity);
+			var beacon = new Beacon(
+				native.ProximityUUID.AsString(),
+				native.Name,
+				region.Identifier,
+				prox,
+				native.Minor,
+				native.Major
+			);
+			return beacon;
+		}
+
+
         protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
             return new BeaconRegion(
-                native.ProximityUuid.AsString(),
-                native.Identifier,
+				native.Identifier,
+				native.ProximityUuid.AsString(),
                 this.NSNumberToNumber(native.Major),
                 this.NSNumberToNumber(native.Minor)
-            );
+        	);
         }
 
 

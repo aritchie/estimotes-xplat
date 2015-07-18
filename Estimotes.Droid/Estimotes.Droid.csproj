@@ -13,7 +13,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v2.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Estimotes.Android.Binding\Estimotes.Android.Binding.csproj">
-      <Project>{6a1f28dd-ec87-49a8-9207-dedeea2d3f73}</Project>
+      <Project>{6A1F28DD-EC87-49A8-9207-DEDEEA2D3F73}</Project>
       <Name>Estimotes.Android.Binding</Name>
     </ProjectReference>
     <ProjectReference Include="..\Estimotes.Interface\Estimotes.Interface.csproj">

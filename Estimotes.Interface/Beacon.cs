@@ -5,19 +5,20 @@ namespace Estimotes {
 
     public class Beacon {
 
-        public Proximity Proximity { get; private set; }
-        public ushort? Minor { get; private set; }
-        public ushort? Major { get; private set; }
-		public string Name { get; private set; }
-		public string Uuid { get; private set; }
+		public Proximity Proximity { get; }
+		public ushort? Minor { get; }
+		public ushort? Major { get; }
+		public string Name { get; }
+		public string Identifier { get; }
+		public string Uuid { get; }
 
 
-		public Beacon(string uuid, string name, Proximity proximity, ushort minor, ushort major) {
+		public Beacon(string uuid, string name, string identifier, Proximity proximity, ushort major, ushort minor) {
 			this.Uuid = uuid;
 			this.Name = name;
             this.Proximity = proximity;
-            this.Minor = minor;
             this.Major = major;
+			this.Minor = minor;
         }
 
 

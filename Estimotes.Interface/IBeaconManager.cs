@@ -9,8 +9,8 @@ namespace Estimotes {
 
         Task<bool> Initialize();
 
-        void StartMonitoring(string uuid, ushort? major = null, ushort? minor = null);
-        void StopMonitoring(string uuid, ushort? major = null, ushort? minor = null);
+		void StartMonitoring(BeaconRegion region);
+		void StopMonitoring(BeaconRegion region);
         event EventHandler<BeaconRegion> EnteredRegion;
         event EventHandler<BeaconRegion> ExitedRegion;
 

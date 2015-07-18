@@ -44,7 +44,7 @@ namespace Samples.ViewModels {
                 return;
 
             App.Regions.Remove(region);
-            EstimoteManager.Instance.StopMonitoring(region.Uuid);
+            EstimoteManager.Instance.StopMonitoring(region);
             this.List = App.Regions.ToList();
 		}
 
@@ -58,9 +58,10 @@ namespace Samples.ViewModels {
 			if (!uuid.Ok)
 				return;
 
+			var region = new BeaconRegion("com.acrapps", uuid.Text);
 			try {
-                EstimoteManager.Instance.StartMonitoring(uuid.Text);
-                App.Regions.Add(new BeaconRegion("com.acrapps", uuid.Text));
+                EstimoteManager.Instance.StartMonitoring(region);
+                App.Regions.Add(region);
 				this.List = App.Regions.ToList();
 			}
 			catch (Exception ex) {
