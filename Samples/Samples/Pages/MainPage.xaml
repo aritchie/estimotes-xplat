@@ -14,7 +14,7 @@
 		<acr:ListView ItemsSource="{Binding List}">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Name}" Detail="{Binding Proximity}" />
+					<TextCell Text="{Binding Uuid}" Detail="{Binding Proximity}" />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</acr:ListView>

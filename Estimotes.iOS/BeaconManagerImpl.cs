@@ -50,7 +50,7 @@ namespace Estimotes {
 				var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
 					if (args.Status == CLAuthorizationStatus.NotDetermined)
 						return; // not done yet
-					
+
 					var status = this.IsGoodStatus(args.Status);
 					tcs.TrySetResult(status);
 				});
@@ -122,7 +122,6 @@ namespace Estimotes {
 			var prox = this.FromNative(native.Proximity);
 			var beacon = new Beacon(
 				native.ProximityUUID.AsString(),
-				String.Empty,
 				String.Empty,
 //				native.Name,
 //				region.Identifier,

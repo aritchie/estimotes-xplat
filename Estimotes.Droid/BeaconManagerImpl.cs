@@ -103,7 +103,6 @@ namespace Estimotes {
             var prox = this.FromNative(Utils.ComputeProximity(native));
             var beacon = new Beacon(
                 native.ProximityUUID,
-                native.Name,
 				region.Identifier,
                 prox,
 				(ushort)native.Major,
@@ -125,7 +124,7 @@ namespace Estimotes {
 
         protected virtual Region ToNative(BeaconRegion region) {
 			return new Region(
-				region.Identifier, 
+				region.Identifier,
 				region.Uuid,
 				this.ToInteger(region.Major),
 				this.ToInteger(region.Minor)
