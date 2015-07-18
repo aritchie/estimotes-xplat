@@ -8,19 +8,18 @@ namespace Estimotes {
 		public Proximity Proximity { get; }
 		public ushort? Minor { get; }
 		public ushort? Major { get; }
-		public string Identifier { get; }
 		public string Uuid { get; }
 
 
-		public Beacon(string uuid, string identifier, Proximity proximity, ushort major, ushort minor) {
+		public Beacon(string uuid, Proximity proximity, ushort major, ushort minor) {
 			this.Uuid = uuid;
-			this.Identifier = identifier;
             this.Proximity = proximity;
             this.Major = major;
 			this.Minor = minor;
         }
 
 
+		// TODO: colour, distance, power?
         // TODO: readtemperatureasync
         // TODO: getbatterylevel and battery life remaining
     }
