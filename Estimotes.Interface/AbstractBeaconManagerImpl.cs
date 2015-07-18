@@ -8,10 +8,10 @@ namespace Estimotes {
     public abstract class AbstractBeaconManagerImpl : IBeaconManager {
 
         public abstract Task<bool> Initialize();
-        public abstract void StartMonitoring(params BeaconRegion[] regions);
-        public abstract void StopMonitoring(params BeaconRegion[] regions);
-        public abstract void StartRanging(params BeaconRegion[] regions);
-        public abstract void StopRanging(params BeaconRegion[] regions);
+        public abstract void StartMonitoring(string uuid, ushort? major = null, ushort? minor = null);
+        public abstract void StopMonitoring(string uuid, ushort? major = null, ushort? minor = null);
+        public abstract void StartRanging(BeaconRegion region);
+        public abstract void StopRanging(BeaconRegion region);
 
 
         public event EventHandler<IEnumerable<Beacon>> Ranged;
@@ -20,8 +20,7 @@ namespace Estimotes {
 
 
         protected virtual void OnRanged(IEnumerable<Beacon> beacons) {
-            if (this.Ranged != null)
-                this.Ranged(this, beacons);
+            this.Ranged?.Invoke(this, beacons);
         }
 
 

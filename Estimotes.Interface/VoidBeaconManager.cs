@@ -8,12 +8,10 @@ namespace Estimotes {
     public class VoidBeaconManager : IBeaconManager {
 
         public async Task<bool> Initialize() { return false; }
-        public void StartMonitoring(params BeaconRegion[] regions) {}
-        public void StartRanging(params BeaconRegion[] regions) {}
-        public void StopMonitoring(params BeaconRegion[] regions) {}
-        public void StopRanging(params BeaconRegion[] regions) {}
-        public void StopAllMonitoring() {}
-        public void StopAllRanging() {}
+        public void StartMonitoring(string uuid, ushort? major = default(ushort?), ushort? minor = default(ushort?)) {}
+        public void StopMonitoring(string uuid, ushort? major = default(ushort?), ushort? minor = default(ushort?)) {}
+        public void StartRanging(BeaconRegion region) {}
+        public void StopRanging(BeaconRegion region) {}
 
         public event EventHandler<IEnumerable<Beacon>> Ranged;
         public event EventHandler<BeaconRegion> EnteredRegion;

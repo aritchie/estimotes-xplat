@@ -5,13 +5,17 @@ namespace Estimotes {
 
     public class BeaconRegion {
 
-        public string Uuid { get; private set; }
-        public string Identifier { get; private set; }
+        public string Uuid { get; }
+        public string Identifier { get; }
+        public ushort? Major { get; }
+        public ushort? Minor { get; }
 
 
-        public BeaconRegion(string uuid, string identifier) {
-            this.Uuid = uuid;
+        public BeaconRegion(string identifier, string uuid, ushort? major = null, ushort? minor = null) {
             this.Identifier = identifier;
+            this.Uuid = uuid;
+            this.Major = major;
+            this.Minor = minor;
         }
 
 
@@ -23,7 +27,13 @@ namespace Estimotes {
             if (!Object.Equals(this.Uuid, other.Uuid))
                 return false;
 
-            if (!Object.Equals(this.Identifier, other.Identifier))
+            //if (!Object.Equals(this.Identifier, other.Identifier))
+            //    return false;
+
+            if (!Object.Equals(this.Major, other.Major))
+                return false;
+
+            if (!Object.Equals(this.Minor, other.Minor))
                 return false;
 
             return true;

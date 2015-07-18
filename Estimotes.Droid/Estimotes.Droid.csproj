@@ -37,10 +37,9 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml" />
-    <Reference Include="Estimotes.Xamarin.Android, Version=1.0.4.2, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Estimotes-Xamarin.1.0.20141223.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BeaconManagerImpl.cs" />
@@ -58,6 +57,10 @@
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Estimotes.Android.Binding\Estimotes.Android.Binding.csproj">
+      <Project>{6a1f28dd-ec87-49a8-9207-dedeea2d3f73}</Project>
+      <Name>Estimotes.Android.Binding</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Estimotes.Interface\Estimotes.Interface.csproj">
       <Project>{5B2339D1-65D5-4483-ACA9-997350A30E5B}</Project>
       <Name>Estimotes.Interface</Name>

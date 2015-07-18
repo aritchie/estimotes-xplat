@@ -46,6 +46,8 @@
       <HintPath>..\Components\estimotesdkios-2.4.0\lib\ios-unified\Estimote.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />

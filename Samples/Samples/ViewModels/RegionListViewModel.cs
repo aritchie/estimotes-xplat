@@ -12,6 +12,12 @@ namespace Samples.ViewModels {
 
 	public class RegionListViewModel : LifecycleViewModel {
 
+        public RegionListViewModel() {
+            this.Remove = new Acr.Command<BeaconRegion>(async x => await this.OnRemoveRegion(x));
+            this.Add = new Acr.Command(async () => await this.OnAddRegion());
+        }
+
+
 	    public override void OnActivate() {
 			base.OnActivate();
             this.List = App.Regions.ToList();
@@ -28,31 +34,17 @@ namespace Samples.ViewModels {
 		}
 
 
-		private ICommand addCmd;
-		public ICommand Add {
-			get {
-				this.addCmd = this.addCmd ?? new Acr.Command(async () => await this.OnAddRegion());
-				return this.addCmd;
-			}
-		}
-
-
-		private Acr.Command<BeaconRegion> removeCmd;
-		public Acr.Command<BeaconRegion> Remove {
-			get {
-				this.removeCmd = this.removeCmd ?? new Acr.Command<BeaconRegion>(async x => await this.OnRemoveRegion(x));
-				return this.removeCmd;
-			}
-		}
+		public ICommand Add { get; }
+		public Command<BeaconRegion> Remove { get; }
 
 
 		private async Task OnRemoveRegion(BeaconRegion region) {
-            var confirm = await UserDialogs.Instance.ConfirmAsync(String.Format("Stop Monitoring Region {0}?", region.Identifier));
+            var confirm = await UserDialogs.Instance.ConfirmAsync($"Stop Monitoring Region {region.Uuid}?");
             if (!confirm)
                 return;
 
             App.Regions.Remove(region);
-            EstimoteManager.Instance.StopMonitoring(region);
+            EstimoteManager.Instance.StopMonitoring(region.Uuid);
             this.List = App.Regions.ToList();
 		}
 
@@ -66,14 +58,9 @@ namespace Samples.ViewModels {
 			if (!uuid.Ok)
 				return;
 
-			var id = await UserDialogs.Instance.PromptAsync("Enter the beacon identifier");
-			if (!id.Ok)
-				return;
-
 			try {
-				var region = new BeaconRegion(uuid.Text.Trim(), id.Text.Trim());
-                EstimoteManager.Instance.StartMonitoring(region);
-                App.Regions.Add(region);
+                EstimoteManager.Instance.StartMonitoring(uuid.Text);
+                App.Regions.Add(new BeaconRegion("com.acrapps", uuid.Text));
 				this.List = App.Regions.ToList();
 			}
 			catch (Exception ex) {

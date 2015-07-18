@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
 using EstimoteSdk;
+using Java.Lang;
 
 
 namespace Estimotes {
@@ -26,17 +26,7 @@ namespace Estimotes {
                 this.OnExitedRegion(region);
             };
             this.beaconManager.Ranging += (sender, args) => {
-                var beacons = args.Beacons.Select(x => {
-                    var prox = this.FromNative(Utils.ComputeProximity(x));
-                    var beacon = new Beacon(
-						args.Region.ProximityUUID,
-						args.Region.Identifier,
-						prox,
-						(ushort)x.Minor,
-						(ushort)x.Major
-					);
-                    return beacon;
-                });
+                var beacons = args.Beacons.Select(this.FromNative);
                 this.OnRanged(beacons);
             };
         }
@@ -67,35 +57,25 @@ namespace Estimotes {
         }
 
 
-        public override void StartMonitoring(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StartMonitoring(native);
-            }
+        public override void StartMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
+            this.beaconManager.StartMonitoring(new Region(null, uuid, new Integer(major ?? 0), new Integer(minor ?? 0)));
         }
 
 
-        public override void StartRanging(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StartRanging(native);
-            }
+        public override void StopMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
+            this.beaconManager.StopMonitoring(new Region(null, uuid, new Integer(major ?? 0), new Integer(minor ?? 0)));
         }
 
 
-        public override void StopMonitoring(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StopMonitoring(native);
-            }
+        public override void StartRanging(BeaconRegion region) {
+            var native = this.ToNative(region);
+            this.beaconManager.StartRanging(native);
         }
 
 
-        public override void StopRanging(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StopRanging(native);
-            }
+        public override void StopRanging(BeaconRegion region) {
+            var native = this.ToNative(region);
+            this.beaconManager.StopRanging(native);
         }
 
 
@@ -113,15 +93,39 @@ namespace Estimotes {
         }
 
 
-        protected virtual BeaconRegion FromNative(EstimoteSdk.Region native) {
-            // TODO: minor & major?
-            return new BeaconRegion(native.ProximityUUID, native.Identifier);
+        protected virtual Beacon FromNative(EstimoteSdk.Beacon native) {
+            var prox = this.FromNative(Utils.ComputeProximity(native));
+            var beacon = new Beacon(
+                native.ProximityUUID,
+                native.Name,
+                prox,
+				(ushort)native.Minor,
+				(ushort)native.Major
+			);
+            return beacon;
+        }
+
+        protected virtual BeaconRegion FromNative(Region native) {
+            return new BeaconRegion(
+                native.Identifier,
+                native.ProximityUUID,
+                this.JavaToNumber(native.Major),
+                this.JavaToNumber(native.Minor)
+            );
         }
 
 
-        protected virtual EstimoteSdk.Region ToNative(BeaconRegion region) {
+        protected virtual Region ToNative(BeaconRegion region) {
             var native = new Region(region.Identifier, region.Uuid, null, null);
             return native;
+        }
+
+
+        protected virtual ushort? JavaToNumber(Integer integer) {
+            if (integer == null || integer.IntValue() == 0)
+                return null;
+
+            return (ushort)integer.IntValue();
         }
     }
 }

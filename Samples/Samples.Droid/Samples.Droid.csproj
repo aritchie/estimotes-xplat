@@ -50,6 +50,9 @@
     </JavaOptions>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Estimotes.Android.Binding">
+      <HintPath>..\..\Estimotes.Android.Binding\bin\Debug\Estimotes.Android.Binding.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -102,9 +105,6 @@
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
-    <Reference Include="Estimotes.Xamarin.Android">
-      <HintPath>..\..\packages\Estimotes-Xamarin.1.0.20141223.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

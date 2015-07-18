@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -13,6 +12,14 @@ namespace Samples.ViewModels {
 
     public class MainViewModel : LifecycleViewModel {
 
+        public MainViewModel() {
+            this.GotoRegions = new Command(async () => {
+				if (this.IsBeaconFunctionalityAvailable)
+					await App.Current.MainPage.Navigation.PushAsync(new RegionListPage());
+			});
+        }
+
+
         public override async void OnActivate() {
 			base.OnActivate();
             this.List = new List<Beacon>();
@@ -23,7 +30,8 @@ namespace Samples.ViewModels {
 
             else {
                 EstimoteManager.Instance.Ranged += this.OnRanged;
-                EstimoteManager.Instance.StartRanging(App.Regions.ToArray());
+                foreach (var region in App.Regions)
+                    EstimoteManager.Instance.StartRanging(region);
             }
 		}
 
@@ -32,7 +40,8 @@ namespace Samples.ViewModels {
 			base.OnDeactivate();
             if (this.IsBeaconFunctionalityAvailable) {
                 EstimoteManager.Instance.Ranged -= this.OnRanged;
-                EstimoteManager.Instance.StopRanging(App.Regions.ToArray());
+                foreach (var region in App.Regions)
+                    EstimoteManager.Instance.StopRanging(region);
             }
 		}
 
@@ -60,18 +69,7 @@ namespace Samples.ViewModels {
 		}
 
 
-		private ICommand gotoRegions;
-		public ICommand GotoRegions {
-			get {
-				this.gotoRegions = this.gotoRegions ?? new Command(async () => {
-					if (this.IsBeaconFunctionalityAvailable)
-						await App.Current.MainPage.Navigation.PushAsync(new RegionListPage());
-				});
-				return this.gotoRegions;
-			}
-		}
-
-
+		public ICommand GotoRegions { get; }
         public IList<Beacon> List { get; private set; }
 
         private bool isBeaconFunctionalityAvailable;

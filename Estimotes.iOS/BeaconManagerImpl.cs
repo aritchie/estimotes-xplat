@@ -86,35 +86,27 @@ namespace Estimotes {
 		}
 
 
-        public override void StartMonitoring(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StartMonitoring(native);
-            }
+        public override void StartMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
+            var native = this.ToNative(new BeaconRegion(null, uuid, major, minor));
+            this.beaconManager.StartMonitoring(native);
         }
 
 
-        public override void StartRanging(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StartRangingBeacons(native);
-            }
+        public override void StartRanging(BeaconRegion region) {
+            var native = this.ToNative(region);
+            this.beaconManager.StartRangingBeacons(native);
         }
 
 
-        public override void StopMonitoring(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StopMonitoring(native);
-            }
+        public override void StopMonitoring(string uuid, ushort? major = null, ushort? minor = null) {
+            var native = this.ToNative(new BeaconRegion(null, uuid, major, minor));
+            this.beaconManager.StopMonitoring(native);
         }
 
 
-        public override void StopRanging(params BeaconRegion[] regions) {
-            foreach (var region in regions) {
-                var native = this.ToNative(region);
-                this.beaconManager.StopRangingBeacons(native);
-            }
+        public override void StopRanging(BeaconRegion region) {
+            var native = this.ToNative(region);
+            this.beaconManager.StopRangingBeacons(native);
         }
 
 
@@ -137,8 +129,12 @@ namespace Estimotes {
 
 
         protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
-            // TODO: minor & major?
-            return new BeaconRegion(native.ProximityUuid.AsString(), native.Identifier);
+            return new BeaconRegion(
+                native.ProximityUuid.AsString(),
+                native.Identifier,
+                this.NSNumberToNumber(native.Major),
+                this.NSNumberToNumber(native.Minor)
+            );
         }
 
 
@@ -146,6 +142,14 @@ namespace Estimotes {
             var uuid = new NSUuid(region.Uuid);
             var native = new Estimote.BeaconRegion(uuid, region.Identifier);
             return native;
+        }
+
+
+        protected virtual ushort? NSNumberToNumber(NSNumber num) {
+            if (num == null || num.UInt16Value == 0)
+                return null;
+
+            return num.UInt16Value;
         }
     }
 }

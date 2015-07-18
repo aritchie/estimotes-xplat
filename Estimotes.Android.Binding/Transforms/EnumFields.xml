@@ -1,0 +1,21 @@
+﻿<enum-field-mappings>
+    <mapping jni-class="com/estimote/sdk/Nearable$FirmwareState" clr-enum-type="EstimoteSdk.NearableFirmwareState">
+        <field jni-name="BOOTLOADER" clr-name="Bootloader" value="1" />
+        <field jni-name="APP" clr-name="App" value="2" />
+    </mapping>
+    <mapping jni-class="com/estimote/sdk/Nearable$Orientation" clr-enum-type="EstimoteSdk.NearableOrientation">
+        <field jni-name="UNKNOWN" clr-name="Unknown" value="0" />
+        <field jni-name="HORIZONTAL" clr-name="Horizontal" value="1" />
+        <field jni-name="HORIZONTAL_UPSIDE_DOWN" clr-name="HorizontalUpsideDown" value="2" />
+        <field jni-name="VERTICAL" clr-name="Vertical" value="3" />
+        <field jni-name="VERTICAL_UPSIDE_DOWN" clr-name="VerticalUpsideDown" value="4" />
+        <field jni-name="LEFT_SIDE" clr-name="LeftSide" value="5" />
+        <field jni-name="RIGHT_SIDE" clr-name="RightSide" value="6" />
+    </mapping>
+    <mapping jni-class="com/estimote/sdk/Nearable$BatteryLevel" clr-enum-type="EstimoteSdk.NearableBatteryLevel">
+        <field jni-name="UNKNOWN" clr-name="Unknown" value="0" />
+        <field jni-name="LOW" clr-name="Low" value="1" />
+        <field jni-name="MEDIUM" clr-name="Medium" value="2" />
+        <field jni-name="HIGH" clr-name="High" value="3" />
+    </mapping>
+</enum-field-mappings>

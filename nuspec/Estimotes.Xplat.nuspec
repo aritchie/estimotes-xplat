@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.0.1</version>
+        <version>1.1.0</version>
         <title>Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -10,8 +10,12 @@
         <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
         <projectUrl>https://github.com/aritchie/estimotes-xplat</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <tags>xamarin xam.pcl estimotes beacons ibeacons</tags>
+        <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
+1.1.0
+[android] update estimote sdk libraries
+update libraries to use uuid, major, and minor in scanning
+
 1.0.1
 [android] fix initialization issues
 
@@ -27,7 +31,8 @@ Initial Release
         <!-- android -->
         <file src="..\Estimotes.Droid\bin\Release\Estimotes.dll" target="lib\MonoAndroid10\Estimotes.dll" />
         <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\MonoAndroid10\Estimotes.Interface.dll" />
-        <file src="..\Estimotes.Droid\bin\Release\Estimotes.Xamarin.Android.dll" target="lib\MonoAndroid10\Estimotes.Xamarin.Android.dll" />
+        <file src="..\Estimotes.Interface\bin\Release\Estimotes.Android.Binding.dll" target="lib\MonoAndroid10\Estimotes.Android.Binding.dll" />
+        <!--<file src="..\Estimotes.Droid\bin\Release\Estimotes.Xamarin.Android.dll" target="lib\MonoAndroid10\Estimotes.Xamarin.Android.dll" />-->
 
         <!-- ios -->
         <file src="..\Estimotes.iOS\bin\Release\Estimotes.dll" target="lib\Xamarin.iOS10\Estimotes.dll" />
