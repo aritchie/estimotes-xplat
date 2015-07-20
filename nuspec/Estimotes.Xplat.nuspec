@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <title>Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -12,6 +12,9 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
+1.1.1
+[fix] issue with stopallmonitoring and stopallranging
+
 1.1.0
 [android] update estimote sdk libraries
 update libraries to use uuid, major, and minor in scanning

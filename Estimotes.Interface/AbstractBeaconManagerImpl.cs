@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Acr.Settings;
+using System.Linq;
 
 
 namespace Estimotes {
@@ -24,13 +25,13 @@ namespace Estimotes {
 
 		public virtual void StartMonitoring(BeaconRegion region) {
 			this.monitoringRegions.Add(region);
-			Settings.Local.Set("beacons-monitor", this.monitoringRegions);
+			this.UpdateMonitoringList();
 		}
 
 
 		public virtual void StopMonitoring(BeaconRegion region) {
 			this.monitoringRegions.Remove(region);
-			Settings.Local.Set("beacons-monitor", this.monitoringRegions);
+			this.UpdateMonitoringList();
 		}
 
 
@@ -45,7 +46,8 @@ namespace Estimotes {
 
 
 		public virtual void StopAllMonitoring() {
-			foreach (var region in this.monitoringRegions)
+			var list = this.MonitoringRegions.ToList();
+			foreach (var region in list)
 				this.StopMonitoring(region);
 		}
 
@@ -56,15 +58,8 @@ namespace Estimotes {
 		}
 
 
-		public IReadOnlyList<BeaconRegion> RangingRegions {
-			get { return new ReadOnlyCollection<BeaconRegion>(this.rangingRegions); }
-		}
-
-
-		public IReadOnlyList<BeaconRegion> MonitoringRegions {
-			get { return new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions); }
-		}
-
+		public IReadOnlyList<BeaconRegion> RangingRegions { get; private set; }
+		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
 
         public event EventHandler<IEnumerable<Beacon>> Ranged;
         public event EventHandler<BeaconRegion> EnteredRegion;
@@ -84,5 +79,16 @@ namespace Estimotes {
         protected virtual void OnExitedRegion(BeaconRegion region) {
 			this.ExitedRegion?.Invoke(this, region);
         }
+
+
+		protected virtual void UpdateMonitoringList() {
+			Settings.Local.Set("beacons-monitor", this.monitoringRegions);
+			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions);			
+		}
+
+
+		protected virtual void UpdateRangingList() {
+			this.RangingRegions = new ReadOnlyCollection<BeaconRegion>(this.rangingRegions);
+		}
     }
 }
