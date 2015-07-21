@@ -38,6 +38,7 @@ namespace Samples {
             if (!result)
                 return;
 
+            ei.StopAllMonitoring();
             Regions.Each(x => ei.StartMonitoring(x));
         }
 
