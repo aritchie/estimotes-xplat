@@ -15,7 +15,7 @@ namespace Estimotes {
 
 		protected AbstractBeaconManagerImpl() {
 			Settings.Local.KeysNotToClear.Add("beacons-monitor");
-			this.monitoringRegions = Settings.Local.Get<List<BeaconRegion>>("beacons-monitor", new List<BeaconRegion>());
+			this.monitoringRegions = Settings.Local.Get("beacons-monitor", new List<BeaconRegion>());
 			this.rangingRegions = new List<BeaconRegion>();
 		}
 
@@ -83,7 +83,7 @@ namespace Estimotes {
 
 		protected virtual void UpdateMonitoringList() {
 			Settings.Local.Set("beacons-monitor", this.monitoringRegions);
-			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions);			
+			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions);
 		}
 
 
