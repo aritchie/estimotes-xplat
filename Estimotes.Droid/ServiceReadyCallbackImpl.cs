@@ -5,7 +5,7 @@ using EstimoteSdk;
 namespace Estimotes {
 
     public class ServiceReadyCallbackImpl : Java.Lang.Object, BeaconManager.IServiceReadyCallback {
-        private readonly Action callback;
+        readonly Action callback;
 
 
         public ServiceReadyCallbackImpl(Action callback) {

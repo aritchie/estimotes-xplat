@@ -48,9 +48,6 @@
     <Compile Include="ServiceReadyCallbackImpl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <XamarinComponentReference Include="estimotesdk">
       <Version>1.0.20141223</Version>
       <Visible>False</Visible>

@@ -24,11 +24,12 @@ namespace Samples.ViewModels {
 			base.OnActivate();
             this.List = new List<Beacon>();
 
-            this.IsBeaconFunctionalityAvailable = await EstimoteManager.Instance.Initialize();
-            if (!this.IsBeaconFunctionalityAvailable)
-				UserDialogs.Instance.Alert("Beacon functionality not enabled in app permissions");
+            var status = await EstimoteManager.Instance.Initialize();
+            if (status != BeaconInitStatus.Success)
+				UserDialogs.Instance.Alert($"Beacon functionality failed - {status}");
 
             else {
+                this.IsBeaconFunctionalityAvailable = true;
                 EstimoteManager.Instance.Ranged += this.OnRanged;
                 foreach (var region in App.Regions)
                     EstimoteManager.Instance.StartRanging(region);
@@ -46,7 +47,7 @@ namespace Samples.ViewModels {
 		}
 
 
-		private void OnRanged(object sender, IEnumerable<Beacon> beacons) {
+		void OnRanged(object sender, IEnumerable<Beacon> beacons) {
 			var list = beacons.ToList();
             this.List = list;
 			this.OnPropertyChanged("List");
@@ -72,7 +73,8 @@ namespace Samples.ViewModels {
 		public ICommand GotoRegions { get; }
         public IList<Beacon> List { get; private set; }
 
-        private bool isBeaconFunctionalityAvailable;
+
+        bool isBeaconFunctionalityAvailable;
         public bool IsBeaconFunctionalityAvailable {
             get { return this.isBeaconFunctionalityAvailable; }
             private set { this.SetProperty(ref this.isBeaconFunctionalityAvailable, value); }

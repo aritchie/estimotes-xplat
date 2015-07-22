@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.1.1</version>
-        <title>Estimotes Plugin for Xamarin</title>
+        <version>1.2.0</version>
+        <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
         <owners>Allan Ritchie</owners>
@@ -12,6 +12,13 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
+1.2
+[breaking] region monitoring event has been merged into one super event
+[feature] initialization function now returns reason for failure
+[feature] startranging/monitoring returns false if region is already being ranged/monitored
+[feature] stopranging/monitoring returns false if region was not already being ranged/monitored
+[fix] ranging list issues
+
 1.1.1
 [fix] issue with stopallmonitoring and stopallranging
 

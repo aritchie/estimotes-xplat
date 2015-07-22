@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using CoreLocation;
 using Foundation;
 using UIKit;
@@ -11,21 +10,20 @@ using Estimote;
 namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
-        private readonly BeaconManager beaconManager;
+        readonly BeaconManager beaconManager;
 
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
             };
-
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
-                this.OnEnteredRegion(region);
+                this.OnRegionStatusChanged(region, true);
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
 				var region = this.FromNative(args.Region);
-                this.OnExitedRegion(region);
+                this.OnRegionStatusChanged(region, false);
             };
 			this.beaconManager.RangedBeacons += (sender, args) => {
 				var beacons = args.Beacons.Select(this.FromNative);
@@ -35,35 +33,35 @@ namespace Estimotes {
 
 
 
-        public override async Task<bool> Initialize() {
+        public override async Task<BeaconInitStatus> Initialize() {
             if (!UIDevice.CurrentDevice.CheckSystemVersion(7, 0))
-                return false;
+                return BeaconInitStatus.InvalidOperatingSystem;
 
-			var good = false;
+            // TODO: bluetooth enabled & present
+
 			var authStatus = BeaconManager.AuthorizationStatus();
+            var good = this.IsGoodStatus(authStatus);
+            if (good)
+                return BeaconInitStatus.Success;
 
-			if (authStatus != CLAuthorizationStatus.NotDetermined)
-				good = this.IsGoodStatus(authStatus);
+			var tcs = new TaskCompletionSource<BeaconInitStatus>();
+			var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
+				if (args.Status == CLAuthorizationStatus.NotDetermined)
+					return; // not done yet
 
-			else {
-				var tcs = new TaskCompletionSource<bool>();
-				var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
-					if (args.Status == CLAuthorizationStatus.NotDetermined)
-						return; // not done yet
+				var success = this.IsGoodStatus(args.Status);
+                tcs.TrySetResult(success ? BeaconInitStatus.Success : BeaconInitStatus.PermissionDenied);
+			});
+			this.beaconManager.AuthorizationStatusChanged += funcPnt;
+			this.beaconManager.RequestAlwaysAuthorization();
+			var status = await tcs.Task;
+			this.beaconManager.AuthorizationStatusChanged -= funcPnt;
 
-					var status = this.IsGoodStatus(args.Status);
-					tcs.TrySetResult(status);
-				});
-				this.beaconManager.AuthorizationStatusChanged += funcPnt;
-				this.beaconManager.RequestAlwaysAuthorization();
-				good = await tcs.Task;
-				this.beaconManager.AuthorizationStatusChanged -= funcPnt;
-			}
-			return good;
+            return status;
         }
 
 
-		private bool IsGoodStatus(CLAuthorizationStatus status) {
+		protected virtual bool IsGoodStatus(CLAuthorizationStatus status) {
 			return (
 			    status == CLAuthorizationStatus.Authorized ||
 			    status == CLAuthorizationStatus.AuthorizedAlways ||
@@ -72,31 +70,27 @@ namespace Estimotes {
 		}
 
 
-		public override void StartMonitoring(BeaconRegion region) {
+		protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
-			base.StartMonitoring(region);
         }
 
 
-        public override void StartRanging(BeaconRegion region) {
+        protected override void StartRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StartRangingBeacons(native);
-			base.StartRanging(region);
         }
 
 
-		public override void StopMonitoring(BeaconRegion region) {
+		protected override void StopMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StopMonitoring(native);
-			base.StopMonitoring(region);
         }
 
 
-        public override void StopRanging(BeaconRegion region) {
+        protected override void StopRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StopRangingBeacons(native);
-			base.StopRanging(region);
         }
 
 

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Acr.Settings;
 using System.Linq;
+using Acr.Settings;
 
 
 namespace Estimotes {
 
     public abstract class AbstractBeaconManagerImpl : IBeaconManager {
-		private readonly IList<BeaconRegion> monitoringRegions;
-		private readonly IList<BeaconRegion> rangingRegions;
+		readonly IList<BeaconRegion> monitoringRegions;
+		readonly IList<BeaconRegion> rangingRegions;
 
 
 		protected AbstractBeaconManagerImpl() {
@@ -20,41 +20,72 @@ namespace Estimotes {
 		}
 
 
-        public abstract Task<bool> Initialize();
+        public abstract Task<BeaconInitStatus> Initialize();
+        protected abstract void StartMonitoringNative(BeaconRegion region);
+        protected abstract void StartRangingNative(BeaconRegion region);
+        protected abstract void StopMonitoringNative(BeaconRegion region);
+        protected abstract void StopRangingNative(BeaconRegion region);
 
 
-		public virtual void StartMonitoring(BeaconRegion region) {
+		public virtual bool StartMonitoring(BeaconRegion region) {
+            if (this.monitoringRegions.Any(x => x.Identifier.Equals(region.Identifier)))
+                return false;
+
+            this.StopMonitoringNative(region);
 			this.monitoringRegions.Add(region);
 			this.UpdateMonitoringList();
+            return true;
 		}
 
 
-		public virtual void StopMonitoring(BeaconRegion region) {
-			this.monitoringRegions.Remove(region);
-			this.UpdateMonitoringList();
+		public virtual bool StopMonitoring(BeaconRegion region) {
+			if (!this.monitoringRegions.Remove(region))
+                return false;
+
+            this.StopMonitoringNative(region);
+            this.UpdateMonitoringList();
+            return true;
 		}
 
 
-		public virtual void StartRanging(BeaconRegion region) {
+		public virtual bool StartRanging(BeaconRegion region) {
+            if (this.rangingRegions.Any(x => x.Identifier.Equals(region.Identifier)))
+                return false;
+
+            this.StartRangingNative(region);
 			this.rangingRegions.Add(region);
+            this.UpdateRangingList();
+            return true;
 		}
 
 
-		public virtual void StopRanging(BeaconRegion region) {
-			this.rangingRegions.Remove(region);
+		public virtual bool StopRanging(BeaconRegion region) {
+			if (!this.rangingRegions.Remove(region))
+                return false;
+
+            this.StopRangingNative(region);
+            this.UpdateRangingList();
+            return true;
 		}
 
 
 		public virtual void StopAllMonitoring() {
-			var list = this.MonitoringRegions.ToList();
+			var list = this.monitoringRegions.ToList();
 			foreach (var region in list)
-				this.StopMonitoring(region);
+				this.StopMonitoringNative(region);
+
+            this.monitoringRegions.Clear();
+            this.UpdateMonitoringList();
 		}
 
 
 		public virtual void StopAllRanging() {
-			foreach (var region in this.rangingRegions)
-				this.StopMonitoring(region);
+            var list = this.rangingRegions.ToList();
+			foreach (var region in list)
+				this.StopRangingNative(region);
+
+            this.rangingRegions.Clear();
+            this.UpdateRangingList();
 		}
 
 
@@ -62,8 +93,7 @@ namespace Estimotes {
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
 
         public event EventHandler<IEnumerable<Beacon>> Ranged;
-        public event EventHandler<BeaconRegion> EnteredRegion;
-        public event EventHandler<BeaconRegion> ExitedRegion;
+        public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
 
 
         protected virtual void OnRanged(IEnumerable<Beacon> beacons) {
@@ -71,13 +101,8 @@ namespace Estimotes {
         }
 
 
-        protected virtual void OnEnteredRegion(BeaconRegion region) {
-			this.EnteredRegion?.Invoke(this, region);
-        }
-
-
-        protected virtual void OnExitedRegion(BeaconRegion region) {
-			this.ExitedRegion?.Invoke(this, region);
+        protected virtual void OnRegionStatusChanged(BeaconRegion region, bool entering) {
+            this.RegionStatusChanged?.Invoke(this, new BeaconRegionStatusChangedEventArgs(region, entering));
         }
 
 

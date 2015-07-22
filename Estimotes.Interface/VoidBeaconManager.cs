@@ -8,27 +8,20 @@ namespace Estimotes {
 
 	public class VoidBeaconManager : IBeaconManager {
 
-		public VoidBeaconManager() {
-			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
-			this.RangingRegions = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
-		}
-
-
-        public async Task<bool> Initialize() { return false; }
-		public void StartMonitoring(BeaconRegion region) {}
-        public void StartRanging(BeaconRegion region) {}
-		public void StopMonitoring(BeaconRegion region) {}
-		public void StopRanging(BeaconRegion region) {}
+        public async Task<BeaconInitStatus> Initialize() => BeaconInitStatus.Unknown;
+		public bool StartMonitoring(BeaconRegion region) => false;
+        public bool StartRanging(BeaconRegion region) => false;
+		public bool StopMonitoring(BeaconRegion region) => false;
+		public bool StopRanging(BeaconRegion region) => false;
 
         public event EventHandler<IEnumerable<Beacon>> Ranged;
-        public event EventHandler<BeaconRegion> EnteredRegion;
-        public event EventHandler<BeaconRegion> ExitedRegion;
+        public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
 
 		public void StopAllMonitoring() {}
 		public void StopAllRanging() {}
 
 
-		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; }
-		public IReadOnlyList<BeaconRegion> RangingRegions { get; }
+		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
+		public IReadOnlyList<BeaconRegion> RangingRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
     }
 }

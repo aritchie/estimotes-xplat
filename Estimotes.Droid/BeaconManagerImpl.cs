@@ -11,19 +11,19 @@ namespace Estimotes {
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
 
         private readonly BeaconManager beaconManager;
-		private readonly object syncLock = new object();
-        private bool isConnected;
+		readonly object syncLock = new object();
+        bool isConnected;
 
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager(Application.Context);
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
-                this.OnEnteredRegion(region);
+                this.OnRegionStatusChanged(region, true);
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
-                this.OnExitedRegion(region);
+                this.OnRegionStatusChanged(region, false);
             };
             this.beaconManager.Ranging += (sender, args) => {
 				var beacons = args.Beacons.Select(x => this.FromNative(args.Region, x));
@@ -32,56 +32,51 @@ namespace Estimotes {
         }
 
 
-        public override async Task<bool> Initialize() {
+        public override async Task<BeaconInitStatus> Initialize() {
             if (this.isConnected)
-                return true;
+                return BeaconInitStatus.Success;
 
 			if (!this.beaconManager.CheckPermissionsAndService())
-				return false;
+				return BeaconInitStatus.PermissionDenied; // TODO: more!
 
-            var tcs = new TaskCompletionSource<object>();
+            var tcs = new TaskCompletionSource<BeaconInitStatus>();
 			lock (this.syncLock) {
 				if (this.isConnected)
-					tcs.TrySetResult(null);
+					tcs.TrySetResult(BeaconInitStatus.Success);
 
 				//Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Connection.BeaconService)));
 				var ready = new ServiceReadyCallbackImpl(() => {
 				    this.isConnected = true;
-                    tcs.TrySetResult(null);
+                    tcs.TrySetResult(BeaconInitStatus.Success);
 				});
 				this.beaconManager.Connect(ready);
 			}
 
-            await tcs.Task;
-            return this.isConnected;
+            return await tcs.Task;
         }
 
 
-		public override void StartMonitoring(BeaconRegion region) {
+		protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
 			this.beaconManager.StartMonitoring(native);
-			base.StartMonitoring(region);
         }
 
 
-		public override void StopMonitoring(BeaconRegion region) {
+		protected override void StopMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
 			this.beaconManager.StopMonitoring(native);
-			base.StopMonitoring(region);
         }
 
 
-        public override void StartRanging(BeaconRegion region) {
+        protected override void StartRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StartRanging(native);
-			base.StartRanging(region);
         }
 
 
-        public override void StopRanging(BeaconRegion region) {
+        protected override void StopRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StopRanging(native);
-			base.StopRanging(region);
         }
 
 
