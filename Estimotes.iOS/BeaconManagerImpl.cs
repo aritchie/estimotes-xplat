@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreBluetooth;
 using CoreLocation;
 using Foundation;
 using UIKit;
@@ -37,7 +38,14 @@ namespace Estimotes {
             if (!UIDevice.CurrentDevice.CheckSystemVersion(7, 0))
                 return BeaconInitStatus.InvalidOperatingSystem;
 
-            // TODO: bluetooth enabled & present
+            if (!CLLocationManager.LocationServicesEnabled)
+                return BeaconInitStatus.LocationServicesDisabled;
+
+            //if (!CLLocationManager.IsMonitoringAvailable())
+            //CLLocationManager.IsRangingAvailable
+            var btstatus = this.GetBluetoothStatus();
+            if (btstatus != BeaconInitStatus.Success)
+                return btstatus;
 
 			var authStatus = BeaconManager.AuthorizationStatus();
             var good = this.IsGoodStatus(authStatus);
@@ -58,6 +66,19 @@ namespace Estimotes {
 			this.beaconManager.AuthorizationStatusChanged -= funcPnt;
 
             return status;
+        }
+
+
+        protected virtual BeaconInitStatus GetBluetoothStatus() {
+            using (var cb = new CBCentralManager()) {
+                switch (cb.State) {
+                    case CBCentralManagerState.Unauthorized: return BeaconInitStatus.PermissionDenied;
+                    case CBCentralManagerState.Unsupported: return BeaconInitStatus.BluetoothMissing;
+                    case CBCentralManagerState.PoweredOn: return BeaconInitStatus.Success;
+                    case CBCentralManagerState.PoweredOff: return BeaconInitStatus.BluetoothOff;
+                    default : return BeaconInitStatus.Unknown;
+                }
+            }
         }
 
 

@@ -33,8 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Acr.Settings, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Acr.Settings.4.2.5\lib\MonoAndroid10\Acr.Settings.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Acr.Settings.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Acr.Settings.4.2.5\lib\MonoAndroid10\Acr.Settings.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime" />
@@ -48,12 +60,6 @@
     <Compile Include="ServiceReadyCallbackImpl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <XamarinComponentReference Include="estimotesdk">
-      <Version>1.0.20141223</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Estimotes.Android.Binding\Estimotes.Android.Binding.csproj">
       <Project>{6A1F28DD-EC87-49A8-9207-DEDEEA2D3F73}</Project>
       <Name>Estimotes.Android.Binding</Name>
@@ -65,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Values\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\Estimotes.Shared\Estimotes.Shared.projitems" Label="Shared" Condition="Exists('..\Estimotes.Shared\Estimotes.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

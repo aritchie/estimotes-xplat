@@ -6,6 +6,9 @@ namespace Estimotes {
         Unknown,
         PermissionDenied,
         InvalidOperatingSystem,
+        LocationServicesDisabled,
+        BluetoothMissing,
+        BluetoothOff,
         Success
     }
 }

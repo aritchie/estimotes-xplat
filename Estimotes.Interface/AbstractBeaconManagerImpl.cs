@@ -14,8 +14,8 @@ namespace Estimotes {
 
 
 		protected AbstractBeaconManagerImpl() {
-			Settings.Local.KeysNotToClear.Add("beacons-monitor");
-			this.monitoringRegions = Settings.Local.Get("beacons-monitor", new List<BeaconRegion>());
+			Acr.Settings.Settings.Local.KeysNotToClear.Add("beacons-monitor");
+			this.monitoringRegions = Acr.Settings.Settings.Local.Get("beacons-monitor", new List<BeaconRegion>());
 			this.rangingRegions = new List<BeaconRegion>();
 		}
 

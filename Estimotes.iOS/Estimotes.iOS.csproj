@@ -42,8 +42,20 @@
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Acr.Settings, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Acr.Settings.4.2.5\lib\Xamarin.iOS10\Acr.Settings.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Acr.Settings.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Acr.Settings.4.2.5\lib\Xamarin.iOS10\Acr.Settings.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Estimote">
       <HintPath>..\Components\estimotesdkios-2.4.0\lib\ios-unified\Estimote.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime" />
@@ -57,6 +69,9 @@
       <Project>{5B2339D1-65D5-4483-ACA9-997350A30E5B}</Project>
       <Name>Estimotes.Interface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\Estimotes.Shared\Estimotes.Shared.projitems" Label="Shared" Condition="Exists('..\Estimotes.Shared\Estimotes.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
