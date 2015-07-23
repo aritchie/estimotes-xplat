@@ -108,7 +108,11 @@ namespace Estimotes {
 
 
 		protected virtual void UpdateMonitoringList() {
-			Settings.Local.Set(SETTING_KEY, this.monitoringRegions);
+			if (this.monitoringRegions.Any())
+				Settings.Local.Set(SETTING_KEY, this.monitoringRegions);
+			else
+				Settings.Local.Remove(SETTING_KEY);
+			
 			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions);
 		}
 

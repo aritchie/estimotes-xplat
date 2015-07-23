@@ -18,6 +18,16 @@ namespace Estimotes {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
             };
+
+			// TODO: make this determining state configurable.  
+//			this.beaconManager.DeterminedState += (sender, args) => {
+//				if (args.State == CLRegionState.Unknown)
+//					return;
+//				
+//				var region = this.FromNative(args.Region);
+//				var entering = (args.State == CLRegionState.Inside);
+//				this.OnRegionStatusChanged(region, entering);
+//			};
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -41,6 +51,8 @@ namespace Estimotes {
             if (!CLLocationManager.LocationServicesEnabled)
                 return BeaconInitStatus.LocationServicesDisabled;
 
+//			if (UIApplication.SharedApplication.BackgroundRefreshStatus != UIBackgroundRefreshStatus.Denied)
+//				return;
             //if (!CLLocationManager.IsMonitoringAvailable())
             //CLLocationManager.IsRangingAvailable
 //            var btstatus = this.GetBluetoothStatus();
@@ -95,6 +107,7 @@ namespace Estimotes {
 		protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
+			this.beaconManager.RequestState(native);
         }
 
 
@@ -158,13 +171,22 @@ namespace Estimotes {
 
         protected virtual Estimote.BeaconRegion ToNative(BeaconRegion region) {
 			var uuid = new NSUuid(region.Uuid);
-			if (region.Minor != null)
-				return new Estimote.BeaconRegion(uuid, region.Major.Value, region.Minor.Value, region.Identifier);
+			Estimote.BeaconRegion native = null;
 
-			if (region.Major != null)
-				return new Estimote.BeaconRegion(uuid, region.Major.Value, region.Identifier);
+			if (region.Major > 0 && region.Minor > 0)
+				native = new Estimote.BeaconRegion(uuid, region.Major.Value, region.Minor.Value, region.Identifier);
 
-			return new Estimote.BeaconRegion(uuid, region.Identifier);
+			else if (region.Major > 0)
+				native = new Estimote.BeaconRegion(uuid, region.Major.Value, region.Identifier);
+
+			else
+				native = new Estimote.BeaconRegion(uuid, region.Identifier);
+
+			native.NotifyEntryStateOnDisplay = true;
+			native.NotifyOnEntry = true;
+			native.NotifyOnExit = true;
+
+			return native;
         }
     }
 }

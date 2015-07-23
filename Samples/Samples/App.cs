@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Acr;
 using Acr.Notifications;
-using Acr.UserDialogs;
 using Estimotes;
 using Samples.Pages;
 using Xamarin.Forms;
@@ -27,21 +26,19 @@ namespace Samples {
 
        protected override async void OnStart() {
             base.OnStart();
+			Notifications.Instance.Badge = 0; // just waking up for permissions
             App.IsBackgrounded = false;
 
             var ei = EstimoteManager.Instance;
-            ei.RegionStatusChanged += (sender, args) => {
-                if (args.IsEntering)
-                    Notify("Entered Region", "You have entered a region");
-                else
-                    Notify("Exited Region", "You have exited a region");
-            };
+			ei.RegionStatusChanged += OnBeaconRegionStatusChanged;
             var result = await EstimoteManager.Instance.Initialize();
             if (result != BeaconInitStatus.Success)
                 return;
 
             ei.StopAllMonitoring();
-            Regions.Each(x => ei.StartMonitoring(x));
+			foreach (var region in Regions)
+				if (!ei.StartMonitoring(region))
+					throw new ArgumentException("Just cancelled all regions - this should go");
         }
 
 
@@ -57,16 +54,16 @@ namespace Samples {
         }
 
 
+		static void OnBeaconRegionStatusChanged(object sender, BeaconRegionStatusChangedEventArgs args) {
+			if (args.IsEntering)
+				Notify("Entered Region", "You have entered a region");
+			else
+				Notify("Exited Region", "You have exited a region");
+		}
+
+
         static void Notify(string title, string msg) {
-            try {
-                if (App.IsBackgrounded)
-                    Notifications.Instance.Send(title, msg);
-                else
-                    UserDialogs.Instance.Alert(title, msg);
-            }
-            catch (Exception ex) {
-                Debug.WriteLine("Notification Error: " + ex);
-            }
+			Notifications.Instance.Send(title, msg);
         }
     }
 }
