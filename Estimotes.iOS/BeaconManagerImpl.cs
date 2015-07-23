@@ -43,9 +43,9 @@ namespace Estimotes {
 
             //if (!CLLocationManager.IsMonitoringAvailable())
             //CLLocationManager.IsRangingAvailable
-            var btstatus = this.GetBluetoothStatus();
-            if (btstatus != BeaconInitStatus.Success)
-                return btstatus;
+//            var btstatus = this.GetBluetoothStatus();
+//            if (btstatus != BeaconInitStatus.Success)
+//                return btstatus;
 
 			var authStatus = BeaconManager.AuthorizationStatus();
             var good = this.IsGoodStatus(authStatus);
@@ -69,17 +69,18 @@ namespace Estimotes {
         }
 
 
-        protected virtual BeaconInitStatus GetBluetoothStatus() {
-            using (var cb = new CBCentralManager()) {
-                switch (cb.State) {
-                    case CBCentralManagerState.Unauthorized: return BeaconInitStatus.PermissionDenied;
-                    case CBCentralManagerState.Unsupported: return BeaconInitStatus.BluetoothMissing;
-                    case CBCentralManagerState.PoweredOn: return BeaconInitStatus.Success;
-                    case CBCentralManagerState.PoweredOff: return BeaconInitStatus.BluetoothOff;
-                    default : return BeaconInitStatus.Unknown;
-                }
-            }
-        }
+//        protected virtual BeaconInitStatus GetBluetoothStatus() {
+//            using (var cb = new CBCentralManager()) {
+//				cb.
+//                switch (cb.State) {
+//                    case CBCentralManagerState.Unauthorized: return BeaconInitStatus.PermissionDenied;
+//                    case CBCentralManagerState.Unsupported: return BeaconInitStatus.BluetoothMissing;
+//                    case CBCentralManagerState.PoweredOn: return BeaconInitStatus.Success;
+//                    case CBCentralManagerState.PoweredOff: return BeaconInitStatus.BluetoothOff;
+//                    default : return BeaconInitStatus.Unknown;
+//                }
+//            }
+//        }
 
 
 		protected virtual bool IsGoodStatus(CLAuthorizationStatus status) {

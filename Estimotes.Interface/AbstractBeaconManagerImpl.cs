@@ -9,13 +9,14 @@ using Acr.Settings;
 namespace Estimotes {
 
     public abstract class AbstractBeaconManagerImpl : IBeaconManager {
+		private const string SETTING_KEY = "beacons-monitor";
 		readonly IList<BeaconRegion> monitoringRegions;
 		readonly IList<BeaconRegion> rangingRegions;
 
 
 		protected AbstractBeaconManagerImpl() {
-			Acr.Settings.Settings.Local.KeysNotToClear.Add("beacons-monitor");
-			this.monitoringRegions = Acr.Settings.Settings.Local.Get("beacons-monitor", new List<BeaconRegion>());
+			Settings.Local.KeysNotToClear.Add(SETTING_KEY);
+			this.monitoringRegions = Settings.Local.Get(SETTING_KEY, new List<BeaconRegion>());
 			this.rangingRegions = new List<BeaconRegion>();
 		}
 
@@ -28,7 +29,7 @@ namespace Estimotes {
 
 
 		public virtual bool StartMonitoring(BeaconRegion region) {
-            if (this.monitoringRegions.Any(x => x.Identifier.Equals(region.Identifier)))
+			if (this.monitoringRegions.Any(x => x.Uuid.Equals(region.Uuid)))
                 return false;
 
             this.StopMonitoringNative(region);
@@ -49,7 +50,7 @@ namespace Estimotes {
 
 
 		public virtual bool StartRanging(BeaconRegion region) {
-            if (this.rangingRegions.Any(x => x.Identifier.Equals(region.Identifier)))
+			if (this.rangingRegions.Any(x => x.Uuid.Equals(region.Uuid)))
                 return false;
 
             this.StartRangingNative(region);
@@ -107,7 +108,7 @@ namespace Estimotes {
 
 
 		protected virtual void UpdateMonitoringList() {
-			Settings.Local.Set("beacons-monitor", this.monitoringRegions);
+			Settings.Local.Set(SETTING_KEY, this.monitoringRegions);
 			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions);
 		}
 
