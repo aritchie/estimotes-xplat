@@ -32,7 +32,7 @@ namespace Estimotes {
 			if (this.monitoringRegions.Any(x => x.Uuid.Equals(region.Uuid)))
                 return false;
 
-            this.StopMonitoringNative(region);
+            this.StartMonitoringNative(region);
 			this.monitoringRegions.Add(region);
 			this.UpdateMonitoringList();
             return true;
