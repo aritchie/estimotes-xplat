@@ -36,6 +36,9 @@ namespace Estimotes {
             if (this.isConnected)
                 return BeaconInitStatus.Success;
 
+			if (this.beaconManager.IsBluetoothEnabled)
+				return BeaconInitStatus.BluetoothOff;
+			
 			if (!this.beaconManager.CheckPermissionsAndService())
 				return BeaconInitStatus.PermissionDenied; // TODO: more!
 

@@ -24,13 +24,13 @@ namespace Samples.ViewModels {
 			base.OnActivate();
             this.List = new List<Beacon>();
 
+			EstimoteManager.Instance.Ranged += this.OnRanged;
             var status = await EstimoteManager.Instance.Initialize();
             if (status != BeaconInitStatus.Success)
 				UserDialogs.Instance.Alert($"Beacon functionality failed - {status}");
 
             else {
-                this.IsBeaconFunctionalityAvailable = true;
-                EstimoteManager.Instance.Ranged += this.OnRanged;
+                this.IsBeaconFunctionalityAvailable = true;                
                 foreach (var region in App.Regions)
                     EstimoteManager.Instance.StartRanging(region);
             }
@@ -39,11 +39,8 @@ namespace Samples.ViewModels {
 
 		public override void OnDeactivate() {
 			base.OnDeactivate();
-            if (this.IsBeaconFunctionalityAvailable) {
-                EstimoteManager.Instance.Ranged -= this.OnRanged;
-                foreach (var region in App.Regions)
-                    EstimoteManager.Instance.StopRanging(region);
-            }
+            EstimoteManager.Instance.Ranged -= this.OnRanged;
+			EstimoteManager.Instance.StopAllRanging();
 		}
 
 

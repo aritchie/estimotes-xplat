@@ -51,6 +51,7 @@ namespace Samples {
         protected override void OnSleep() {
             base.OnSleep();
             App.IsBackgrounded = true;
+			EstimoteManager.Instance.StopAllRanging();
         }
 
 

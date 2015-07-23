@@ -50,9 +50,6 @@
     </JavaOptions>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Estimotes.Android.Binding">
-      <HintPath>..\..\Estimotes.Android.Binding\bin\Debug\Estimotes.Android.Binding.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -108,6 +105,9 @@
     </Reference>
     <Reference Include="Acr.Settings.Interface">
       <HintPath>..\..\packages\Acr.Settings.4.2.5\lib\MonoAndroid10\Acr.Settings.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Estimotes.Android">
+      <HintPath>..\..\Estimotes.Android.Binding\bin\Debug\Estimotes.Android.Binding.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
