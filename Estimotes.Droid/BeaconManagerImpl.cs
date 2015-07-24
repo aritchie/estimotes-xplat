@@ -17,6 +17,9 @@ namespace Estimotes {
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager(Application.Context);
+            //this.beaconManager.Nearable += (sender, args) => {};
+            //this.beaconManager.Eddystone += (sender, args) => { };
+
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -36,11 +39,14 @@ namespace Estimotes {
             if (this.isConnected)
                 return BeaconInitStatus.Success;
 
-			if (this.beaconManager.IsBluetoothEnabled)
+            if (!this.beaconManager.HasBluetooth)
+                return BeaconInitStatus.BluetoothMissing;
+
+            if (!this.beaconManager.IsBluetoothEnabled)
 				return BeaconInitStatus.BluetoothOff;
-			
+
 			if (!this.beaconManager.CheckPermissionsAndService())
-				return BeaconInitStatus.PermissionDenied; // TODO: more!
+				return BeaconInitStatus.PermissionDenied;
 
             var tcs = new TaskCompletionSource<BeaconInitStatus>();
 			lock (this.syncLock) {
@@ -55,7 +61,13 @@ namespace Estimotes {
 				this.beaconManager.Connect(ready);
 			}
 
-            return await tcs.Task;
+            var status = await tcs.Task;
+            // restore monitored beacons
+            //if (status == BeaconInitStatus.Success)
+            //    foreach (var region in this.MonitoringRegions)
+            //        this.StartMonitoringNative(region);
+
+            return status;
         }
 
 

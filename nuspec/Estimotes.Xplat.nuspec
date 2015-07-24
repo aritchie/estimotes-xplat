@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
-        <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
+        <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote SDK</description>
         <authors>Allan Ritchie</authors>
         <owners>Allan Ritchie</owners>
         <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
@@ -18,6 +18,7 @@
 [feature] startranging/monitoring returns false if region is already being ranged/monitored
 [feature] stopranging/monitoring returns false if region was not already being ranged/monitored
 [fix] ranging list issues
+[android] updated estimote bindings to latest sdk
 
 1.1.1
 [fix] issue with stopallmonitoring and stopallranging
