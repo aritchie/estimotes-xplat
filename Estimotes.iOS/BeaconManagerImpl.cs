@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CoreBluetooth;
 using CoreLocation;
 using Foundation;
 using UIKit;
@@ -12,22 +11,24 @@ namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BeaconManager beaconManager;
+        readonly NearableManager nearableManager;
 
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
             };
-
-			// TODO: make this determining state configurable.  
+            this.nearableManager = new NearableManager();
+			// TODO: make this determining state configurable.
 //			this.beaconManager.DeterminedState += (sender, args) => {
 //				if (args.State == CLRegionState.Unknown)
 //					return;
-//				
+//
 //				var region = this.FromNative(args.Region);
 //				var entering = (args.State == CLRegionState.Inside);
 //				this.OnRegionStatusChanged(region, entering);
 //			};
+            //this.nearableManager.RangedNearables
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -37,7 +38,7 @@ namespace Estimotes {
                 this.OnRegionStatusChanged(region, false);
             };
 			this.beaconManager.RangedBeacons += (sender, args) => {
-				var beacons = args.Beacons.Select(this.FromNative);
+				var beacons = args.Beacons.Select(x => new Beacon(args.Region, x));
 				this.OnRanged(beacons);
             };
         }
@@ -104,7 +105,18 @@ namespace Estimotes {
 		}
 
 
-		protected override void StartMonitoringNative(BeaconRegion region) {
+        public override string StartNearableDiscovery() {
+            //this.nearableManager.StartRanging(NearableType.All);
+            return null;
+        }
+
+
+        public override void StopNearableDiscovery(string id) {
+            //this.nearableManager.StopRanging();
+        }
+
+
+        protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
 			this.beaconManager.RequestState(native);
@@ -127,36 +139,6 @@ namespace Estimotes {
             var native = this.ToNative(region);
             this.beaconManager.StopRangingBeacons(native);
         }
-
-
-        protected virtual Proximity FromNative(CLProximity proximity) {
-            switch (proximity) {
-
-                case CLProximity.Far:
-                    return Proximity.Far;
-
-                case CLProximity.Immediate:
-                    return Proximity.Immediate;
-
-                case CLProximity.Near:
-                    return Proximity.Near;
-
-                default:
-                    return Proximity.Unknown;
-            }
-        }
-
-
-		protected virtual Beacon FromNative(Estimote.Beacon native) {
-			var prox = this.FromNative(native.Proximity);
-			var beacon = new Beacon(
-				native.ProximityUUID.AsString(),
-				prox,
-				native.Minor,
-				native.Major
-			);
-			return beacon;
-		}
 
 
 		protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {

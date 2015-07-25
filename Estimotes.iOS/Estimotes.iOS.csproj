@@ -32,7 +32,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Beacon.cs" />
     <Compile Include="BeaconManagerImpl.cs" />
+    <Compile Include="Nearable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -51,7 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beacon.cs" />
     <Compile Include="BeaconManagerImpl.cs" />
+    <Compile Include="Nearable.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceReadyCallbackImpl.cs" />
