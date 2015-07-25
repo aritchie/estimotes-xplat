@@ -22,7 +22,7 @@ namespace Samples.ViewModels {
 
         public override async void OnActivate() {
 			base.OnActivate();
-            this.List = new List<AbstractBeacon>();
+            this.List = new List<IBeacon>();
 
 			EstimoteManager.Instance.Ranged += this.OnRanged;
             var status = await EstimoteManager.Instance.Initialize();
@@ -68,7 +68,7 @@ namespace Samples.ViewModels {
 
 
 		public ICommand GotoRegions { get; }
-        public IList<AbstractBeacon> List { get; private set; }
+        public IList<IBeacon> List { get; private set; }
 
 
         bool isBeaconFunctionalityAvailable;

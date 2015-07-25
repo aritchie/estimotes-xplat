@@ -13,5 +13,9 @@ namespace Estimotes {
 
 
         public string Identifier => this.native.Identifier;
+        public long CurrentMotionDuration => (long)this.native.CurrentMotionStateDuration;
+        public double Temperature => this.native.Temperature;
+        public bool IsMoving => this.native.IsMoving;
+        public int Rssi => (int)this.native.Rssi;
     }
 }
