@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.3.0</version>
+        <version>1.2.2</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -13,10 +13,10 @@
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
 1.3
+improved samples for monitoring
+[fix] several fixes around monitoring
 [android] restore monitoring regions on initialize
-[feature] nearables ranging and monitoring
-[feature] eddystore ranging and monitoring
-[ios] updated estimote bindings to latest sdk
+
 
 1.2
 [breaking] region monitoring event has been merged into one super event

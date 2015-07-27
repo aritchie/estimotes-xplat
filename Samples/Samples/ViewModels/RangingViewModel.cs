@@ -10,19 +10,11 @@ using Samples.Pages;
 
 namespace Samples.ViewModels {
 
-    public class MainViewModel : LifecycleViewModel {
-
-        public MainViewModel() {
-            this.GotoRegions = new Command(async () => {
-				if (this.IsBeaconFunctionalityAvailable)
-					await App.Current.MainPage.Navigation.PushAsync(new RegionListPage());
-			});
-        }
-
+    public class RangingViewModel : LifecycleViewModel {
 
         public override async void OnActivate() {
 			base.OnActivate();
-            this.List = new List<IBeacon>();
+			this.List = new List<BeaconViewModel>();
 
 			EstimoteManager.Instance.Ranged += this.OnRanged;
             var status = await EstimoteManager.Instance.Initialize();
@@ -30,7 +22,6 @@ namespace Samples.ViewModels {
 				UserDialogs.Instance.Alert($"Beacon functionality failed - {status}");
 
             else {
-                this.IsBeaconFunctionalityAvailable = true;
                 foreach (var region in App.Regions)
                     EstimoteManager.Instance.StartRanging(region);
             }
@@ -45,7 +36,10 @@ namespace Samples.ViewModels {
 
 
 		void OnRanged(object sender, IEnumerable<IBeacon> beacons) {
-			var list = beacons.ToList();
+			var list = new List<BeaconViewModel>();
+			foreach (var beacon in beacons)
+				list.Add(new BeaconViewModel(beacon));
+			
             this.List = list;
 			this.OnPropertyChanged("List");
             //if (beacon.Proximity == Proximity.Unknown) {
@@ -66,15 +60,6 @@ namespace Samples.ViewModels {
             //}
 		}
 
-
-		public ICommand GotoRegions { get; }
-        public IList<IBeacon> List { get; private set; }
-
-
-        bool isBeaconFunctionalityAvailable;
-        public bool IsBeaconFunctionalityAvailable {
-            get { return this.isBeaconFunctionalityAvailable; }
-            private set { this.SetProperty(ref this.isBeaconFunctionalityAvailable, value); }
-        }
+        public IList<BeaconViewModel> List { get; private set; }
     }
 }

@@ -105,21 +105,21 @@ namespace Estimotes {
 		}
 
 
-        public override string StartNearableDiscovery() {
-            //this.nearableManager.StartRanging(NearableType.All);
-            return null;
-        }
-
-
-        public override void StopNearableDiscovery(string id) {
-            //this.nearableManager.StopRanging();
-        }
+//        public override string StartNearableDiscovery() {
+//            //this.nearableManager.StartRanging(NearableType.All);
+//            return null;
+//        }
+//
+//
+//        public override void StopNearableDiscovery(string id) {
+//            //this.nearableManager.StopRanging();
+//        }
 
 
         protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
-			this.beaconManager.RequestState(native);
+//			this.beaconManager.RequestState(native);
         }
 
 

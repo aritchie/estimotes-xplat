@@ -44,12 +44,12 @@ namespace Estimotes {
         bool StopRanging(BeaconRegion region);
         event EventHandler<IEnumerable<IBeacon>> Ranged;
 
-        string StartNearableDiscovery();
-        void StopNearableDiscovery(string id);
+//        string StartNearableDiscovery();
+//        void StopNearableDiscovery(string id);
 
 		IReadOnlyList<BeaconRegion> MonitoringRegions { get; }
 		IReadOnlyList<BeaconRegion> RangingRegions { get; }
-        event EventHandler<IEnumerable<INearable>> Nearables;
+//        event EventHandler<IEnumerable<INearable>> Nearables;
 
 		void StopAllMonitoring();
 		void StopAllRanging();

@@ -17,10 +17,10 @@ namespace Estimotes {
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager(Application.Context);
-            this.beaconManager.Nearable += (sender, args) => {
-                var nearables = args.P0.Select(x => new Nearable(x));
-                this.OnNearables(nearables);
-            };
+//            this.beaconManager.Nearable += (sender, args) => {
+//                var nearables = args.P0.Select(x => new Nearable(x));
+//                this.OnNearables(nearables);
+//            };
             //this.beaconManager.Eddystone += (sender, args) => { };
 
             this.beaconManager.EnteredRegion += (sender, args) => {
@@ -74,14 +74,15 @@ namespace Estimotes {
         }
 
 
-        public override string StartNearableDiscovery() {
-            return this.beaconManager.StartNearableDiscovery();
-        }
+//        public override string StartNearableDiscovery() {
+//            return this.beaconManager.StartNearableDiscovery();
+//        }
+//
+//
+//        public override void StopNearableDiscovery(string id) {
+//            this.beaconManager.StopNearableDiscovery(id);
+//        }
 
-
-        public override void StopNearableDiscovery(string id) {
-            this.beaconManager.StopNearableDiscovery(id);
-        }
 
         protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);

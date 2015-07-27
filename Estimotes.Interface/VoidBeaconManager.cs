@@ -14,7 +14,7 @@ namespace Estimotes {
 		public bool StopMonitoring(BeaconRegion region) => false;
 		public bool StopRanging(BeaconRegion region) => false;
 
-        public event EventHandler<IEnumerable<AbstractBeacon>> Ranged;
+        public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
 
 		public void StopAllMonitoring() {}

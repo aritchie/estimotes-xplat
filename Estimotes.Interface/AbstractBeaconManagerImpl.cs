@@ -26,9 +26,8 @@ namespace Estimotes {
         protected abstract void StartRangingNative(BeaconRegion region);
         protected abstract void StopMonitoringNative(BeaconRegion region);
         protected abstract void StopRangingNative(BeaconRegion region);
-        public abstract string StartNearableDiscovery();
-        public abstract void StopNearableDiscovery(string id);
-
+//        public abstract string StartNearableDiscovery();
+//        public abstract void StopNearableDiscovery(string id);
 
 
 		public virtual bool StartMonitoring(BeaconRegion region) {
@@ -98,7 +97,7 @@ namespace Estimotes {
 
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
-        public event EventHandler<IEnumerable<INearable>> Nearables;
+//        public event EventHandler<IEnumerable<INearable>> Nearables;
 
 
         protected virtual void OnRanged(IEnumerable<IBeacon> beacons) {
@@ -111,9 +110,9 @@ namespace Estimotes {
         }
 
 
-        protected virtual void OnNearables(IEnumerable<INearable> nearables) {
-            this.Nearables?.Invoke(this, nearables);
-        }
+//        protected virtual void OnNearables(IEnumerable<INearable> nearables) {
+//            this.Nearables?.Invoke(this, nearables);
+//        }
 
 
 		protected virtual void UpdateMonitoringList() {
