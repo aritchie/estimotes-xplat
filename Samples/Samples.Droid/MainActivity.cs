@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
@@ -14,9 +15,11 @@ namespace Samples.Droid {
 
         protected override void OnCreate(Bundle bundle) {
             base.OnCreate(bundle);
+			var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "samples.db");
+				
             Forms.Init(this, bundle);
             UserDialogs.Init(() => (Activity)Forms.Context);
-            this.LoadApplication(new App());
+            this.LoadApplication(new App(dbPath));
         }
     }
 }

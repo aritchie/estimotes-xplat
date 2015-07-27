@@ -24,16 +24,16 @@ namespace Estimotes {
             if (other == null)
                 return false;
 
-            if (!Object.Equals(this.Uuid, other.Uuid))
+			if (ReferenceEquals(this, other))
+				return true;
+			
+			if (!this.Uuid.Equals(other.Uuid, StringComparison.OrdinalIgnoreCase))
                 return false;
 
-            //if (!Object.Equals(this.Identifier, other.Identifier))
-            //    return false;
-
-            if (!Object.Equals(this.Major, other.Major))
+            if (this.Major != other.Major)
                 return false;
 
-            if (!Object.Equals(this.Minor, other.Minor))
+            if (this.Minor != other.Minor)
                 return false;
 
             return true;

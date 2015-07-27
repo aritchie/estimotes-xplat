@@ -18,6 +18,9 @@ namespace Estimotes {
 			Settings.Local.KeysNotToClear.Add(SETTING_KEY);
 			this.monitoringRegions = Settings.Local.Get(SETTING_KEY, new List<BeaconRegion>());
 			this.rangingRegions = new List<BeaconRegion>();
+
+			this.UpdateMonitoringList();
+			this.UpdateRangingList();
 		}
 
 
@@ -26,6 +29,8 @@ namespace Estimotes {
         protected abstract void StartRangingNative(BeaconRegion region);
         protected abstract void StopMonitoringNative(BeaconRegion region);
         protected abstract void StopRangingNative(BeaconRegion region);
+//        public abstract string StartNearableDiscovery();
+//        public abstract void StopNearableDiscovery(string id);
 
 
 		public virtual bool StartMonitoring(BeaconRegion region) {
@@ -93,11 +98,12 @@ namespace Estimotes {
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; private set; }
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
 
-        public event EventHandler<IEnumerable<Beacon>> Ranged;
+        public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
+//        public event EventHandler<IEnumerable<INearable>> Nearables;
 
 
-        protected virtual void OnRanged(IEnumerable<Beacon> beacons) {
+        protected virtual void OnRanged(IEnumerable<IBeacon> beacons) {
             this.Ranged?.Invoke(this, beacons);
         }
 
@@ -107,12 +113,17 @@ namespace Estimotes {
         }
 
 
+//        protected virtual void OnNearables(IEnumerable<INearable> nearables) {
+//            this.Nearables?.Invoke(this, nearables);
+//        }
+
+
 		protected virtual void UpdateMonitoringList() {
 			if (this.monitoringRegions.Any())
 				Settings.Local.Set(SETTING_KEY, this.monitoringRegions);
 			else
 				Settings.Local.Remove(SETTING_KEY);
-			
+
 			this.MonitoringRegions = new ReadOnlyCollection<BeaconRegion>(this.monitoringRegions);
 		}
 
