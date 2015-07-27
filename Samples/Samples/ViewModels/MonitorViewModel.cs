@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr;
-using Samples.Models;
 using Estimotes;
 
 
 
 namespace Samples.ViewModels {
-	
+
 	public class MonitorViewModel : LifecycleViewModel {
 
 		public MonitorViewModel() {

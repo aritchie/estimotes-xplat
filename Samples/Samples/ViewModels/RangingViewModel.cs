@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
 using Acr;
 using Acr.UserDialogs;
 using Estimotes;
-using Samples.Pages;
 
 
 namespace Samples.ViewModels {
@@ -46,7 +43,7 @@ namespace Samples.ViewModels {
 			var list = new List<BeaconViewModel>();
 			foreach (var beacon in beacons)
 				list.Add(new BeaconViewModel(beacon));
-			
+
             this.List = list;
 			this.OnPropertyChanged("List");
             //if (beacon.Proximity == Proximity.Unknown) {
