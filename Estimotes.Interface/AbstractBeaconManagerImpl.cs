@@ -18,6 +18,9 @@ namespace Estimotes {
 			Settings.Local.KeysNotToClear.Add(SETTING_KEY);
 			this.monitoringRegions = Settings.Local.Get(SETTING_KEY, new List<BeaconRegion>());
 			this.rangingRegions = new List<BeaconRegion>();
+
+			this.UpdateMonitoringList();
+			this.UpdateRangingList();
 		}
 
 

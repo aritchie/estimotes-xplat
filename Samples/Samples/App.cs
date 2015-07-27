@@ -75,14 +75,9 @@ namespace Samples {
 			});
 
 			if (args.IsEntering)
-				Notify("Entered Region", "You have entered a region");
+				Notifications.Instance.Send("Entered Region", "You have entered a region");
 			else
-				Notify("Exited Region", "You have exited a region");
+				Notifications.Instance.Send("Exited Region", "You have exited a region");
 		}
-
-
-        static void Notify(string title, string msg) {
-			Notifications.Instance.Send(title, msg);
-        }
     }
 }

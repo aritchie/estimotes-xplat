@@ -8,6 +8,7 @@ namespace Estimotes {
         readonly Estimote.Beacon beacon;
         readonly Estimote.BeaconRegion region;
 
+
         public Beacon(Estimote.BeaconRegion region, Estimote.Beacon beacon) {
             this.region = region;
             this.beacon = beacon;

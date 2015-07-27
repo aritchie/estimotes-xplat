@@ -12,9 +12,16 @@ namespace Samples.ViewModels {
 
     public class RangingViewModel : LifecycleViewModel {
 
+		public override void OnStart() {
+			this.List = new List<BeaconViewModel>();
+			base.OnStart();
+		}
+
+
         public override async void OnActivate() {
 			base.OnActivate();
-			this.List = new List<BeaconViewModel>();
+			this.List.Clear();
+			this.OnPropertyChanged("List");
 
 			EstimoteManager.Instance.Ranged += this.OnRanged;
             var status = await EstimoteManager.Instance.Initialize();

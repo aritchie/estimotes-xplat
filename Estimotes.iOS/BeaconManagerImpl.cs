@@ -11,24 +11,13 @@ namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BeaconManager beaconManager;
-        readonly NearableManager nearableManager;
+//        readonly NearableManager nearableManager;
 
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
-            };
-            this.nearableManager = new NearableManager();
-			// TODO: make this determining state configurable.
-//			this.beaconManager.DeterminedState += (sender, args) => {
-//				if (args.State == CLRegionState.Unknown)
-//					return;
-//
-//				var region = this.FromNative(args.Region);
-//				var entering = (args.State == CLRegionState.Inside);
-//				this.OnRegionStatusChanged(region, entering);
-//			};
-            //this.nearableManager.RangedNearables
+            };            
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -119,7 +108,6 @@ namespace Estimotes {
         protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
             this.beaconManager.StartMonitoring(native);
-//			this.beaconManager.RequestState(native);
         }
 
 

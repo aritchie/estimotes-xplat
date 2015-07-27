@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.2.2</version>
+        <version>1.3.0</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -14,8 +14,11 @@
         <releaseNotes>
 1.3
 improved samples for monitoring
+[fix] beacon is now an implemented interface with the setters made private
 [fix] several fixes around monitoring
 [android] restore monitoring regions on initialize
+[android] beacon ranging now works like iOS where it ranges all beacons at once
+[android] beacon service is started in code
 
 
 1.2
