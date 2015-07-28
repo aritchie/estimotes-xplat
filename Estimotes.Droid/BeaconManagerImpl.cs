@@ -48,7 +48,7 @@ namespace Estimotes {
                 this.OnRegionStatusChanged(region, false);
             };
             this.beaconManager.Ranging += (sender, args) => {
-				var beacons = args.Beacons.Select(x => new Beacon(args.Region, x));
+				var beacons = args.Beacons.Select(x => new Beacon(x));
 				lock (this.beaconsInRange) {
 					foreach (var beacon in beacons) {
 						var index = this.GetIndexOfBeacon(beacon);

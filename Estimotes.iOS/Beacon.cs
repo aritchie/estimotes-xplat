@@ -5,12 +5,10 @@ using CoreLocation;
 namespace Estimotes {
 
     public class Beacon : IBeacon {
-        readonly Estimote.Beacon beacon;
-        readonly Estimote.BeaconRegion region;
+		readonly Estimote.Beacon beacon;
 
 
-        public Beacon(Estimote.BeaconRegion region, Estimote.Beacon beacon) {
-            this.region = region;
+        public Beacon(Estimote.Beacon beacon) {
             this.beacon = beacon;
 
             this.Uuid = this.beacon.ProximityUUID.AsString();
@@ -36,7 +34,6 @@ namespace Estimotes {
 
 
         public string Uuid { get; }
-        public string Identifier => this.region.Identifier;
         public ushort Major => this.beacon.Major;
         public ushort Minor => this.beacon.Minor;
         public Proximity Proximity { get; }

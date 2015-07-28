@@ -27,7 +27,7 @@ namespace Estimotes {
                 this.OnRegionStatusChanged(region, false);
             };
 			this.beaconManager.RangedBeacons += (sender, args) => {
-				var beacons = args.Beacons.Select(x => new Beacon(args.Region, x));
+				var beacons = args.Beacons.Select(x => new Beacon(x));
 				this.OnRanged(beacons);
             };
         }
@@ -130,12 +130,8 @@ namespace Estimotes {
 
 
 		protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
-            return new BeaconRegion(
-				native.Identifier,
-				native.ProximityUuid.AsString(),
-				native.Major.UInt16Value,
-				native.Minor.UInt16Value
-        	);
+			// major & minor are not available in outgoing regions
+			return new BeaconRegion(native.Identifier, native.ProximityUuid.AsString(), native.Major.UInt16Value, native.Minor.UInt16Value);
         }
 
 
@@ -148,7 +144,7 @@ namespace Estimotes {
 
 			else if (region.Major > 0)
 				native = new Estimote.BeaconRegion(uuid, region.Major.Value, region.Identifier);
-
+			
 			else
 				native = new Estimote.BeaconRegion(uuid, region.Identifier);
 

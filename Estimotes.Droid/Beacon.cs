@@ -6,11 +6,9 @@ namespace Estimotes {
 
     public class Beacon : IBeacon {
         readonly EstimoteSdk.Beacon beacon;
-        readonly EstimoteSdk.Region region;
 
 
-        public Beacon(EstimoteSdk.Region region, EstimoteSdk.Beacon beacon) {
-            this.region = region;
+        public Beacon(EstimoteSdk.Beacon beacon) {
             this.beacon = beacon;
 			var prox = Utils.ComputeProximity(beacon);
 			if (prox == Utils.Proximity.Far)
@@ -25,7 +23,6 @@ namespace Estimotes {
 
 
         public string Uuid => this.beacon.ProximityUUID;
-        public string Identifier => this.region.Identifier;
         public ushort Major => (ushort)this.beacon.Major;
         public ushort Minor => (ushort)this.beacon.Minor;
 		public Proximity Proximity { get; internal set; }

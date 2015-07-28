@@ -14,34 +14,34 @@ namespace Estimotes {
         Task<BeaconInitStatus> Initialize();
 
         /// <summary>
-        /// Starts background monitoring for beacon region.  Returns false if beacon identifier is already being monitored
+        /// Starts background monitoring for beacon region
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-		bool StartMonitoring(BeaconRegion region);
+		void StartMonitoring(BeaconRegion region);
 
         /// <summary>
-        /// Stops background monitoring for beacon region.  Returns false if beacon identifier was not being monitored
+        /// Stops background monitoring for beacon region
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-		bool StopMonitoring(BeaconRegion region);
+		void StopMonitoring(BeaconRegion region);
 
         event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
 
         /// <summary>
-        /// Stops background monitoring for beacon region.  Returns false if beacon identifier was not being monitored
+        /// Stops background monitoring for beacon region
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-        bool StartRanging(BeaconRegion region);
+        void StartRanging(BeaconRegion region);
 
         /// <summary>
-        /// Stops background monitoring for beacon region.  Returns false if beacon identifier was not being monitored
+        /// Stops background monitoring for beacon region
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-        bool StopRanging(BeaconRegion region);
+        void StopRanging(BeaconRegion region);
         event EventHandler<IEnumerable<IBeacon>> Ranged;
 
 //        string StartNearableDiscovery();

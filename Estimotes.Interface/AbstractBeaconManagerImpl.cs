@@ -33,45 +33,31 @@ namespace Estimotes {
 //        public abstract void StopNearableDiscovery(string id);
 
 
-		public virtual bool StartMonitoring(BeaconRegion region) {
-			if (this.monitoringRegions.Any(x => x.Uuid.Equals(region.Uuid)))
-                return false;
-
+		public virtual void StartMonitoring(BeaconRegion region) {
             this.StartMonitoringNative(region);
 			this.monitoringRegions.Add(region);
 			this.UpdateMonitoringList();
-            return true;
 		}
 
 
-		public virtual bool StopMonitoring(BeaconRegion region) {
-			if (!this.monitoringRegions.Remove(region))
-                return false;
-
+		public virtual void StopMonitoring(BeaconRegion region) {
+			this.monitoringRegions.Remove(region);
             this.StopMonitoringNative(region);
             this.UpdateMonitoringList();
-            return true;
 		}
 
 
-		public virtual bool StartRanging(BeaconRegion region) {
-			if (this.rangingRegions.Any(x => x.Uuid.Equals(region.Uuid)))
-                return false;
-
+		public virtual void StartRanging(BeaconRegion region) {
             this.StartRangingNative(region);
 			this.rangingRegions.Add(region);
             this.UpdateRangingList();
-            return true;
 		}
 
 
-		public virtual bool StopRanging(BeaconRegion region) {
-			if (!this.rangingRegions.Remove(region))
-                return false;
-
+		public virtual void StopRanging(BeaconRegion region) {
+			this.rangingRegions.Remove(region);
             this.StopRangingNative(region);
             this.UpdateRangingList();
-            return true;
 		}
 
 

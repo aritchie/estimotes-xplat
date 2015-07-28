@@ -14,10 +14,16 @@ namespace Samples {
     public class App : Application {
 		public static SampleDbConnection Data { get; private set; }
 
+/*
+With only UUID: it consists of all beacons with a given UUID. For example: a region defined with default Estimote UUID would consist of all Estimote Beacons with unchanged UUID.
+With UUID and Major: it consists of all beacons using a specific combination of UUID and Major. For example: all Estimote Beacons with default UUID and Major set to 1.
+With UUID, Major and Minor: it consists of only a single beacon (keep in mind that Estimote Cloud prevents having two beacons with the same ID’s). For example, one with default Estimote UUID, Major set to 1 and Minor set to 1.
+		*/
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
-			new BeaconRegion("acrapps", "AE189F8B-9011-4859-B53E-C65314880E22"),
-			new BeaconRegion("default",  "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
+			new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876, 60214),
+			new BeaconRegion("mint", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 47263, 31286)
+//			new BeaconRegion("mint", "AE189F8B-9011-4859-B53E-C65314880E22", 47263, 31286)
         };
 
 
@@ -45,8 +51,7 @@ namespace Samples {
 
             ei.StopAllMonitoring();
 			foreach (var region in Regions)
-				if (!ei.StartMonitoring(region))
-					throw new ArgumentException("Just cancelled all regions - this should go");
+				ei.StartMonitoring(region);
         }
 
 
@@ -75,9 +80,9 @@ namespace Samples {
 			});
 
 			if (args.IsEntering)
-				Notifications.Instance.Send("Entered Region", "You have entered a region");
+				Notifications.Instance.Send("Entered Region", $"You have entered {args.Region.Identifier}");
 			else
-				Notifications.Instance.Send("Exited Region", "You have exited a region");
+				Notifications.Instance.Send("Exited Region", $"You have exited {args.Region.Identifier}");
 		}
     }
 }

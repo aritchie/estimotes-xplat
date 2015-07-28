@@ -5,7 +5,6 @@ namespace Estimotes {
 
     public interface IBeacon {
 
-        string Identifier { get; }
 		Proximity Proximity { get; }
 		ushort Minor { get; }
 		ushort Major { get; }
