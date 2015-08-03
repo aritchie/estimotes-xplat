@@ -53,5 +53,8 @@ namespace Estimotes {
 
 		void StopAllMonitoring();
 		void StopAllRanging();
+
+//		IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
+//		IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
     }
 }

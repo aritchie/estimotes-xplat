@@ -44,9 +44,6 @@
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Estimote">
-      <HintPath>..\Components\estimotesdkios-2.4.0\lib\ios-unified\Estimote.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Threading.Tasks" />
@@ -67,6 +64,10 @@
     <ProjectReference Include="..\Estimotes.Interface\Estimotes.Interface.csproj">
       <Project>{5B2339D1-65D5-4483-ACA9-997350A30E5B}</Project>
       <Name>Estimotes.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Estimotes.iOS.Binding\Estimotes.iOS.Binding.csproj">
+      <Project>{1DC35113-BF49-4B3C-BC9B-DF55A421A9E2}</Project>
+      <Name>Estimotes.iOS.Binding</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

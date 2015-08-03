@@ -21,9 +21,9 @@ With UUID, Major and Minor: it consists of only a single beacon (keep in mind th
 		*/
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
+//			new BeaconRegion("doubleregion", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876)
 			new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876, 60214),
 			new BeaconRegion("mint", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 47263, 31286)
-//			new BeaconRegion("mint", "AE189F8B-9011-4859-B53E-C65314880E22", 47263, 31286)
         };
 
 

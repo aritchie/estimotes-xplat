@@ -130,8 +130,12 @@ namespace Estimotes {
 
 
 		protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
-			// major & minor are not available in outgoing regions
-			return new BeaconRegion(native.Identifier, native.ProximityUuid.AsString(), native.Major.UInt16Value, native.Minor.UInt16Value);
+			return new BeaconRegion(
+				native.Identifier,
+				native.ProximityUuid.AsString(),
+				native.Major.UInt16Value,
+				native.Minor.UInt16Value
+			);
         }
 
 

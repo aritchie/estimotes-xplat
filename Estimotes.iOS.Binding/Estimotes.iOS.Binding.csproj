@@ -36,15 +36,134 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="EstimoteSDK.framework\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+    <Compile Include="ApiDefinitions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+  <ItemGroup>
+    <None Include="generate.cmd" />
+    <None Include="EstimoteSDK.framework\EstimoteSDK" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconConnection.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconFirmwareVO.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconManagerDelegate.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconUpdateConfig.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconUpdateInfo.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBeaconVO.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBluetoothBeacon.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTBulkUpdater.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTCloudManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTDateRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystone.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneFilter.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneFilterUID.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneFilterURL.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneFilterURLDomain.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneTelemetry.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTEddystoneUID.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTFirmwareInfoVO.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTMotionRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTNearable.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTNearableDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTNearableManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTNearableRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTNotificationTransporter.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTOrientationRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTProximityRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTSecureBeaconManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTSimulatedNearableManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTTemperatureRule.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTTrigger.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTTriggerManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\ESTUtilityManager.h" />
+    <None Include="EstimoteSDK.framework\Headers\EstimoteSDK.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\EstimoteSDK" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconConnection.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconFirmwareVO.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconManagerDelegate.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconUpdateConfig.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconUpdateInfo.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBeaconVO.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBluetoothBeacon.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTBulkUpdater.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTCloudManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTDateRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystone.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneFilter.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneFilterUID.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneFilterURL.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneFilterURLDomain.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneTelemetry.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTEddystoneUID.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTFirmwareInfoVO.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTMotionRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTNearable.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTNearableDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTNearableManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTNearableRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTNotificationTransporter.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTOrientationRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTProximityRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTSecureBeaconManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTSimulatedNearableManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTTemperatureRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTTrigger.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTTriggerManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\ESTUtilityManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\A\Headers\EstimoteSDK.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\EstimoteSDK" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconConnection.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconFirmwareVO.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconManagerDelegate.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconUpdateConfig.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconUpdateInfo.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBeaconVO.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBluetoothBeacon.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTBulkUpdater.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTCloudManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTDateRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystone.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneFilter.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneFilterUID.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneFilterURL.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneFilterURLDomain.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneTelemetry.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTEddystoneUID.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTFirmwareInfoVO.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTMotionRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTNearable.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTNearableDefinitions.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTNearableManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTNearableRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTNotificationTransporter.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTOrientationRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTProximityRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTSecureBeaconManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTSimulatedNearableManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTTemperatureRule.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTTrigger.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTTriggerManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\ESTUtilityManager.h" />
+    <None Include="EstimoteSDK.framework\Versions\Current\Headers\EstimoteSDK.h" />
+  </ItemGroup>
 </Project>
