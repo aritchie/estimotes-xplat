@@ -38,12 +38,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <XamarinComponentReference Include="estimotesdkios">
-      <Version>2.4.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="Estimote, Version=1.0.5528.18045, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Components\estimotesdkios-2.4.0\lib\ios-unified\Estimote.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Threading.Tasks" />
@@ -68,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="estimotesdkios">
+      <Visible>False</Visible>
+      <Version>2.4.0</Version>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="..\Estimotes.Shared\Estimotes.Shared.projitems" Label="Shared" Condition="Exists('..\Estimotes.Shared\Estimotes.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

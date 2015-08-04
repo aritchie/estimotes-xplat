@@ -13,8 +13,8 @@ namespace Estimotes {
         /// <returns></returns>
         Task<BeaconInitStatus> Initialize();
 
-        Task StartAdvertising();
-        Task StopAdvertising();
+        //Task StartAdvertising();
+        //Task StopAdvertising();
 
         /// <summary>
         /// Starts background monitoring for beacon region

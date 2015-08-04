@@ -1,10 +1,36 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.Advertisement;
 
 
 namespace Estimotes.Uwp {
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BluetoothLEAdvertisementWatcher watcher;
+
+        public override async Task<BeaconInitStatus> Initialize() {
+            return BeaconInitStatus.Unknown;
+        }
+
+
+        protected override void StartRangingNative(BeaconRegion region) {
+            throw new NotImplementedException();
+        }
+
+
+        protected override void StopRangingNative(BeaconRegion region) {
+            throw new NotImplementedException();
+        }
+
+
+        protected override void StartMonitoringNative(BeaconRegion region) {
+            throw new NotImplementedException();
+        }
+
+
+        protected override void StopMonitoringNative(BeaconRegion region) {
+            throw new NotImplementedException();
+        }
+
 
         //https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/BluetoothAdvertisement/cs
         public BeaconManagerImpl() {
