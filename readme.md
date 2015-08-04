@@ -26,7 +26,7 @@ You need to add BLUETOOTH and BLUETOOTH_ADMIN privileges to your android project
 
 First thing to do is initialize the plugin
 
-    var available = await EstimotesManager.Instance.Initialize();
+    var status = await EstimotesManager.Instance.Initialize();
     if (status != BeaconInitStatus.Success) {
         ... You have a problem with permissions or bluetooth is unavailable on the device, use the enum to figure out what!
     }
