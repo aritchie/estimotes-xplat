@@ -11,7 +11,7 @@ namespace Estimotes {
         /// This must be called in order to initialize any sort of monitoring or scanning
         /// </summary>
         /// <returns></returns>
-        Task<BeaconInitStatus> Initialize();
+        Task<BeaconInitStatus> Initialize(bool backgroundMonitoring = true);
 
         //Task StartAdvertising();
         //Task StopAdvertising();
@@ -57,6 +57,7 @@ namespace Estimotes {
 		void StopAllMonitoring();
 		void StopAllRanging();
 
+        Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? waitTime);
 //		IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
 //		IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
     }

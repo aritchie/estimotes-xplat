@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Acr;
 using Acr.Notifications;
 using Estimotes;
 using Samples.Pages;
@@ -21,9 +19,10 @@ With UUID, Major and Minor: it consists of only a single beacon (keep in mind th
 		*/
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
+            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 1)
 //			new BeaconRegion("doubleregion", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876)
-			new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876, 60214),
-			new BeaconRegion("mint", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 47263, 31286)
+			//new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876, 60214),
+			//new BeaconRegion("mint", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 47263, 31286)
         };
 
 
@@ -72,8 +71,8 @@ With UUID, Major and Minor: it consists of only a single beacon (keep in mind th
 			App.Data.Insert(new BeaconPing {
 				Identifier = args.Region.Identifier,
 				Uuid = args.Region.Uuid,
-				Major = args.Region.Major.Value,
-				Minor = args.Region.Minor.Value,
+				Major = args.Region.Major ?? 0,
+				Minor = args.Region.Minor ?? 0,
 				DateCreated = DateTime.Now,
 				IsEntering = args.IsEntering,
 				IsAppInBackground = App.IsBackgrounded

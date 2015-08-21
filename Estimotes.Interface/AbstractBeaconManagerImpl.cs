@@ -81,6 +81,30 @@ namespace Estimotes {
 		}
 
 
+        public virtual async Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? waitTime) {
+            var tcs = new TaskCompletionSource<IEnumerable<IBeacon>>();
+            EventHandler<IEnumerable<IBeacon>> handler;
+            handler = (sender, beacons) => {
+                var list = beacons
+                    .Where(x => x.Uuid.Equals(region.Uuid) && x.Major == region.Major && x.Minor == region.Minor)
+                    .ToList();
+                tcs.TrySetResult(list);
+            };
+            var wasRanging = false;
+            if (!this.RangingRegions.Contains(region)) {
+                this.StartRanging(region);
+                wasRanging = true;
+            }
+            this.Ranged += handler;
+            var result = await tcs.Task; // TODO: may fire multiple times, I need a collection
+            this.Ranged -= handler;
+            if (!wasRanging)
+                this.StopRanging(region);
+
+            return result;
+        }
+
+
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; private set; }
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
 

@@ -26,22 +26,22 @@ You need to add BLUETOOTH and BLUETOOTH_ADMIN privileges to your android project
 
 First thing to do is initialize the plugin
 
-    var status = await EstimotesManager.Instance.Initialize();
+    var status = await EstimoteManager.Instance.Initialize();
     if (status != BeaconInitStatus.Success) {
         ... You have a problem with permissions or bluetooth is unavailable on the device, use the enum to figure out what!
     }
 
 Now hook up to the event(s) you want to use
 
-    EstimotesManager.Instance.Ranged += (sender, beacons) => {};
-    EstimotesManager.Instance.RegionStatusChanged += (sender, region) => {};
+    EstimoteManager.Instance.Ranged += (sender, beacons) => {};
+    EstimoteManager.Instance.RegionStatusChanged += (sender, region) => {};
 
 And to actually start or stop the process (optionally, you can also pass major/minor combinations)
 
     // for exact distancing, use ranging - requires your app to be in the foreground
-    EstimotesManager.Instance.StartRanging(new BeaconRegion("Beacon Identifier", "Your UUID"));
-    EstimotesManager.Instance.StopRanging(new BeaconRegion("Beacon Identifier", "Your UUID"));
+    EstimoteManager.Instance.StartRanging(new BeaconRegion("Beacon Identifier", "Your UUID"));
+    EstimoteManager.Instance.StopRanging(new BeaconRegion("Beacon Identifier", "Your UUID"));
 
     // for background monitoring when you don't care about actual distance
-    EstimotesManager.Instance.StartMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
-    EstimotesManager.Instance.StopMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
+    EstimoteManager.Instance.StartMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
+    EstimoteManager.Instance.StopMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));

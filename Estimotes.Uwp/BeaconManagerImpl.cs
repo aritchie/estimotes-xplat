@@ -132,29 +132,6 @@ namespace Estimotes.Uwp {
 
 
     /*
-Skip to content
-This repository
-Pull requests
-Issues
-Gist
- @aritchie
- Watch 303
-  Unstar 914
- Fork 589Microsoft/Windows-universal-samples
-Branch: master  Windows-universal-samples/Samples/BluetoothAdvertisement/cs/Scenario3_BackgroundWatcher.xaml.cs
-@oldnewthingoldnewthing 4 days ago Windows 10 RTM updates
-1 contributor
-RawBlameHistory     320 lines (283 sloc)  15.912 kB
-//*********************************************************
-//
-// Copyright (c) Microsoft. All rights reserved.
-// This code is licensed under the MIT License (MIT).
-// THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-// IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-// PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//*********************************************************
 
 using System;
 using System.Collections.Generic;

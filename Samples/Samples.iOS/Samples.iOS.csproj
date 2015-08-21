@@ -186,13 +186,14 @@
       <HintPath>..\..\packages\Humanizer.1.37.7\lib\portable-win+net40+sl50+wp8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Humanizer.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="estimotesdkios">
+      <Visible>False</Visible>
+      <Version>3.3.3</Version>
+      <InstallationInProgress>True</InstallationInProgress>
+    </XamarinComponentReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.1.4.3.6376\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.4.3.6376\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="..\..\packages\SQLitePCL.raw_basic.0.8.1\build\Xamarin.iOS10\SQLitePCL.raw_basic.targets" Condition="Exists('..\..\packages\SQLitePCL.raw_basic.0.8.1\build\Xamarin.iOS10\SQLitePCL.raw_basic.targets')" />
-  <ItemGroup>
-    <XamarinComponentReference Include="estimotesdkios">
-      <Version>2.4.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-  </ItemGroup>
 </Project>

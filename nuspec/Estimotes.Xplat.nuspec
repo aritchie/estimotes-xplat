@@ -23,7 +23,7 @@ improved samples for monitoring
 [android] beacon ranging now works like iOS where it ranges all beacons at once
 [android] beacon service is started in code
 
-
+Estimotes.Uwp.Uwp
 1.2
 [breaking] region monitoring event has been merged into one super event
 [feature] initialization function now returns reason for failure
@@ -65,5 +65,10 @@ Initial Release
         <file src="..\Estimotes.iOS\bin\Release\Estimotes.dll" target="lib\Xamarin.iOS10\Estimotes.dll" />
         <file src="..\Estimotes.iOS\bin\Release\Estimote.dll" target="lib\Xamarin.iOS10\Estimote.dll" />
         <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\Xamarin.iOS10\Estimotes.Interface.dll" />
+
+        <!-- uwp -->
+        <!--<file src="..\src\Estimotes.Uwp\bin\Release\Estimotes.Uwp.dll" target="lib\uap10.0\Estimotes.Uwp.dll" />
+        <file src="..\src\Estimotes.Uwp\bin\Release\Estimotes.Uwp.Interface.dll" target="lib\uap10.0\Estimotes.Uwp.Interface.dll" />
+        <file src="..\src\Estimotes.Uwp\Properties\Estimotes.Uwp.rd.xml" target="lib\uap10.0\Estimotes.Uwp.rd.xml" />-->
     </files>
 </package>

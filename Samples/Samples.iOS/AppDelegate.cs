@@ -19,7 +19,7 @@ namespace Samples.iOS {
             Forms.Init();
             UserDialogs.Init();
 
-			this.LoadApplication(new App(dbPath));
+			this.LoadApplication(new Samples.App(dbPath));
             return base.FinishedLaunching(app, options);
         }
     }

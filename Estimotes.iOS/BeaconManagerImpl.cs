@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreLocation;
@@ -17,7 +18,7 @@ namespace Estimotes {
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
-            };            
+            };
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -85,7 +86,7 @@ namespace Estimotes {
 //        }
 
 
-		protected virtual bool IsGoodStatus(CLAuthorizationStatus status) {
+        protected virtual bool IsGoodStatus(CLAuthorizationStatus status) {
 			return (
 			    status == CLAuthorizationStatus.Authorized ||
 			    status == CLAuthorizationStatus.AuthorizedAlways ||
@@ -148,7 +149,7 @@ namespace Estimotes {
 
 			else if (region.Major > 0)
 				native = new Estimote.BeaconRegion(uuid, region.Major.Value, region.Identifier);
-			
+
 			else
 				native = new Estimote.BeaconRegion(uuid, region.Identifier);
 

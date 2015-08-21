@@ -54,7 +54,7 @@ namespace Estimotes {
 						var index = this.GetIndexOfBeacon(beacon);
 
 						if (beacon.Proximity == Proximity.Unknown) {
-							if (index > -1) 
+							if (index > -1)
 								this.beaconsInRange.RemoveAt(index);
 						}
 						else {
@@ -63,7 +63,7 @@ namespace Estimotes {
 								this.beaconsInRange.Add(beacon);
 
 							else {
-								var b = this.beaconsInRange[index]; 
+								var b = this.beaconsInRange[index];
 								b.Proximity = beacon.Proximity;
 								b.LastPing = beacon.LastPing;
 							}
@@ -118,7 +118,7 @@ namespace Estimotes {
         }
 
 
-		protected override void StopMonitoringNative(BeaconRegion region) {			
+		protected override void StopMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
 			this.beaconManager.StopMonitoring(native);
         }
@@ -133,7 +133,7 @@ namespace Estimotes {
         protected override void StopRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
             this.beaconManager.StopRanging(native);
-			lock (this.beaconsInRange) 
+			lock (this.beaconsInRange)
 				this.beaconsInRange.Clear(); // TODO: could clear this smart.  Instead of the mess below, clear it all and let re-ranging pick it all back up
 //				var count = this.beaconsInRange.Count;
 //				for (var i = 0; i < count; i++) {
@@ -143,9 +143,9 @@ namespace Estimotes {
 //					if (b.Uuid.Equals(region.Uuid, StringComparison.InvariantCultureIgnoreCase)) {
 //						if (region.Major > 0) {
 //							if (region.Major == b.Major) {
-//								if (region.Minor > 0) 
+//								if (region.Minor > 0)
 //									remove = (region.Minor == b.Minor);
-//								else 
+//								else
 //									remove = true;
 //							}
 //						}
@@ -194,7 +194,7 @@ namespace Estimotes {
 			base.UpdateRangingList();
 			if (this.rangeTimer == null)
 				return;
-			
+
 			if (this.RangingRegions.Count == 0) {
 				if (this.rangeTimer.Enabled)
 					this.rangeTimer.Stop();

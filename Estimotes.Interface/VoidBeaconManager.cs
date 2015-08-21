@@ -15,7 +15,9 @@ namespace Estimotes {
 		public void StopRanging(BeaconRegion region) {}
 		public void StopAllMonitoring() {}
 		public void StopAllRanging() {}
-
+        public async Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? time) {
+            return new List<IBeacon>(0);
+        }
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
 
