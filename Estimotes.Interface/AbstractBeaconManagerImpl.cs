@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Estimotes {
 		}
 
 
-        public abstract Task<BeaconInitStatus> Initialize();
+        public abstract Task<BeaconInitStatus> Initialize(bool backgroundMonitoring);
         protected abstract void StartMonitoringNative(BeaconRegion region);
         protected abstract void StartRangingNative(BeaconRegion region);
         protected abstract void StopMonitoringNative(BeaconRegion region);
@@ -82,13 +83,16 @@ namespace Estimotes {
 
 
         public virtual async Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? waitTime) {
-            var tcs = new TaskCompletionSource<IEnumerable<IBeacon>>();
+            var beaconList = new Dictionary<string, IBeacon>();
             EventHandler<IEnumerable<IBeacon>> handler;
             handler = (sender, beacons) => {
                 var list = beacons
                     .Where(x => x.Uuid.Equals(region.Uuid) && x.Major == region.Major && x.Minor == region.Minor)
                     .ToList();
-                tcs.TrySetResult(list);
+                foreach (var beacon in list) {
+                    var key = $"{beacon.Uuid}-{beacon.Major}-{beacon.Minor}";
+                    beaconList[key] = beacon;
+                }
             };
             var wasRanging = false;
             if (!this.RangingRegions.Contains(region)) {
@@ -96,12 +100,13 @@ namespace Estimotes {
                 wasRanging = true;
             }
             this.Ranged += handler;
-            var result = await tcs.Task; // TODO: may fire multiple times, I need a collection
+            await Task.Delay(waitTime ?? TimeSpan.FromSeconds(2));
             this.Ranged -= handler;
+
             if (!wasRanging)
                 this.StopRanging(region);
 
-            return result;
+            return beaconList.Values;
         }
 
 
