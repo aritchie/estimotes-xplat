@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 
@@ -8,7 +9,7 @@ namespace Estimotes {
 
 	public class VoidBeaconManager : IBeaconManager {
 
-        public async Task<BeaconInitStatus> Initialize() => BeaconInitStatus.Unknown;
+        public async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) => BeaconInitStatus.Unknown;
 		public void StartMonitoring(BeaconRegion region) {}
 		public void StartRanging(BeaconRegion region) {}
 		public void StopMonitoring(BeaconRegion region) {}
@@ -18,10 +19,14 @@ namespace Estimotes {
         public async Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? time) {
             return new List<IBeacon>(0);
         }
+
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
 
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
+
+        public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; } = Observable.Empty<BeaconRegionStatusChangedEventArgs>();
+        public IObservable<IEnumerable<IBeacon>> WhenRanged { get; } = Observable.Empty<IEnumerable<IBeacon>>();
     }
 }

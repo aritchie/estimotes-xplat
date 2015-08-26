@@ -14,10 +14,8 @@ namespace Samples.iOS {
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options) {
 			var path = NSFileManager.DefaultManager.GetUrls(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomain.User)[0].Path;
-			var dbPath = Path.Combine(path, "..", "Library/samples.db");
-
+			var dbPath = Path.Combine(path, "..", "Library");
             Forms.Init();
-            UserDialogs.Init();
 
 			this.LoadApplication(new Samples.App(dbPath));
             return base.FinishedLaunching(app, options);

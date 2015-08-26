@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Reactive.Linq;
 using Acr.Settings;
 
 
 namespace Estimotes {
 
     public abstract class AbstractBeaconManagerImpl : IBeaconManager {
-		private const string SETTING_KEY = "beacons-monitor";
+		const string SETTING_KEY = "beacons-monitor";
 		readonly IList<BeaconRegion> monitoringRegions;
 		readonly IList<BeaconRegion> rangingRegions;
 
@@ -22,6 +23,19 @@ namespace Estimotes {
 
 			this.UpdateMonitoringList();
 			this.UpdateRangingList();
+
+            this.WhenRegionStatusChanges = Observable
+                .FromEventPattern<BeaconRegionStatusChangedEventArgs>(
+                    x => this.RegionStatusChanged += x,
+                    x => this.RegionStatusChanged -= x
+                )
+                .Select(x => x.EventArgs);
+            this.WhenRanged = Observable
+                .FromEventPattern<IEnumerable<IBeacon>>(
+                    x => this.Ranged += x,
+                    x => this.Ranged -= x
+                )
+                .Select(x => x.EventArgs);
 		}
 
 
@@ -30,8 +44,8 @@ namespace Estimotes {
         protected abstract void StartRangingNative(BeaconRegion region);
         protected abstract void StopMonitoringNative(BeaconRegion region);
         protected abstract void StopRangingNative(BeaconRegion region);
-//        public abstract string StartNearableDiscovery();
-//        public abstract void StopNearableDiscovery(string id);
+        //public abstract void StartNearableDiscovery();
+        //public abstract void StopNearableDiscovery();
 
 
 		public virtual void StartMonitoring(BeaconRegion region) {
@@ -113,9 +127,12 @@ namespace Estimotes {
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; private set; }
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
 
+        public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
+        public IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
+
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
-//        public event EventHandler<IEnumerable<INearable>> Nearables;
+        //public event EventHandler<IEnumerable<INearable>> Nearables;
 
 
         protected virtual void OnRanged(IEnumerable<IBeacon> beacons) {
@@ -128,12 +145,12 @@ namespace Estimotes {
         }
 
 
-//        protected virtual void OnNearables(IEnumerable<INearable> nearables) {
-//            this.Nearables?.Invoke(this, nearables);
-//        }
+        //protected virtual void OnNearables(IEnumerable<INearable> nearables) {
+            //this.Nearables?.Invoke(this, nearables);
+        //}
 
 
-		protected virtual void UpdateMonitoringList() {
+        protected virtual void UpdateMonitoringList() {
 			if (this.monitoringRegions.Any())
 				Settings.Local.Set(SETTING_KEY, this.monitoringRegions);
 			else

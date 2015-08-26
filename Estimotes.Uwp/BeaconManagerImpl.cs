@@ -7,7 +7,7 @@ namespace Estimotes.Uwp {
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BluetoothLEAdvertisementWatcher watcher;
 
-        public override async Task<BeaconInitStatus> Initialize() {
+        public override async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
             return BeaconInitStatus.Unknown;
         }
 

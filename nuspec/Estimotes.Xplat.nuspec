@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.3.1</version>
+        <version>1.4.0</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -12,6 +12,11 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
+1.4
+[feature] Separate permission requests for background and foreground
+[feature] Quick range nearby beacons via FetchNearbyBeacons(region, waitTimeSpan).  Useful for ranging in the background
+[feature] RX Observables
+
 1.3.1
 [fix] Remove annoying checks to see if beacon region is already being scanned/monitored
 
@@ -23,7 +28,6 @@ improved samples for monitoring
 [android] beacon ranging now works like iOS where it ranges all beacons at once
 [android] beacon service is started in code
 
-Estimotes.Uwp.Uwp
 1.2
 [breaking] region monitoring event has been merged into one super event
 [feature] initialization function now returns reason for failure
@@ -47,7 +51,8 @@ many other minor bugfixes
 Initial Release
         </releaseNotes>
         <dependencies>
-            <dependency id="Acr.Settings" version="[4.2.5, 5)" />
+            <dependency id="Acr.Settings" version="[4.3, 5)" />
+            <dependency id="Rx-Main" version="[2.2.5, 3)" />
         </dependencies>
     </metadata>
     <files>

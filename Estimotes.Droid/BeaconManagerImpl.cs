@@ -75,7 +75,7 @@ namespace Estimotes {
         }
 
 
-        public override async Task<BeaconInitStatus> Initialize() {
+        public override async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
             if (this.isConnected)
                 return BeaconInitStatus.Success;
 

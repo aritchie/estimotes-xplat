@@ -47,8 +47,8 @@ namespace Estimotes {
         void StopRanging(BeaconRegion region);
         event EventHandler<IEnumerable<IBeacon>> Ranged;
 
-//        string StartNearableDiscovery();
-//        void StopNearableDiscovery(string id);
+        //void StartNearableDiscovery();
+        //void StopNearableDiscovery();
 
 		IReadOnlyList<BeaconRegion> MonitoringRegions { get; }
 		IReadOnlyList<BeaconRegion> RangingRegions { get; }
@@ -57,8 +57,9 @@ namespace Estimotes {
 		void StopAllMonitoring();
 		void StopAllRanging();
 
-        Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? waitTime);
-//		IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
-//		IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
+        Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? waitTime = null);
+
+        IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
+		IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
     }
 }

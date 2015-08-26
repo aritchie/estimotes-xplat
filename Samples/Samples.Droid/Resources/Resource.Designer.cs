@@ -28,6 +28,8 @@ namespace Samples.Droid
 		{
 			global::Acr.Notifications.Resource.String.ApplicationName = global::Samples.Droid.Resource.String.ApplicationName;
 			global::Acr.Notifications.Resource.String.Hello = global::Samples.Droid.Resource.String.Hello;
+			global::Acr.Support.Android.Resource.String.ApplicationName = global::Samples.Droid.Resource.String.ApplicationName;
+			global::Acr.Support.Android.Resource.String.Hello = global::Samples.Droid.Resource.String.Hello;
 			global::AndroidHUD.Resource.Attribute.ahBarColor = global::Samples.Droid.Resource.Attribute.ahBarColor;
 			global::AndroidHUD.Resource.Attribute.ahBarLength = global::Samples.Droid.Resource.Attribute.ahBarLength;
 			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::Samples.Droid.Resource.Attribute.ahBarWidth;
@@ -65,6 +67,7 @@ namespace Samples.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::Samples.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::Samples.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::Samples.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::Splat.Resource.String.library_name = global::Samples.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Resource.String.ApplicationName = global::Samples.Droid.Resource.String.ApplicationName;
 			global::Xamarin.Forms.Platform.Resource.String.Hello = global::Samples.Droid.Resource.String.Hello;
 		}

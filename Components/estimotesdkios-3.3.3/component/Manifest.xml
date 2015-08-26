@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="estimotesdkios">
+  <name>Estimote SDK for iOS</name>
+  <publisher>Xamarin Inc.</publisher>
+  <publisher-url>http://www.xamarin.com</publisher-url>
+  <version>3.3.3</version>
+  <summary>Estimote SDK for Xamarin.iOS enables ranging and monitoring iBeacons and Estimote Nearables.</summary>
+  <samples>
+    <sample id="BeaconExample">
+      <name>iBeacon Samples</name>
+      <summary>iBeacon Samples</summary>
+    </sample>
+    <sample id="NearableExample">
+      <name>Nearable Samples</name>
+      <summary>Nearable Samples</summary>
+    </sample>
+  </samples>
+</component>

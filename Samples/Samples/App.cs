@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Acr.Notifications;
 using Estimotes;
 using Samples.Pages;
@@ -11,18 +12,9 @@ namespace Samples {
 
     public class App : Application {
 		public static SampleDbConnection Data { get; private set; }
-
-/*
-With only UUID: it consists of all beacons with a given UUID. For example: a region defined with default Estimote UUID would consist of all Estimote Beacons with unchanged UUID.
-With UUID and Major: it consists of all beacons using a specific combination of UUID and Major. For example: all Estimote Beacons with default UUID and Major set to 1.
-With UUID, Major and Minor: it consists of only a single beacon (keep in mind that Estimote Cloud prevents having two beacons with the same ID’s). For example, one with default Estimote UUID, Major set to 1 and Minor set to 1.
-		*/
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
-            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 1)
-//			new BeaconRegion("doubleregion", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876)
-			//new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 46876, 60214),
-			//new BeaconRegion("mint", "B9407F30-F5F8-466E-AFF9-25556B57FE6D", 47263, 31286)
+            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
         };
 
 
@@ -67,21 +59,37 @@ With UUID, Major and Minor: it consists of only a single beacon (keep in mind th
         }
 
 
-		static void OnBeaconRegionStatusChanged(object sender, BeaconRegionStatusChangedEventArgs args) {
+		static async void OnBeaconRegionStatusChanged(object sender, BeaconRegionStatusChangedEventArgs args) {
 			App.Data.Insert(new BeaconPing {
 				Identifier = args.Region.Identifier,
 				Uuid = args.Region.Uuid,
 				Major = args.Region.Major ?? 0,
 				Minor = args.Region.Minor ?? 0,
 				DateCreated = DateTime.Now,
-				IsEntering = args.IsEntering,
-				IsAppInBackground = App.IsBackgrounded
+				Type = args.IsEntering ? BeaconPingType.MonitorEntering : BeaconPingType.MonitorExiting
 			});
 
-			if (args.IsEntering)
-				Notifications.Instance.Send("Entered Region", $"You have entered {args.Region.Identifier}");
-			else
+			if (!args.IsEntering)
 				Notifications.Instance.Send("Exited Region", $"You have exited {args.Region.Identifier}");
+			else {
+                try {
+                    var beacons = await EstimoteManager.Instance.FetchNearbyBeacons(args.Region);
+                    foreach (var beacon in beacons) {
+			            App.Data.Insert(new BeaconPing {
+				            Identifier = args.Region.Identifier,
+				            Uuid = beacon.Uuid,
+				            Major = beacon.Major,
+				            Minor = beacon.Minor,
+				            DateCreated = DateTime.Now,
+				            Type = App.IsBackgrounded ? BeaconPingType.RangedBackground : BeaconPingType.RangedForeground
+			            });
+                    }
+                    Notifications.Instance.Send("Entered Region", $"You have entered {args.Region.Identifier}");
+                }
+                catch (Exception ex) {
+                    Debug.WriteLine(ex);
+                }
+            }
 		}
     }
 }

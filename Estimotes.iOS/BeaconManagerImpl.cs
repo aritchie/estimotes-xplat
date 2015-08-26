@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreLocation;
@@ -12,10 +11,10 @@ namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BeaconManager beaconManager;
-//        readonly NearableManager nearableManager;
 
 
         public BeaconManagerImpl() {
+
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
             };
@@ -24,18 +23,18 @@ namespace Estimotes {
                 this.OnRegionStatusChanged(region, true);
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
-				var region = this.FromNative(args.Region);
+                var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, false);
             };
-			this.beaconManager.RangedBeacons += (sender, args) => {
-				var beacons = args.Beacons.Select(x => new Beacon(x));
-				this.OnRanged(beacons);
+            this.beaconManager.RangedBeacons += (sender, args) => {
+                var beacons = args.Beacons.Select(x => new Beacon(x));
+                this.OnRanged(beacons);
             };
         }
 
 
 
-        public override async Task<BeaconInitStatus> Initialize() {
+        public override async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
             if (!UIDevice.CurrentDevice.CheckSystemVersion(7, 0))
                 return BeaconInitStatus.InvalidOperatingSystem;
 
@@ -51,20 +50,24 @@ namespace Estimotes {
 //                return btstatus;
 
 			var authStatus = BeaconManager.AuthorizationStatus();
-            var good = this.IsGoodStatus(authStatus);
+            var good = this.IsGoodStatus(authStatus, backgroundMonitoring);
             if (good)
                 return BeaconInitStatus.Success;
 
 			var tcs = new TaskCompletionSource<BeaconInitStatus>();
-			var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
+            var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
 				if (args.Status == CLAuthorizationStatus.NotDetermined)
 					return; // not done yet
 
-				var success = this.IsGoodStatus(args.Status);
+				var success = this.IsGoodStatus(args.Status, backgroundMonitoring);
                 tcs.TrySetResult(success ? BeaconInitStatus.Success : BeaconInitStatus.PermissionDenied);
 			});
 			this.beaconManager.AuthorizationStatusChanged += funcPnt;
-			this.beaconManager.RequestAlwaysAuthorization();
+            if (backgroundMonitoring)
+			    this.beaconManager.RequestAlwaysAuthorization();
+            else
+                this.beaconManager.RequestWhenInUseAuthorization();
+
 			var status = await tcs.Task;
 			this.beaconManager.AuthorizationStatusChanged -= funcPnt;
 
@@ -86,7 +89,10 @@ namespace Estimotes {
 //        }
 
 
-        protected virtual bool IsGoodStatus(CLAuthorizationStatus status) {
+        protected virtual bool IsGoodStatus(CLAuthorizationStatus status, bool forBg) {
+            if (forBg)
+                return status == CLAuthorizationStatus.AuthorizedAlways;
+
 			return (
 			    status == CLAuthorizationStatus.Authorized ||
 			    status == CLAuthorizationStatus.AuthorizedAlways ||
