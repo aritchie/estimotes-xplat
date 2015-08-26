@@ -1,45 +1,36 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.Advertisement;
+using UniversalBeaconLibrary.Beacon;
 
 
-namespace Estimotes.Uwp {
+namespace Estimotes {
+
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BluetoothLEAdvertisementWatcher watcher;
+        readonly BeaconManager beaconMgr;
+
 
         public override async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
             return BeaconInitStatus.Unknown;
         }
 
 
-        protected override void StartRangingNative(BeaconRegion region) {
-            throw new NotImplementedException();
-        }
-
-
-        protected override void StopRangingNative(BeaconRegion region) {
-            throw new NotImplementedException();
-        }
-
-
-        protected override void StartMonitoringNative(BeaconRegion region) {
-            throw new NotImplementedException();
-        }
-
-
-        protected override void StopMonitoringNative(BeaconRegion region) {
-            throw new NotImplementedException();
-        }
+        protected override void StartRangingNative(BeaconRegion region) {}
+        protected override void StopRangingNative(BeaconRegion region) {}
+        protected override void StartMonitoringNative(BeaconRegion region) {}
+        protected override void StopMonitoringNative(BeaconRegion region) {}
 
 
         //https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/BluetoothAdvertisement/cs
         public BeaconManagerImpl() {
-            this.watcher = new BluetoothLEAdvertisementWatcher();
-            watcher.Received += (sender, args) => {};
+            this.beaconMgr = new BeaconManager();
+            this.beaconMgr.BluetoothBeacons.CollectionChanged += (sender, args) => { };
 
-            // Attach a handler to process watcher stopping due to various conditions,
-            // such as the Bluetooth radio turning off or the Stop method was called
-            watcher.Stopped += (sender, args) => {};
+            this.watcher = new BluetoothLEAdvertisementWatcher();
+            this.watcher.Received += (sender, args) => this.beaconMgr.ReceivedAdvertisement(args);
+
 // Begin of watcher configuration. Configure the advertisement filter to look for the data advertised by the publisher
             // in Scenario 2 or 4. You need to run Scenario 2 on another Windows platform within proximity of this one for Scenario 1 to
             // take effect. The APIs shown in this Scenario are designed to operate only if the App is in the foreground. For background

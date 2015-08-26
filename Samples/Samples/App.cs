@@ -14,7 +14,8 @@ namespace Samples {
 		public static SampleDbConnection Data { get; private set; }
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
-            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
+            //new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
+            new BeaconRegion("mine", "24D57072-274C-4B31-AB65-818A77B73D85")
         };
 
 
@@ -29,20 +30,11 @@ namespace Samples {
         }
 
 
-        protected override async void OnStart() {
+        protected override void OnStart() {
             base.OnStart();
-			Notifications.Instance.Badge = 0; // just waking up for permissions
             App.IsBackgrounded = false;
-
-            var ei = EstimoteManager.Instance;
-			ei.RegionStatusChanged += OnBeaconRegionStatusChanged;
-            var result = await EstimoteManager.Instance.Initialize();
-            if (result != BeaconInitStatus.Success)
-                return;
-
-            ei.StopAllMonitoring();
-			foreach (var region in Regions)
-				ei.StartMonitoring(region);
+            EstimoteManager.Instance.Initialize().ContinueWith(x => OnBeaconMgrInit(x.Result));
+            Notifications.Instance.Badge = 0; // just waking up for permissions
         }
 
 
@@ -55,7 +47,21 @@ namespace Samples {
         protected override void OnSleep() {
             base.OnSleep();
             App.IsBackgrounded = true;
-			EstimoteManager.Instance.StopAllRanging();
+            EstimoteManager.Instance.StopAllRanging();
+        }
+
+
+        static void OnBeaconMgrInit(BeaconInitStatus status) {
+            Debug.WriteLine($"Beacon Init Status: {status}");
+            if (status != BeaconInitStatus.Success)
+                return;
+
+            EstimoteManager.Instance.RegionStatusChanged += OnBeaconRegionStatusChanged;
+            EstimoteManager.Instance.StopAllMonitoring();
+			foreach (var region in Regions) {
+                Debug.WriteLine($"Start Monitoring Region: {region}");
+				EstimoteManager.Instance.StartMonitoring(region);
+            }
         }
 
 

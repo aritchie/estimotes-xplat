@@ -19,6 +19,11 @@ namespace Estimotes {
         }
 
 
+        public override string ToString() {
+            return $"[UUID: {this.Uuid} - Identifier: {this.Identifier} - Major: {this.Major ?? 0} - Minor: {this.Minor ?? 0}]";
+        }
+
+
         public override bool Equals(object obj) {
             var other = obj as BeaconRegion;
             if (other == null)
@@ -26,7 +31,7 @@ namespace Estimotes {
 
 			if (ReferenceEquals(this, other))
 				return true;
-			
+
 			if (!this.Uuid.Equals(other.Uuid, StringComparison.OrdinalIgnoreCase))
                 return false;
 
@@ -47,7 +52,7 @@ namespace Estimotes {
 
 			if (this.Minor != null)
 				hash += this.Minor.Value.GetHashCode();
-			
+
             return hash;
         }
     }

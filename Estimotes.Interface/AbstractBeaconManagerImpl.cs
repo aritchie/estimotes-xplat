@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -98,23 +97,27 @@ namespace Estimotes {
 
         public virtual async Task<IEnumerable<IBeacon>> FetchNearbyBeacons(BeaconRegion region, TimeSpan? waitTime) {
             var beaconList = new Dictionary<string, IBeacon>();
-            EventHandler<IEnumerable<IBeacon>> handler;
-            handler = (sender, beacons) => {
-                var list = beacons
-                    .Where(x => x.Uuid.Equals(region.Uuid) && x.Major == region.Major && x.Minor == region.Minor)
-                    .ToList();
+            var handler = new EventHandler<IEnumerable<IBeacon>>((sender, beacons) => {
+                var list = beacons.Where(x => x.Uuid.Equals(region.Uuid));
+
+                if (region.Major > 0)
+                    list = list.Where(x => x.Major == region.Major.Value);
+
+                if (region.Minor > 0)
+                    list = list.Where(x => x.Minor == region.Minor.Value);
+
                 foreach (var beacon in list) {
                     var key = $"{beacon.Uuid}-{beacon.Major}-{beacon.Minor}";
                     beaconList[key] = beacon;
                 }
-            };
-            var wasRanging = false;
+            });
+            var wasRanging = true;
             if (!this.RangingRegions.Contains(region)) {
                 this.StartRanging(region);
-                wasRanging = true;
+                wasRanging = false;
             }
             this.Ranged += handler;
-            await Task.Delay(waitTime ?? TimeSpan.FromSeconds(2));
+            await Task.Delay(waitTime ?? TimeSpan.FromSeconds(3));
             this.Ranged -= handler;
 
             if (!wasRanging)

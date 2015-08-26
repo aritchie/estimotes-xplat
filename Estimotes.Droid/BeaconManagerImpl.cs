@@ -1,23 +1,25 @@
 using System;
 using System.Linq;
-using System.Timers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 using Android.App;
 using EstimoteSdk;
 using Java.Lang;
 using Android.Content;
+using Android.Util;
+using Timer = System.Timers.Timer;
 
 
 namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
-
-		readonly IList<Beacon> beaconsInRange = new List<Beacon>();
-		readonly object syncLock = new object();
+        const string DEBUG_TAG = "acrbeacons";
+        readonly IList<Beacon> beaconsInRange = new List<Beacon>();
 		readonly BeaconManager beaconManager;
 		readonly Timer rangeTimer;
         bool isConnected;
+
 
 
         public BeaconManagerImpl() {
@@ -40,14 +42,17 @@ namespace Estimotes {
 			};
 			this.beaconManager = new BeaconManager(Application.Context);
             this.beaconManager.EnteredRegion += (sender, args) => {
+                Log.Debug(DEBUG_TAG, "EnteredRegion Event");
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
+                Log.Debug(DEBUG_TAG, "ExitedRegion Event");
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, false);
             };
             this.beaconManager.Ranging += (sender, args) => {
+                Log.Debug(DEBUG_TAG, "Ranging Event");
 				var beacons = args.Beacons.Select(x => new Beacon(x));
 				lock (this.beaconsInRange) {
 					foreach (var beacon in beacons) {
@@ -85,34 +90,40 @@ namespace Estimotes {
             if (!this.beaconManager.IsBluetoothEnabled)
 				return BeaconInitStatus.BluetoothOff;
 
-			if (!this.beaconManager.CheckPermissionsAndService())
-				return BeaconInitStatus.PermissionDenied;
+			//if (!this.beaconManager.CheckPermissionsAndService())
+				//return BeaconInitStatus.PermissionDenied;
 
-            var tcs = new TaskCompletionSource<BeaconInitStatus>();
-			lock (this.syncLock) {
-				if (this.isConnected)
-					tcs.TrySetResult(BeaconInitStatus.Success);
-
-				Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Service.BeaconService)));
-				var ready = new ServiceReadyCallbackImpl(() => {
-				    this.isConnected = true;
-                    tcs.TrySetResult(BeaconInitStatus.Success);
-				});
-				this.beaconManager.Connect(ready);
-			}
-
-            var status = await tcs.Task;
-
+            await this.Connect();
             // restore monitored beacons
-            if (status == BeaconInitStatus.Success)
-                foreach (var region in this.MonitoringRegions)
-                    this.StartMonitoringNative(region);
+            foreach (var region in this.MonitoringRegions)
+                this.StartMonitoringNative(region);
 
-            return status;
+            return BeaconInitStatus.Success;
+        }
+
+
+        readonly ManualResetEvent locker = new ManualResetEvent(true);
+        protected virtual Task Connect() {
+            return Task.Factory.StartNew(() => {
+                this.locker.WaitOne();
+
+                if (this.isConnected)
+                    Log.Debug(DEBUG_TAG, "already connected to estimote service");
+                else {
+                    Application.Context.StartService(new Intent(Application.Context, typeof(EstimoteSdk.Service.BeaconService)));
+			        var ready = new ServiceReadyCallbackImpl(() => {
+                        Log.Debug(DEBUG_TAG, "successfully connected to estimote service");
+				        this.isConnected = true;
+                        this.locker.Set();
+			        });
+    		        this.beaconManager.Connect(ready);
+                }
+            });
         }
 
 
         protected override void StartMonitoringNative(BeaconRegion region) {
+            Log.Debug(DEBUG_TAG, "StartMonitoringNative");
 			var native = this.ToNative(region);
 			this.beaconManager.StartMonitoring(native);
         }

@@ -13,10 +13,33 @@ namespace Estimotes {
 			this.Minor = minor;
         }
 
-        public string Identifier { get; }
+
         public ushort Major { get; }
         public ushort Minor { get; }
         public Proximity Proximity { get; }
         public string Uuid { get; }
+
+
+        public override bool Equals(object obj) {
+            var other = obj as IBeacon;
+            if (other == null)
+                return false;
+
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            var flag = this.Uuid == other.Uuid && this.Major == other.Major && this.Minor == other.Minor;
+            return flag;
+        }
+
+
+        public override int GetHashCode() {
+            return this.Uuid.GetHashCode() + this.Major.GetHashCode() + this.Minor.GetHashCode();
+        }
+
+
+        public override string ToString() {
+            return $"[UUID: {this.Uuid} - Major: {this.Major} - Minor: {this.Minor}]";
+        }
     }
 }
