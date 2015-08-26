@@ -166,8 +166,8 @@ namespace Estimotes {
             return new BeaconRegion(
                 native.Identifier,
                 native.ProximityUUID,
-				(ushort)native.Major.IntValue(),
-				(ushort)native.Minor.IntValue()
+				this.FromInteger(native.Major),
+				this.FromInteger(native.Minor)
             );
         }
 
@@ -180,14 +180,6 @@ namespace Estimotes {
 				this.ToInteger(region.Minor)
 			);
         }
-
-
-		protected virtual Integer ToInteger(ushort? num) {
-			if (num == null || num == 0)
-				return null;
-
-			return new Integer(num.Value);
-		}
 
 
 		protected override void UpdateRangingList() {
@@ -204,6 +196,19 @@ namespace Estimotes {
 					this.rangeTimer.Start();
 			}
 		}
+
+
+		protected virtual Integer ToInteger(ushort? num) {
+			if (num == null || num == 0)
+				return null;
+
+			return new Integer(num.Value);
+		}
+
+
+        protected virtual ushort FromInteger(Integer integer) {
+            return integer == null ? (ushort)0 : (ushort)integer.IntValue();
+        }
 
 
 		int GetIndexOfBeacon(Beacon beacon) {
