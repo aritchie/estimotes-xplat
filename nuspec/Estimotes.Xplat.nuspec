@@ -13,10 +13,11 @@
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
 1.4
-[feature] Separate permission requests for background and foreground
+[feature] Separate permission requests for background and foreground (only really applies to ios)
 [feature] Quick range nearby beacons via FetchNearbyBeacons(region, waitTimeSpan).  Useful for ranging in the background
 [feature] RX Observables
-[fix][droid] NRE in monitoring
+[fix][droid] fix monitoring issues
+[fix][droid] init issues
 
 1.3.1
 [fix] Remove annoying checks to see if beacon region is already being scanned/monitored
@@ -52,15 +53,15 @@ many other minor bugfixes
 Initial Release
         </releaseNotes>
         <dependencies>
-            <group>
+            <!--<group>-->
                 <dependency id="Acr.Settings" version="[4.3, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
-            </group>
+            <!--</group>
             <group target="UAP10.0">
                 <dependency id="Acr.Settings" version="[4.3, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
                 <dependency id="UniversalBeaconLibrary" version="[1.1, 2)" />
-            </group>
+            </group>-->
         </dependencies>
     </metadata>
     <files>
