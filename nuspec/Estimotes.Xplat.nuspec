@@ -12,9 +12,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
-1.4.1
+1.4.2
 [fix][#4][droid] fixes for init process
 [fix] minor doc additions
+[feature][droid] set foreground and background scanning peroids - can only be set from android project ((UserDialogsImpl)UserDialogs.Instance).SetBackgroundScanPeriod(...)
 
 1.4
 [feature] Separate permission requests for background and foreground (only really applies to ios)

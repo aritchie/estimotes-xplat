@@ -5,7 +5,8 @@
 This is a cross platform implementation of the estimote library for beacons.  It will allow you to make beacon calls for your PCL library.
 Please be sure to read through the samples found in this repository!
 
-This library currently only support iOS and Android.
+This library currently only supported on iOS and Android.  You can get it on nuget at [https://www.nuget.org/packages/Estimotes.Xplat/](https://www.nuget.org/packages/Estimotes.Xplat/)
+
 
 ## SETUP
 ### iOS
@@ -67,3 +68,6 @@ And to actually start or stop the process (optionally, you can also pass major/m
 
 4. How many regions can I monitor/range at one time?
 * On android, I don't believe their is a limitation.  On iOS, the maximum is 20.  This library does not protect against errors around this maximum
+
+5. Estimote.iOS.Binding doesn't compile
+* Don't worry about it.  It is a test binding at the moment and isn't actively used.

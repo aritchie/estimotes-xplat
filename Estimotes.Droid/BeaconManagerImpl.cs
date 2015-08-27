@@ -21,7 +21,6 @@ namespace Estimotes {
         bool isConnected;
 
 
-
         public BeaconManagerImpl() {
 			this.rangeTimer = new Timer(500); // every second TODO: should coincide with foreground timer
 			this.rangeTimer.Elapsed += (sender, args) => {
@@ -80,6 +79,16 @@ namespace Estimotes {
         }
 
 
+        public void SetBackgroundScanPeriod(TimeSpan scanPeriod, TimeSpan waitTime) {
+            this.beaconManager.SetBackgroundScanPeriod((long)scanPeriod.TotalMilliseconds, (long)waitTime.TotalMilliseconds);
+        }
+
+
+        public void SetForegroundScanPeriod(TimeSpan scanPeriod, TimeSpan waitTime) {
+            this.beaconManager.SetForegroundScanPeriod((long)scanPeriod.TotalMilliseconds, (long)waitTime.TotalMilliseconds);
+        }
+
+
         public override async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
             if (this.isConnected)
                 return BeaconInitStatus.Success;
@@ -103,7 +112,7 @@ namespace Estimotes {
         }
 
 
-        readonly ManualResetEvent locker = new ManualResetEvent(false);
+        readonly ManualResetEvent locker = new ManualResetEvent(true);
         protected virtual async Task Connect() {
             await Task.Factory.StartNew(() => {
                 this.locker.WaitOne();
