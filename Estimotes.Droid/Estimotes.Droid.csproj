@@ -44,6 +44,10 @@
     <Reference Include="Estimote">
       <HintPath>..\Components\estimotesdkios-3.3.3\lib\ios-unified\Estimote.dll</HintPath>
     </Reference>
+    <Reference Include="Estimotes.Xamarin.Android, Version=1.0.8.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Estimotes-Xamarin.1.1.0.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -64,10 +68,6 @@
     <Compile Include="ServiceReadyCallbackImpl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Estimotes.Android.Binding\Estimotes.Android.Binding.csproj">
-      <Project>{6A1F28DD-EC87-49A8-9207-DEDEEA2D3F73}</Project>
-      <Name>Estimotes.Android.Binding</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Estimotes.Interface\Estimotes.Interface.csproj">
       <Project>{5B2339D1-65D5-4483-ACA9-997350A30E5B}</Project>
       <Name>Estimotes.Interface</Name>

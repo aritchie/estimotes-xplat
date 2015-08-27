@@ -68,6 +68,3 @@ And to actually start or stop the process (optionally, you can also pass major/m
 
 4. How many regions can I monitor/range at one time?
 * On android, I don't believe their is a limitation.  On iOS, the maximum is 20.  This library does not protect against errors around this maximum
-
-5. Estimote.iOS.Binding doesn't compile
-* Don't worry about it.  It is a test binding at the moment and isn't actively used.

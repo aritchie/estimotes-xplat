@@ -12,6 +12,9 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
+1.5
+[fix] Switch to Xamarin Estimote bindings
+
 1.4.2
 [fix][#4][droid] fixes for init process
 [fix] minor doc additions
@@ -58,10 +61,16 @@ many other minor bugfixes
 Initial Release
         </releaseNotes>
         <dependencies>
-            <!--<group>-->
+            <group>
                 <dependency id="Acr.Settings" version="[4.3, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
-            <!--</group>
+            </group>
+            <group target="MonoAndroid10">
+                <dependency id="Acr.Settings" version="[4.3, 5)" />
+                <dependency id="Rx-Main" version="[2.2.5, 3)" />
+                <dependency id="Estimotes-Xamarin" version="[1.1.0, 2)" />
+            </group>
+            <!--
             <group target="UAP10.0">
                 <dependency id="Acr.Settings" version="[4.3, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />

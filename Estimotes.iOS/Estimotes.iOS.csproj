@@ -72,7 +72,7 @@
   <ItemGroup>
     <XamarinComponentReference Include="estimotesdkios">
       <Visible>False</Visible>
-      <Version>3.3.3</Version>
+      <Version>2.4.0</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="..\Estimotes.Shared\Estimotes.Shared.projitems" Label="Shared" Condition="Exists('..\Estimotes.Shared\Estimotes.Shared.projitems')" />
