@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.4.0</version>
+        <version>1.4.1</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -12,6 +12,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons</tags>
         <releaseNotes>
+1.4.1
+[fix][#4][droid] fixes for init process
+[fix] minor doc additions
+
 1.4
 [feature] Separate permission requests for background and foreground (only really applies to ios)
 [feature] Quick range nearby beacons via FetchNearbyBeacons(region, waitTimeSpan).  Useful for ranging in the background

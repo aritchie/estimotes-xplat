@@ -94,6 +94,7 @@ namespace Estimotes {
 				//return BeaconInitStatus.PermissionDenied;
 
             await this.Connect();
+
             // restore monitored beacons
             foreach (var region in this.MonitoringRegions)
                 this.StartMonitoringNative(region);
@@ -102,9 +103,9 @@ namespace Estimotes {
         }
 
 
-        readonly ManualResetEvent locker = new ManualResetEvent(true);
-        protected virtual Task Connect() {
-            return Task.Factory.StartNew(() => {
+        readonly ManualResetEvent locker = new ManualResetEvent(false);
+        protected virtual async Task Connect() {
+            await Task.Factory.StartNew(() => {
                 this.locker.WaitOne();
 
                 if (this.isConnected)
@@ -119,6 +120,7 @@ namespace Estimotes {
     		        this.beaconManager.Connect(ready);
                 }
             });
+            await Task.Delay(300); // let android get its stuff together
         }
 
 
