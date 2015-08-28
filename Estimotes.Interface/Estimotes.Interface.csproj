@@ -42,6 +42,7 @@
     <Compile Include="BeaconInitStatus.cs" />
     <Compile Include="BeaconRegion.cs" />
     <Compile Include="BeaconRegionStatusChangedEventArgs.cs" />
+    <Compile Include="EddystoneType.cs" />
     <Compile Include="IBeacon.cs" />
     <Compile Include="IBeaconManager.cs" />
     <Compile Include="IEddystone.cs" />

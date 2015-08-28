@@ -77,12 +77,13 @@ namespace Estimotes {
 				}
 				this.OnRanged(this.beaconsInRange);
             };
-            this.beaconManager.Eddystone += (o, eventArgs) => {
-                //eventArgs.Eddystones.First().
-
+            this.beaconManager.Eddystone += (sender, args) => {
+                var list = args.Eddystones.Select(x => new Eddystone(x));
+                this.OnEddystone(list);
             };
             this.beaconManager.Nearable += (sender, args) => {
-
+                var list = args.Nearables.Select(x => new Nearable(x));
+                this.OnNearables(list);
             };
         }
 
@@ -190,7 +191,7 @@ namespace Estimotes {
             var native = this.ToNative(region);
             this.beaconManager.StopRanging(native);
 			lock (this.beaconsInRange)
-				this.beaconsInRange.Clear(); // TODO: could clear this smart.  Instead of the mess below, clear it all and let re-ranging pick it all back up
+				this.beaconsInRange.Clear(); // TODO: could clear this smart.
         }
 
 
