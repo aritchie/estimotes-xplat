@@ -22,7 +22,9 @@ namespace Estimotes {
 
 
         public BeaconManagerImpl() {
+            this.beaconManager = new BeaconManager(Application.Context);
 			this.rangeTimer = new Timer(500); // every second TODO: should coincide with foreground timer
+
 			this.rangeTimer.Elapsed += (sender, args) => {
 				this.rangeTimer.Stop();
 				lock (this.beaconsInRange) {
@@ -39,7 +41,6 @@ namespace Estimotes {
 				}
 				this.rangeTimer.Start();
 			};
-			this.beaconManager = new BeaconManager(Application.Context);
             this.beaconManager.EnteredRegion += (sender, args) => {
                 Log.Debug(DEBUG_TAG, "EnteredRegion Event");
                 var region = this.FromNative(args.Region);
@@ -76,6 +77,13 @@ namespace Estimotes {
 				}
 				this.OnRanged(this.beaconsInRange);
             };
+            this.beaconManager.Eddystone += (o, eventArgs) => {
+                //eventArgs.Eddystones.First().
+
+            };
+            this.beaconManager.Nearable += (sender, args) => {
+
+            };
         }
 
 
@@ -109,6 +117,32 @@ namespace Estimotes {
                 this.StartMonitoringNative(region);
 
             return BeaconInitStatus.Success;
+        }
+
+
+        string esScanId;
+        public override void StartEddystoneScan() {
+            if (this.esScanId == null)
+                this.esScanId = this.beaconManager.StartEddystoneScanning();
+        }
+
+
+        public override void StopEddystoneScan() {
+            if (this.esScanId != null)
+                this.beaconManager.StopEddystoneScanning(this.esScanId);
+        }
+
+
+        string nearableScanId;
+        public override void StartNearableDiscovery() {
+            if (this.nearableScanId == null)
+                this.nearableScanId = this.beaconManager.StartNearableDiscovery();
+        }
+
+
+        public override void StopNearableDiscovery() {
+            if (this.nearableScanId != null)
+                this.beaconManager.StopNearableDiscovery(this.nearableScanId);
         }
 
 
@@ -157,30 +191,6 @@ namespace Estimotes {
             this.beaconManager.StopRanging(native);
 			lock (this.beaconsInRange)
 				this.beaconsInRange.Clear(); // TODO: could clear this smart.  Instead of the mess below, clear it all and let re-ranging pick it all back up
-//				var count = this.beaconsInRange.Count;
-//				for (var i = 0; i < count; i++) {
-//					var remove = false;
-//
-//					var b = this.beaconsInRange[i];
-//					if (b.Uuid.Equals(region.Uuid, StringComparison.InvariantCultureIgnoreCase)) {
-//						if (region.Major > 0) {
-//							if (region.Major == b.Major) {
-//								if (region.Minor > 0)
-//									remove = (region.Minor == b.Minor);
-//								else
-//									remove = true;
-//							}
-//						}
-//						else {
-//							remove = true;
-//						}
-//					}
-//					if (remove) {
-//						this.beaconsInRange.RemoveAt(i);
-//						i--;
-//						count--;
-//					}
-//			}
         }
 
 

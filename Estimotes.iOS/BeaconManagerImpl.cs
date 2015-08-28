@@ -11,13 +11,15 @@ namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BeaconManager beaconManager;
+        readonly NearableManager nearableManager;
 
 
         public BeaconManagerImpl() {
-
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
             };
+            //this.nearableManager = new NearableManager();
+
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -101,15 +103,26 @@ namespace Estimotes {
 		}
 
 
-//        public override string StartNearableDiscovery() {
-//            //this.nearableManager.StartRanging(NearableType.All);
-//            return null;
-//        }
-//
-//
-//        public override void StopNearableDiscovery(string id) {
-//            //this.nearableManager.StopRanging();
-//        }
+        public override void StartEddystoneScan() {
+            throw new NotImplementedException();
+        }
+
+
+        public override void StopEddystoneScan() {
+            throw new NotImplementedException();
+        }
+
+
+        public override void StartNearableDiscovery() {
+            //this.nearableManager.StartRanging(NearableType.All);
+            throw new NotImplementedException();
+        }
+
+
+        public override void StopNearableDiscovery() {
+            //this.nearableManager.StopRanging();
+            throw new NotImplementedException();
+        }
 
 
         protected override void StartMonitoringNative(BeaconRegion region) {

@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Beacon.cs" />
     <Compile Include="BeaconManagerImpl.cs" />
+    <Compile Include="Eddystone.cs" />
     <Compile Include="Nearable.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

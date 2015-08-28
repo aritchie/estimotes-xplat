@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.Advertisement;
 using UniversalBeaconLibrary.Beacon;
@@ -21,6 +20,10 @@ namespace Estimotes {
         protected override void StopRangingNative(BeaconRegion region) {}
         protected override void StartMonitoringNative(BeaconRegion region) {}
         protected override void StopMonitoringNative(BeaconRegion region) {}
+        public override void StartEddystoneScan() {}
+        public override void StopEddystoneScan() {}
+        public override void StartNearableDiscovery() {}
+        public override void StopNearableDiscovery() {}
 
 
         //https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/BluetoothAdvertisement/cs
