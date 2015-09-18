@@ -199,8 +199,8 @@ namespace Estimotes {
             return new BeaconRegion(
                 native.Identifier,
                 native.ProximityUUID,
-				this.FromInteger(native.Major),
-				this.FromInteger(native.Minor)
+			    (ushort)native.Major,
+			    (ushort)native.Minor
             );
         }
 
@@ -209,8 +209,8 @@ namespace Estimotes {
 			return new Region(
 				region.Identifier,
 				region.Uuid,
-				this.ToInteger(region.Major),
-				this.ToInteger(region.Minor)
+			    region.Major ?? 0,
+			    region.Minor ?? 0
 			);
         }
 
@@ -230,18 +230,6 @@ namespace Estimotes {
 			}
 		}
 
-
-		protected virtual Integer ToInteger(ushort? num) {
-			if (num == null || num == 0)
-				return null;
-
-			return new Integer(num.Value);
-		}
-
-
-        protected virtual ushort FromInteger(Integer integer) {
-            return integer == null ? (ushort)0 : (ushort)integer.IntValue();
-        }
 
 
 		int GetIndexOfBeacon(Beacon beacon) {

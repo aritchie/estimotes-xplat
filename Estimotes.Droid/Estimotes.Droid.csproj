@@ -44,10 +44,6 @@
     <Reference Include="Estimote">
       <HintPath>..\Components\estimotesdkios-3.3.3\lib\ios-unified\Estimote.dll</HintPath>
     </Reference>
-    <Reference Include="Estimotes.Xamarin.Android, Version=1.0.8.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Estimotes-Xamarin.1.1.0.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -58,11 +54,16 @@
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Estimote.Android, Version=1.0.8.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Estimote.Android.0.8.7.0\lib\MonoAndroid43\Xamarin.Estimote.Android.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beacon.cs" />
     <Compile Include="BeaconManagerImpl.cs" />
     <Compile Include="Eddystone.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Nearable.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

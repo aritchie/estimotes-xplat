@@ -12,13 +12,15 @@ namespace Estimotes {
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BeaconManager beaconManager;
         readonly NearableManager nearableManager;
+        readonly EddystoneManager eddystoneManager;
 
 
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
             };
-            //this.nearableManager = new NearableManager();
+            this.nearableManager = new NearableManager();
+            this.eddystoneManager = new EddystoneManager();
 
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
@@ -31,6 +33,10 @@ namespace Estimotes {
             this.beaconManager.RangedBeacons += (sender, args) => {
                 var beacons = args.Beacons.Select(x => new Beacon(x));
                 this.OnRanged(beacons);
+            };
+            this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
+                var beacons = args.Eddystones.Select(x => new Eddystone(x));
+                this.OnEddystone(beacons);
             };
         }
 
@@ -51,13 +57,12 @@ namespace Estimotes {
 //            if (btstatus != BeaconInitStatus.Success)
 //                return btstatus;
 
-			var authStatus = BeaconManager.AuthorizationStatus();
-            var good = this.IsGoodStatus(authStatus, backgroundMonitoring);
+            var good = this.IsGoodStatus(BeaconManager.AuthorizationStatus, backgroundMonitoring);
             if (good)
                 return BeaconInitStatus.Success;
 
 			var tcs = new TaskCompletionSource<BeaconInitStatus>();
-            var funcPnt = new EventHandler<AuthorizationStatusChangedArgsEventArgs>((sender, args) => {
+            var funcPnt = new EventHandler<AuthorizationStatusChangedEventArgs>((sender, args) => {
 				if (args.Status == CLAuthorizationStatus.NotDetermined)
 					return; // not done yet
 
@@ -104,73 +109,71 @@ namespace Estimotes {
 
 
         public override void StartEddystoneScan() {
-            throw new NotImplementedException();
+            this.eddystoneManager.StartEddystoneDiscovery(null);
         }
 
 
         public override void StopEddystoneScan() {
-            throw new NotImplementedException();
+            this.eddystoneManager.StopEddystoneDiscovery(null);
         }
 
 
         public override void StartNearableDiscovery() {
-            //this.nearableManager.StartRanging(NearableType.All);
-            throw new NotImplementedException();
+            this.nearableManager.StartRangingForType(NearableType.All);
         }
 
 
         public override void StopNearableDiscovery() {
-            //this.nearableManager.StopRanging();
-            throw new NotImplementedException();
+            this.nearableManager.StopRanging();
         }
 
 
         protected override void StartMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
-            this.beaconManager.StartMonitoring(native);
+            this.beaconManager.StartMonitoringForRegion(native);
         }
 
 
         protected override void StartRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
-            this.beaconManager.StartRangingBeacons(native);
+            this.beaconManager.StartRangingBeaconsInRegion(native);
         }
 
 
 		protected override void StopMonitoringNative(BeaconRegion region) {
 			var native = this.ToNative(region);
-            this.beaconManager.StopMonitoring(native);
+            this.beaconManager.StopMonitoringForRegion(native);
         }
 
 
         protected override void StopRangingNative(BeaconRegion region) {
             var native = this.ToNative(region);
-            this.beaconManager.StopRangingBeacons(native);
+            this.beaconManager.StopRangingBeaconsInRegion(native);
         }
 
 
-		protected virtual BeaconRegion FromNative(Estimote.BeaconRegion native) {
+		protected virtual BeaconRegion FromNative(CLBeaconRegion native) {
 			return new BeaconRegion(
 				native.Identifier,
 				native.ProximityUuid.AsString(),
-				native.Major.UInt16Value,
-				native.Minor.UInt16Value
+				native.Major?.UInt16Value,
+				native.Minor?.UInt16Value
 			);
         }
 
 
-        protected virtual Estimote.BeaconRegion ToNative(BeaconRegion region) {
+        protected virtual CLBeaconRegion ToNative(BeaconRegion region) {
 			var uuid = new NSUuid(region.Uuid);
-			Estimote.BeaconRegion native = null;
+			CLBeaconRegion native = null;
 
 			if (region.Major > 0 && region.Minor > 0)
-				native = new Estimote.BeaconRegion(uuid, region.Major.Value, region.Minor.Value, region.Identifier);
+				native = new CLBeaconRegion(uuid, region.Major.Value, region.Minor.Value, region.Identifier);
 
 			else if (region.Major > 0)
-				native = new Estimote.BeaconRegion(uuid, region.Major.Value, region.Identifier);
+				native = new CLBeaconRegion(uuid, region.Major.Value, region.Identifier);
 
 			else
-				native = new Estimote.BeaconRegion(uuid, region.Identifier);
+				native = new CLBeaconRegion(uuid, region.Identifier);
 
 			native.NotifyEntryStateOnDisplay = true;
 			native.NotifyOnEntry = true;

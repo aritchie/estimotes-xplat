@@ -6,12 +6,11 @@ using Samples.ViewModels;
 
 namespace Samples.Pages {
 
-	public partial class RangingPage : Acr.XamForms.ContentPage {
+	public partial class EddystonePage : Acr.XamForms.ContentPage {
 
-		public RangingPage() {
+		public EddystonePage() {
             InitializeComponent();
-            this.BindingContext = new RangingViewModel();
+            this.BindingContext = new EddystoneViewModel();
 		}
 	}
 }
-

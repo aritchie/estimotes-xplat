@@ -6,24 +6,24 @@ using Estimotes;
 
 namespace Samples.ViewModels {
 
-    public class NearableViewModel : LifecycleViewModel {
+    public class EddystoneViewModel : LifecycleViewModel {
 
         public override void OnActivate() {
             base.OnActivate();
-            EstimoteManager.Instance.WhenNearables.Subscribe(x => {
+            EstimoteManager.Instance.WhenEddystone.Subscribe(x => {
                 this.List = x;
                 this.OnPropertyChanged(() => this.List);
             });
-            EstimoteManager.Instance.StartNearableDiscovery();
+            EstimoteManager.Instance.StartEddystoneScan();
         }
 
 
         public override void OnDeactivate() {
             base.OnDeactivate();
-            EstimoteManager.Instance.StopNearableDiscovery();
+            EstimoteManager.Instance.StopEddystoneScan();
         }
 
 
-        public IEnumerable<INearable> List { get; private set; }
+        public IEnumerable<IEddystone> List { get; private set; }
     }
 }

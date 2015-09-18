@@ -70,7 +70,11 @@ Initial Release
             <group target="MonoAndroid10">
                 <dependency id="Acr.Settings" version="[4.3, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
-                <dependency id="Estimotes-Xamarin" version="[1.1.0, 2)" />
+                <dependency id="Xamarin.Estimote.Android" version="[0.8.7, 2.0)" />
+            </group>
+            <group targetFramework="xamarinios">
+                <dependency id="Acr.Settings" version="[4.3, 5)" />
+                <dependency id="Xamarin.Estimote.iOS" version="[3.6, 4.0)" />
             </group>
             <!--
             <group target="UAP10.0">
@@ -87,13 +91,10 @@ Initial Release
 
         <!-- android -->
         <file src="..\Estimotes.Droid\bin\Release\Estimotes.dll" target="lib\MonoAndroid10\Estimotes.dll" />
-        <file src="..\Estimotes.Droid\bin\Release\Estimotes.Android.Binding.dll" target="lib\MonoAndroid10\Estimotes.Android.Binding.dll" />
         <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\MonoAndroid10\Estimotes.Interface.dll" />
-        <!--<file src="..\Estimotes.Droid\bin\Release\Estimotes.Xamarin.Android.dll" target="lib\MonoAndroid10\Estimotes.Xamarin.Android.dll" />-->
 
         <!-- ios -->
         <file src="..\Estimotes.iOS\bin\Release\Estimotes.dll" target="lib\Xamarin.iOS10\Estimotes.dll" />
-        <file src="..\Estimotes.iOS\bin\Release\Estimote.dll" target="lib\Xamarin.iOS10\Estimote.dll" />
         <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\Xamarin.iOS10\Estimotes.Interface.dll" />
 
         <!-- uwp -->

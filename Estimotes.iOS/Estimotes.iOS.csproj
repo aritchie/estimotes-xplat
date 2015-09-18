@@ -35,6 +35,7 @@
     <Compile Include="Beacon.cs" />
     <Compile Include="BeaconManagerImpl.cs" />
     <Compile Include="Eddystone.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Nearable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -47,15 +48,15 @@
       <HintPath>..\packages\Acr.Settings.4.3.0\lib\Xamarin.iOS10\Acr.Settings.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Estimote, Version=1.0.5528.18045, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Components\estimotesdkios-2.4.0\lib\ios-unified\Estimote.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Estimote.iOS, Version=1.0.5736.23486, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Estimote.iOS.3.6.0.0\lib\Xamarin.iOS10\Xamarin.Estimote.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.iOS" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
@@ -69,12 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="estimotesdkios">
-      <Visible>False</Visible>
-      <Version>2.4.0</Version>
-    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="..\Estimotes.Shared\Estimotes.Shared.projitems" Label="Shared" Condition="Exists('..\Estimotes.Shared\Estimotes.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

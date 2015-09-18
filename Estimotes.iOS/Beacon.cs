@@ -5,37 +5,18 @@ using CoreLocation;
 namespace Estimotes {
 
     public class Beacon : IBeacon {
-		readonly Estimote.Beacon beacon;
+		readonly CLBeacon beacon;
 
 
-        public Beacon(Estimote.Beacon beacon) {
+        public Beacon(CLBeacon beacon) {
             this.beacon = beacon;
-
-            this.Uuid = this.beacon.ProximityUUID.AsString();
-            switch (beacon.Proximity) {
-
-                case CLProximity.Far:
-                    this.Proximity = Proximity.Far;
-                    break;
-
-                case CLProximity.Immediate:
-                    this.Proximity = Proximity.Immediate;
-                    break;
-
-                case CLProximity.Near:
-                    this.Proximity = Proximity.Near;
-                    break;
-
-                default:
-                    this.Proximity = Proximity.Unknown;
-                    break;
-            }
+            this.Uuid = this.beacon.ProximityUuid.AsString();
         }
 
 
         public string Uuid { get; }
-        public ushort Major => this.beacon.Major;
-        public ushort Minor => this.beacon.Minor;
-        public Proximity Proximity { get; }
+        public ushort Major => this.beacon.Major?.UInt16Value ?? 0;
+        public ushort Minor => this.beacon.Minor?.UInt16Value ?? 0;
+        public Proximity Proximity => this.beacon.Proximity.FromNative();
     }
 }

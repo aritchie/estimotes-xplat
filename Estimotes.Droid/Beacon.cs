@@ -10,15 +10,7 @@ namespace Estimotes {
 
         public Beacon(EstimoteSdk.Beacon beacon) {
             this.beacon = beacon;
-			var prox = Utils.ComputeProximity(beacon);
-			if (prox == Utils.Proximity.Far)
-				this.Proximity = Proximity.Far;
-			else if (prox == Utils.Proximity.Immediate)
-				this.Proximity = Proximity.Immediate;
-			else if (prox == Utils.Proximity.Near)
-				this.Proximity = Proximity.Near;
-			else
-				this.Proximity = Proximity.Unknown;	
+            this.Proximity = beacon.GetProximity();
         }
 
 
