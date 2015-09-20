@@ -1,11 +1,11 @@
 using System;
-using Estimote;
 
 
 namespace Estimotes {
 
     public class Eddystone : IEddystone {
         readonly Estimote.Eddystone native;
+
 
         public Eddystone(Estimote.Eddystone native) {
             this.native = native;

@@ -53,6 +53,16 @@ And to actually start or stop the process (optionally, you can also pass major/m
     EstimoteManager.Instance.StartMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
     EstimoteManager.Instance.StopMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
 
+For Eddystones
+
+    EstimoteManager.Instance.StartEddystoneScan();
+    EstimoteManager.Instance.StopEddystoneScan();
+    EstimoteManager.Instance.Eddystone += (sender, eddystones) => {};
+
+
+## Observables
+
+For anyone who loves RX, there are observables that can be used instead of events.  WhenEddystone, WhenRanged, WhenRegionStatusChanges, & WhenNearables
 
 ## FAQ
 
@@ -68,3 +78,9 @@ And to actually start or stop the process (optionally, you can also pass major/m
 
 4. How many regions can I monitor/range at one time?
 * On android, I don't believe their is a limitation.  On iOS, the maximum is 20.  This library does not protect against errors around this maximum
+
+5. Can I monitor for eddystone on iOS in the background?
+* Yes, you need to enable "Use BLE accessories" in your iOS main project properties.  Careful with this though!
+
+6. Can I range for beacons in the background?
+* Yes and no.  You can have you app awaken for a monitored beacon and then range it.  On iOS, you get 5 seconds from the time the monitor event is fired.  Use FetchNearbyBeacons(region) to listen for (default) 2 seconds to pick up what may have triggered the monitor event.

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Android.App;
 using EstimoteSdk;
-using Java.Lang;
 using Android.Content;
 using Android.Util;
 using Timer = System.Timers.Timer;

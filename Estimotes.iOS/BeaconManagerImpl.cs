@@ -34,9 +34,19 @@ namespace Estimotes {
                 var beacons = args.Beacons.Select(x => new Beacon(x));
                 this.OnRanged(beacons);
             };
+
+            // TODO
+            this.nearableManager.EnteredIdentifierRegion += (sender, args) => { };
+            this.nearableManager.ExitedIdentifierRegion += (sender, args) => { };
+
             this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
-                var beacons = args.Eddystones.Select(x => new Eddystone(x));
-                this.OnEddystone(beacons);
+                try {
+                    var beacons = args.Eddystones.Select(x => new Eddystone(x));
+                    this.OnEddystone(beacons);
+                }
+                catch (Exception ex) {
+                    Console.WriteLine($"Eddystone {ex}");
+                }
             };
         }
 
@@ -109,12 +119,14 @@ namespace Estimotes {
 
 
         public override void StartEddystoneScan() {
-            this.eddystoneManager.StartEddystoneDiscovery(null);
+            var filter = new EddystoneFilterUID(new EddystoneUID("edd1ebbeac04e5defa017"));
+            this.eddystoneManager.StartEddystoneDiscovery(filter);
         }
 
 
         public override void StopEddystoneScan() {
-            this.eddystoneManager.StopEddystoneDiscovery(null);
+            var filter = new EddystoneFilterUID(new EddystoneUID("edd1ebbeac04e5defa017"));
+            this.eddystoneManager.StopEddystoneDiscovery(filter);
         }
 
 

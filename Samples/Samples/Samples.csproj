@@ -47,6 +47,7 @@
       <DependentUpon>NearablePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EddystoneListViewModel.cs" />
     <Compile Include="ViewModels\EddystoneViewModel.cs" />
     <Compile Include="ViewModels\NearableViewModel.cs" />
     <Compile Include="SampleDbConnection.cs" />

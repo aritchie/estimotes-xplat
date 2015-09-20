@@ -10,7 +10,7 @@ namespace Samples.Pages {
 
 		public EddystonePage() {
             InitializeComponent();
-            this.BindingContext = new EddystoneViewModel();
+            this.BindingContext = new EddystoneListViewModel();
 		}
 	}
 }

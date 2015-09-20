@@ -9,7 +9,7 @@
 		<acr:ListView ItemsSource="{Binding List}">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Url}" />
+					<TextCell Text="{Binding Type}" />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</acr:ListView>
