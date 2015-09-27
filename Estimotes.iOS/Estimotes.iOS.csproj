@@ -32,6 +32,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AcrEddystoneDelegate.cs" />
     <Compile Include="Beacon.cs" />
     <Compile Include="BeaconManagerImpl.cs" />
     <Compile Include="Eddystone.cs" />

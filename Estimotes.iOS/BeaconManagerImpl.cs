@@ -20,7 +20,17 @@ namespace Estimotes {
                 ReturnAllRangedBeaconsAtOnce = true
             };
             this.nearableManager = new NearableManager();
-            this.eddystoneManager = new EddystoneManager();
+            this.eddystoneManager = new EddystoneManager {
+                Delegate = new AcrEddystoneDelegate(x => {
+                    try {
+                        var beacons = x.Select(y => new Eddystone(y));
+                        this.OnEddystone(beacons);
+                    }
+                    catch (Exception ex) {
+                        Console.WriteLine($"Eddystone {ex}");
+                    }
+                })
+            };
 
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
@@ -39,15 +49,15 @@ namespace Estimotes {
             this.nearableManager.EnteredIdentifierRegion += (sender, args) => { };
             this.nearableManager.ExitedIdentifierRegion += (sender, args) => { };
 
-            this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
-                try {
-                    var beacons = args.Eddystones.Select(x => new Eddystone(x));
-                    this.OnEddystone(beacons);
-                }
-                catch (Exception ex) {
-                    Console.WriteLine($"Eddystone {ex}");
-                }
-            };
+            //this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
+            //    try {
+            //        var beacons = args.Eddystones.Select(x => new Eddystone(x));
+            //        this.OnEddystone(beacons);
+            //    }
+            //    catch (Exception ex) {
+            //        Console.WriteLine($"Eddystone {ex}");
+            //    }
+            //};
         }
 
 
