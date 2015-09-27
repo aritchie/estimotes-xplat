@@ -18,20 +18,7 @@ namespace Estimotes {
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
-            };
-            this.nearableManager = new NearableManager();
-            this.eddystoneManager = new EddystoneManager {
-                Delegate = new AcrEddystoneDelegate(x => {
-                    try {
-                        var beacons = x.Select(y => new Eddystone(y));
-                        this.OnEddystone(beacons);
-                    }
-                    catch (Exception ex) {
-                        Console.WriteLine($"Eddystone {ex}");
-                    }
-                })
-            };
-
+            }; 
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -45,19 +32,18 @@ namespace Estimotes {
                 this.OnRanged(beacons);
             };
 
+			this.eddystoneManager = new EddystoneManager();
+			this.eddystoneManager.Init();
+			this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
+				var beacons = args.Eddystones.Select(x => new Eddystone(x));
+				this.OnEddystone(beacons);
+			};
+
             // TODO
+			this.nearableManager = new NearableManager();
+//			this.nearableManager.Init ();
             this.nearableManager.EnteredIdentifierRegion += (sender, args) => { };
             this.nearableManager.ExitedIdentifierRegion += (sender, args) => { };
-
-            //this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
-            //    try {
-            //        var beacons = args.Eddystones.Select(x => new Eddystone(x));
-            //        this.OnEddystone(beacons);
-            //    }
-            //    catch (Exception ex) {
-            //        Console.WriteLine($"Eddystone {ex}");
-            //    }
-            //};
         }
 
 
@@ -68,6 +54,7 @@ namespace Estimotes {
 
             if (!CLLocationManager.LocationServicesEnabled)
                 return BeaconInitStatus.LocationServicesDisabled;
+
 
 //			if (UIApplication.SharedApplication.BackgroundRefreshStatus != UIBackgroundRefreshStatus.Denied)
 //				return;
@@ -85,7 +72,7 @@ namespace Estimotes {
             var funcPnt = new EventHandler<AuthorizationStatusChangedEventArgs>((sender, args) => {
 				if (args.Status == CLAuthorizationStatus.NotDetermined)
 					return; // not done yet
-
+			
 				var success = this.IsGoodStatus(args.Status, backgroundMonitoring);
                 tcs.TrySetResult(success ? BeaconInitStatus.Success : BeaconInitStatus.PermissionDenied);
 			});
@@ -128,15 +115,19 @@ namespace Estimotes {
 		}
 
 
+		EddystoneFilter filter = new EddystoneFilterUID();
         public override void StartEddystoneScan() {
-            var filter = new EddystoneFilterUID(new EddystoneUID("edd1ebbeac04e5defa017"));
-            this.eddystoneManager.StartEddystoneDiscovery(filter);
+//            var filter = new EddystoneFilterUID(new EddystoneUID("cd5e3f3ec33a"));
+//            this.eddystoneManager.StartEddystoneDiscovery(filter);
+			this.eddystoneManager.StartEddystoneDiscovery(this.filter);
+
         }
 
 
         public override void StopEddystoneScan() {
-            var filter = new EddystoneFilterUID(new EddystoneUID("edd1ebbeac04e5defa017"));
-            this.eddystoneManager.StopEddystoneDiscovery(filter);
+//			var filter = new EddystoneFilterUID(new EddystoneUID("cd5e3f3ec33a"));
+//            this.eddystoneManager.StopEddystoneDiscovery(filter);
+			this.eddystoneManager.StopEddystoneDiscovery(this.filter);
         }
 
 

@@ -8,7 +8,7 @@
 	<string>The beacons always have you!</string>
 	<key>UIDeviceFamily</key>
 	<array>
-		<integer>2</integer>
+		<integer>1</integer>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -16,15 +16,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 	<key>MinimumOSVersion</key>
-	<string></string>
+	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Estimote</string>
 	<key>CFBundleIdentifier</key>
@@ -49,7 +42,5 @@
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
 	</array>
-	<key>UIMainStoryboardFile~ipad</key>
-	<string>LaunchScreen</string>
 </dict>
 </plist>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.4.2</version>
+        <version>1.5.0</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -10,7 +10,7 @@
         <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
         <projectUrl>https://github.com/aritchie/estimotes-xplat</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <tags>xamarin xam.pcl estimotes beacons</tags>
+        <tags>xamarin xam.pcl estimotes beacons nearables proximity location eddystone ibeacon ble bluetooth</tags>
         <releaseNotes>
 1.5
 [feature] EDDYSTONES!
@@ -64,21 +64,21 @@ Initial Release
         </releaseNotes>
         <dependencies>
             <group>
-                <dependency id="Acr.Settings" version="[4.3, 5)" />
+                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
             </group>
             <group target="MonoAndroid10">
-                <dependency id="Acr.Settings" version="[4.3, 5)" />
+                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
-                <dependency id="Xamarin.Estimote.Android" version="[0.8.7, 2.0)" />
+                <dependency id="Xamarin.Estimote.Android" version="[0.8.8, 2.0)" />
             </group>
             <group targetFramework="xamarinios">
-                <dependency id="Acr.Settings" version="[4.3, 5)" />
+                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
                 <dependency id="Xamarin.Estimote.iOS" version="[3.6, 4.0)" />
             </group>
             <!--
             <group target="UAP10.0">
-                <dependency id="Acr.Settings" version="[4.3, 5)" />
+                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
                 <dependency id="UniversalBeaconLibrary" version="[1.1, 2)" />
             </group>-->
