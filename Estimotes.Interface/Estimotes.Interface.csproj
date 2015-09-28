@@ -53,6 +53,7 @@
     <Compile Include="EddystoneFilter.cs" />
     <Compile Include="EddystoneUidFilter.cs" />
     <Compile Include="EddystoneScanEventArgs.cs" />
+    <Compile Include="EddystoneUrlFilter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

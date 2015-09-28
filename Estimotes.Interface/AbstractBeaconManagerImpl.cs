@@ -95,13 +95,15 @@ namespace Estimotes {
 
 		public virtual void StartEddystoneScan(EddystoneFilter filter) {
 			this.StartEddystoneScanNative(filter);
-			this.eddystoneFilters.Add(filter);
+			this.eddystoneFilters.Add(filter); // TODO: implement equals on filter
+			this.EddystoneFilters = new ReadOnlyCollection<EddystoneFilter>(this.eddystoneFilters);
 		}
 
 
 		public virtual void StopEddystoneScan(EddystoneFilter filter) {
 			this.StopEddystoneScanNative(filter);
-			this.eddystoneFilters.Remove(filter);
+			this.eddystoneFilters.Remove(filter); // TODO: implement equals on filter
+			this.EddystoneFilters = new ReadOnlyCollection<EddystoneFilter>(this.eddystoneFilters);
 		}
 
 

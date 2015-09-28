@@ -77,8 +77,9 @@ namespace Estimotes {
 				this.OnRanged(this.beaconsInRange);
             };
             this.beaconManager.Eddystone += (sender, args) => {
-				var list = args.Eddystones.Select(x => new Eddystone(x)).ToList();
-                this.OnEddystone(list);
+				// TODO: find the best filter or make sure it fits a filter
+				var eddystones = args.Eddystones.Select(x => new Eddystone(x)).ToList();
+				this.OnEddystone(new EddystoneScanEventArgs(null, eddystones));
             };
 //            this.beaconManager.Nearable += (sender, args) => {
 //                var list = args.Nearables.Select(x => new Nearable(x));
@@ -121,13 +122,13 @@ namespace Estimotes {
 
 
         string esScanId;
-        public override void StartEddystoneScan() {
+        public override void StartEddystoneScanNative(EddystoneFilter filter) {
             if (this.esScanId == null)
                 this.esScanId = this.beaconManager.StartEddystoneScanning();
         }
 
 
-        public override void StopEddystoneScan() {
+        public override void StopEddystoneScanNative(EddystoneFilter filter) {
             if (this.esScanId != null)
                 this.beaconManager.StopEddystoneScanning(this.esScanId);
         }
