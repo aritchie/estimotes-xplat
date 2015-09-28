@@ -2,6 +2,5 @@
 
 namespace Estimotes {
 	
-	public class EddystoneFilter {
-	}
+	public interface IEddystoneFilter {}
 }

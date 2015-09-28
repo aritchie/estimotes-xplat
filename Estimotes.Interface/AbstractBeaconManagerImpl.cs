@@ -13,7 +13,7 @@ namespace Estimotes {
 		const string SETTING_KEY = "beacons-monitor";
 		readonly IList<BeaconRegion> monitoringRegions;
 		readonly IList<BeaconRegion> rangingRegions;
-		readonly IList<EddystoneFilter> eddystoneFilters;
+		readonly IList<IEddystoneFilter> eddystoneFilters;
 
 
 		protected AbstractBeaconManagerImpl() {
@@ -55,8 +55,8 @@ namespace Estimotes {
 
 
         public abstract Task<BeaconInitStatus> Initialize(bool backgroundMonitoring);
-		public abstract void StartEddystoneScanNative(EddystoneFilter filter);
-		public abstract void StopEddystoneScanNative(EddystoneFilter filter);
+		public abstract void StartEddystoneScanNative(IEddystoneFilter filter);
+		public abstract void StopEddystoneScanNative(IEddystoneFilter filter);
 //        public abstract void StartNearableDiscovery();
 //        public abstract void StopNearableDiscovery();
         protected abstract void StartMonitoringNative(BeaconRegion region);
@@ -93,17 +93,17 @@ namespace Estimotes {
 		}
 
 
-		public virtual void StartEddystoneScan(EddystoneFilter filter) {
+		public virtual void StartEddystoneScan(IEddystoneFilter filter) {
 			this.StartEddystoneScanNative(filter);
 			this.eddystoneFilters.Add(filter); // TODO: implement equals on filter
-			this.EddystoneFilters = new ReadOnlyCollection<EddystoneFilter>(this.eddystoneFilters);
+			this.EddystoneFilters = new ReadOnlyCollection<IEddystoneFilter>(this.eddystoneFilters);
 		}
 
 
-		public virtual void StopEddystoneScan(EddystoneFilter filter) {
+		public virtual void StopEddystoneScan(IEddystoneFilter filter) {
 			this.StopEddystoneScanNative(filter);
 			this.eddystoneFilters.Remove(filter); // TODO: implement equals on filter
-			this.EddystoneFilters = new ReadOnlyCollection<EddystoneFilter>(this.eddystoneFilters);
+			this.EddystoneFilters = new ReadOnlyCollection<IEddystoneFilter>(this.eddystoneFilters);
 		}
 
 
@@ -161,7 +161,7 @@ namespace Estimotes {
 
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; private set; }
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
-		public IReadOnlyList<EddystoneFilter> EddystoneFilters { get; private set; }
+		public IReadOnlyList<IEddystoneFilter> EddystoneFilters { get; private set; }
 
         public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
         public IObservable<IEnumerable<IBeacon>> WhenRanged { get; }

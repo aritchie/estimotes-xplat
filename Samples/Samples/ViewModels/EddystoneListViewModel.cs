@@ -9,6 +9,11 @@ using Estimotes;
 namespace Samples.ViewModels {
 
     public class EddystoneListViewModel : LifecycleViewModel {
+		readonly IEddystoneFilter filter = new EddystoneUidFilter("EDD1EBEAC04E5DEFA017");
+
+		//EDD1EBEAC04E5DEFA017
+		//cd5e3f3ec33a
+		//		EddystoneFilter filter = new EddystoneFilterUID(new EddystoneUID("EDD1EBEAC04E5DEFA017"));
 
         public override void OnActivate() {
             base.OnActivate();
@@ -21,13 +26,13 @@ namespace Samples.ViewModels {
 					Debug.WriteLine("[eddystone]: {0}", ex);
 				}
             });
-			EstimoteManager.Instance.StartEddystoneScan(null); // TODO
+			EstimoteManager.Instance.StartEddystoneScan(this.filter);
         }
 
 
         public override void OnDeactivate() {
             base.OnDeactivate();
-            EstimoteManager.Instance.StopEddystoneScan(null); // TODO
+			EstimoteManager.Instance.StopEddystoneScan(this.filter);
         }
 
 

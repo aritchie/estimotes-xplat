@@ -116,16 +116,13 @@ namespace Estimotes {
 		}
 
 
-		//EDD1EBEAC04E5DEFA017
-		//cd5e3f3ec33a
-//		EddystoneFilter filter = new EddystoneFilterUID(new EddystoneUID("EDD1EBEAC04E5DEFA017"));
-        public override void StartEddystoneScanNative(EddystoneFilter filter) {
+        public override void StartEddystoneScanNative(IEddystoneFilter filter) {
 			var native = this.ToNative(filter);
 			this.eddystoneManager.StartEddystoneDiscovery(native);
         }
 
 
-		public override void StopEddystoneScanNative(EddystoneFilter filter) {
+		public override void StopEddystoneScanNative(IEddystoneFilter filter) {
 			var native = this.ToNative(filter);
 			this.eddystoneManager.StopEddystoneDiscovery(native);
         }
@@ -175,7 +172,7 @@ namespace Estimotes {
         }
 
 
-		protected virtual Estimote.EddystoneFilter ToNative(Estimotes.EddystoneFilter filter) {
+		protected virtual Estimote.EddystoneFilter ToNative(IEddystoneFilter filter) {
 			var uid = filter as EddystoneUidFilter;
 			if (uid != null)
 				return new Estimote.EddystoneFilterUID(new EddystoneUID (uid.Namespace, uid.InstanceId));
@@ -188,7 +185,7 @@ namespace Estimotes {
 		}
 
 
-		protected virtual EddystoneFilter FromNative(Estimote.EddystoneFilter filter) {
+		protected virtual IEddystoneFilter FromNative(Estimote.EddystoneFilter filter) {
 			if (filter == null)
 				return null;
 			

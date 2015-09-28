@@ -122,13 +122,13 @@ namespace Estimotes {
 
 
         string esScanId;
-        public override void StartEddystoneScanNative(EddystoneFilter filter) {
+        public override void StartEddystoneScanNative(IEddystoneFilter filter) {
             if (this.esScanId == null)
                 this.esScanId = this.beaconManager.StartEddystoneScanning();
         }
 
 
-        public override void StopEddystoneScanNative(EddystoneFilter filter) {
+        public override void StopEddystoneScanNative(IEddystoneFilter filter) {
             if (this.esScanId != null)
                 this.beaconManager.StopEddystoneScanning(this.esScanId);
         }

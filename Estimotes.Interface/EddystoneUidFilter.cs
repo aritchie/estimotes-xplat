@@ -2,7 +2,7 @@
 
 namespace Estimotes {
 	
-	public class EddystoneUidFilter : EddystoneFilter {
+	public class EddystoneUidFilter : IEddystoneFilter {
 		public string Namespace { get; }
 		public string InstanceId { get; }
 

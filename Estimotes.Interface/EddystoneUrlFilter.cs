@@ -2,7 +2,7 @@
 
 namespace Estimotes {
 	
-	public class EddystoneUrlFilter : EddystoneFilter {
+	public class EddystoneUrlFilter : IEddystoneFilter {
 		public string Url { get; }
 		public bool IsDomain { get; }
 

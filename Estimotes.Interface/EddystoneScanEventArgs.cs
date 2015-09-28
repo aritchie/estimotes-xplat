@@ -6,10 +6,10 @@ namespace Estimotes {
 	
 	public class EddystoneScanEventArgs : EventArgs {		
 		public IEnumerable<IEddystone> Eddystones { get; }
-		public EddystoneFilter Filter { get; }
+		public IEddystoneFilter Filter { get; }
 
 
-		public EddystoneScanEventArgs(EddystoneFilter filter, IEnumerable<IEddystone> eddystones) {
+		public EddystoneScanEventArgs(IEddystoneFilter filter, IEnumerable<IEddystone> eddystones) {
 			this.Filter = filter;
 			this.Eddystones = eddystones;
 		}

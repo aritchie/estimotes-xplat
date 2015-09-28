@@ -12,13 +12,13 @@ namespace Estimotes {
         public async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) => BeaconInitStatus.Unknown;
 		public void StartMonitoring(BeaconRegion region) {}
 		public void StartRanging(BeaconRegion region) {}
-		public void StartEddystoneScan(EddystoneFilter filter) { }
+		public void StartEddystoneScan(IEddystoneFilter filter) { }
 //        public void StartNearableDiscovery() { }
 		public void StopMonitoring(BeaconRegion region) {}
 		public void StopRanging(BeaconRegion region) {}
 		public void StopAllMonitoring() {}
 		public void StopAllRanging() {}
-		public void StopEddystoneScan(EddystoneFilter filter) { }
+		public void StopEddystoneScan(IEddystoneFilter filter) { }
 //		public void StopNearableDiscovery() { }
 
 
@@ -33,7 +33,7 @@ namespace Estimotes {
 
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
-		public IReadOnlyList<EddystoneFilter> EddystoneFilters { get; } = new ReadOnlyCollection<EddystoneFilter>(new List<EddystoneFilter>(0));
+		public IReadOnlyList<IEddystoneFilter> EddystoneFilters { get; } = new ReadOnlyCollection<IEddystoneFilter>(new List<IEddystoneFilter>(0));
 
 
         public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; } = Observable.Empty<BeaconRegionStatusChangedEventArgs>();
