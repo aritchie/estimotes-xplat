@@ -107,10 +107,11 @@ namespace Estimotes {
 
         #region Eddystone
 
-        void StartEddystoneScan();
-        void StopEddystoneScan();
-        event EventHandler<IEnumerable<IEddystone>> Eddystone;
-        IObservable<IEnumerable<IEddystone>> WhenEddystone { get; }
+        void StartEddystoneScan(EddystoneFilter filter);
+		void StopEddystoneScan(EddystoneFilter filter);
+		IReadOnlyList<EddystoneFilter> EddystoneFilters { get; }
+		event EventHandler<EddystoneScanEventArgs> Eddystone;
+		IObservable<EddystoneScanEventArgs> WhenEddystone { get; }
 
         #endregion
 

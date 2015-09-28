@@ -13,6 +13,7 @@ namespace Estimotes {
 		const string SETTING_KEY = "beacons-monitor";
 		readonly IList<BeaconRegion> monitoringRegions;
 		readonly IList<BeaconRegion> rangingRegions;
+		readonly IList<EddystoneFilter> eddystoneFilters;
 
 
 		protected AbstractBeaconManagerImpl() {
@@ -38,11 +39,11 @@ namespace Estimotes {
                 .Select(x => x.EventArgs);
 
             this.WhenEddystone = Observable
-                .FromEventPattern<IEnumerable<IEddystone>>(
+				.FromEventPattern<EddystoneScanEventArgs>(
                     x => this.Eddystone += x,
                     x => this.Eddystone -= x
                 )
-                .Select(x => x.EventArgs);
+				.Select(x => x.EventArgs);
 
 //            this.WhenNearables = Observable
 //                .FromEventPattern<IEnumerable<INearable>>(
@@ -54,8 +55,8 @@ namespace Estimotes {
 
 
         public abstract Task<BeaconInitStatus> Initialize(bool backgroundMonitoring);
-        public abstract void StartEddystoneScan();
-        public abstract void StopEddystoneScan();
+		public abstract void StartEddystoneScanNative(EddystoneFilter filter);
+		public abstract void StopEddystoneScanNative(EddystoneFilter filter);
 //        public abstract void StartNearableDiscovery();
 //        public abstract void StopNearableDiscovery();
         protected abstract void StartMonitoringNative(BeaconRegion region);
@@ -89,6 +90,18 @@ namespace Estimotes {
 			this.rangingRegions.Remove(region);
             this.StopRangingNative(region);
             this.UpdateRangingList();
+		}
+
+
+		public virtual void StartEddystoneScan(EddystoneFilter filter) {
+			this.StartEddystoneScanNative(filter);
+			this.eddystoneFilters.Add(filter);
+		}
+
+
+		public virtual void StopEddystoneScan(EddystoneFilter filter) {
+			this.StopEddystoneScanNative(filter);
+			this.eddystoneFilters.Remove(filter);
 		}
 
 
@@ -146,16 +159,17 @@ namespace Estimotes {
 
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; private set; }
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; private set; }
+		public IReadOnlyList<EddystoneFilter> EddystoneFilters { get; private set; }
 
         public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
         public IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
-        public IObservable<IEnumerable<IEddystone>> WhenEddystone { get; }
+		public IObservable<EddystoneScanEventArgs> WhenEddystone { get; }
 //        public IObservable<IEnumerable<INearable>> WhenNearables { get; }
 
 
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
-        public event EventHandler<IEnumerable<IEddystone>> Eddystone;
+		public event EventHandler<EddystoneScanEventArgs> Eddystone;
 //        public event EventHandler<IEnumerable<INearable>> Nearables;
 
 
@@ -169,8 +183,8 @@ namespace Estimotes {
         }
 
 
-        protected virtual void OnEddystone(IEnumerable<IEddystone> eddystones) {
-            this.Eddystone?.Invoke(this, eddystones);
+		protected virtual void OnEddystone(EddystoneScanEventArgs args) {
+            this.Eddystone?.Invoke(this, args);
         }
 
 
