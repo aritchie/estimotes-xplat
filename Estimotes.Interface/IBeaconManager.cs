@@ -114,11 +114,11 @@ namespace Estimotes {
 
         #endregion
 
-        #region Nearables
-        void StartNearableDiscovery();
-        void StopNearableDiscovery();
-        event EventHandler<IEnumerable<INearable>> Nearables;
-        IObservable<IEnumerable<INearable>> WhenNearables { get; }
-        #endregion
+//        #region Nearables
+//        void StartNearableDiscovery();
+//        void StopNearableDiscovery();
+//        event EventHandler<IEnumerable<INearable>> Nearables;
+//        IObservable<IEnumerable<INearable>> WhenNearables { get; }
+//        #endregion
     }
 }

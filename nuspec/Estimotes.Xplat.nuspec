@@ -10,11 +10,10 @@
         <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
         <projectUrl>https://github.com/aritchie/estimotes-xplat</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <tags>xamarin xam.pcl estimotes beacons nearables proximity location eddystone ibeacon ble bluetooth</tags>
+        <tags>xamarin xam.pcl estimotes beacons proximity location eddystone ibeacon ble bluetooth</tags>
         <releaseNotes>
 1.5
 [feature] EDDYSTONES!
-[feature] NEARABLES!
 [fix] Switch to Xamarin Estimote bindings
 
 1.4.2

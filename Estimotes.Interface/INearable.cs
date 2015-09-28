@@ -1,17 +1,17 @@
-﻿using System;
-
-
-namespace Estimotes {
-
-    public interface INearable {
-
-        string Identifier { get; }
-        TimeSpan CurrentMotionDuration { get; }
-        double Temperature { get; }
-        bool IsMoving { get; }
-        int Rssi { get; }
-    }
-}
+﻿//using System;
+//
+//
+//namespace Estimotes {
+//
+//    public interface INearable {
+//
+//        string Identifier { get; }
+//        TimeSpan CurrentMotionDuration { get; }
+//        double Temperature { get; }
+//        bool IsMoving { get; }
+//        int Rssi { get; }
+//    }
+//}
 //public enum NearableTypes {
 //	Unknown = 0,
 //	Dog = 1,

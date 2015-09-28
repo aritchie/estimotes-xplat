@@ -44,20 +44,20 @@ namespace Estimotes {
                 )
                 .Select(x => x.EventArgs);
 
-            this.WhenNearables = Observable
-                .FromEventPattern<IEnumerable<INearable>>(
-                    x => this.Nearables += x,
-                    x => this.Nearables -= x
-                )
-                .Select(x => x.EventArgs);
+//            this.WhenNearables = Observable
+//                .FromEventPattern<IEnumerable<INearable>>(
+//                    x => this.Nearables += x,
+//                    x => this.Nearables -= x
+//                )
+//                .Select(x => x.EventArgs);
 		}
 
 
         public abstract Task<BeaconInitStatus> Initialize(bool backgroundMonitoring);
         public abstract void StartEddystoneScan();
         public abstract void StopEddystoneScan();
-        public abstract void StartNearableDiscovery();
-        public abstract void StopNearableDiscovery();
+//        public abstract void StartNearableDiscovery();
+//        public abstract void StopNearableDiscovery();
         protected abstract void StartMonitoringNative(BeaconRegion region);
         protected abstract void StartRangingNative(BeaconRegion region);
         protected abstract void StopMonitoringNative(BeaconRegion region);
@@ -150,13 +150,13 @@ namespace Estimotes {
         public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
         public IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
         public IObservable<IEnumerable<IEddystone>> WhenEddystone { get; }
-        public IObservable<IEnumerable<INearable>> WhenNearables { get; }
+//        public IObservable<IEnumerable<INearable>> WhenNearables { get; }
 
 
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
         public event EventHandler<IEnumerable<IEddystone>> Eddystone;
-        public event EventHandler<IEnumerable<INearable>> Nearables;
+//        public event EventHandler<IEnumerable<INearable>> Nearables;
 
 
         protected virtual void OnRanged(IEnumerable<IBeacon> beacons) {
@@ -174,9 +174,9 @@ namespace Estimotes {
         }
 
 
-        protected virtual void OnNearables(IEnumerable<INearable> nearables) {
-            this.Nearables?.Invoke(this, nearables);
-        }
+//        protected virtual void OnNearables(IEnumerable<INearable> nearables) {
+//            this.Nearables?.Invoke(this, nearables);
+//        }
 
 
         protected virtual void UpdateMonitoringList() {

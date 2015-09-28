@@ -24,9 +24,9 @@ namespace Samples {
 			this.MainPage = new TabbedPage {
 				Children = {
 					new NavigationPage(new RangingPage { Title = "Estimotes - Ranging" }) { Title = "Ranging" },
-                    new NavigationPage(new EddystonePage { Title = "Estimotes - Eddystone" }) { Title = "Eddystones" },
-                    new NavigationPage(new NearablePage { Title = "Estimotes - Nearables" }) { Title = "Nearables" },
-					new NavigationPage(new MonitorPage { Title = "Estimotes - Monitoring" }) { Title = "Monitoring" }
+					new NavigationPage(new MonitorPage { Title = "Estimotes - Monitoring" }) { Title = "Monitoring" },
+					new NavigationPage(new EddystonePage { Title = "Estimotes - Eddystone" }) { Title = "Eddystones" }
+					//new NavigationPage(new NearablePage { Title = "Estimotes - Nearables" }) { Title = "Nearables" },
 				}
 			};
         }

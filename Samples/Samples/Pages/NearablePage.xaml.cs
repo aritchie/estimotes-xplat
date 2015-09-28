@@ -8,7 +8,7 @@ namespace Samples.Pages {
 
         public NearablePage() {
             InitializeComponent();
-            this.BindingContext = new NearableViewModel();
+//            this.BindingContext = new NearableViewModel();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         readonly BeaconManager beaconManager;
-        readonly NearableManager nearableManager;
+//        readonly NearableManager nearableManager;
         readonly EddystoneManager eddystoneManager;
 
 
@@ -40,10 +40,10 @@ namespace Estimotes {
 			};
 
             // TODO
-			this.nearableManager = new NearableManager();
+//			this.nearableManager = new NearableManager();
 //			this.nearableManager.Init ();
-            this.nearableManager.EnteredIdentifierRegion += (sender, args) => { };
-            this.nearableManager.ExitedIdentifierRegion += (sender, args) => { };
+//            this.nearableManager.EnteredIdentifierRegion += (sender, args) => { };
+//            this.nearableManager.ExitedIdentifierRegion += (sender, args) => { };
         }
 
 
@@ -115,30 +115,27 @@ namespace Estimotes {
 		}
 
 
-		EddystoneFilter filter = new EddystoneFilterUID();
+		//EDD1EBEAC04E5DEFA017
+		//cd5e3f3ec33a
+		EddystoneFilter filter = new EddystoneFilterUID(new EddystoneUID("EDD1EBEAC04E5DEFA017"));
         public override void StartEddystoneScan() {
-//            var filter = new EddystoneFilterUID(new EddystoneUID("cd5e3f3ec33a"));
-//            this.eddystoneManager.StartEddystoneDiscovery(filter);
 			this.eddystoneManager.StartEddystoneDiscovery(this.filter);
-
         }
 
 
         public override void StopEddystoneScan() {
-//			var filter = new EddystoneFilterUID(new EddystoneUID("cd5e3f3ec33a"));
-//            this.eddystoneManager.StopEddystoneDiscovery(filter);
 			this.eddystoneManager.StopEddystoneDiscovery(this.filter);
         }
 
 
-        public override void StartNearableDiscovery() {
-            this.nearableManager.StartRangingForType(NearableType.All);
-        }
-
-
-        public override void StopNearableDiscovery() {
-            this.nearableManager.StopRanging();
-        }
+//        public override void StartNearableDiscovery() {
+//            this.nearableManager.StartRangingForType(NearableType.All);
+//        }
+//
+//
+//        public override void StopNearableDiscovery() {
+//            this.nearableManager.StopRanging();
+//        }
 
 
         protected override void StartMonitoringNative(BeaconRegion region) {

@@ -29,7 +29,7 @@ namespace Estimotes {
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
         public event EventHandler<IEnumerable<IEddystone>> Eddystone;
-        public event EventHandler<IEnumerable<INearable>> Nearables;
+//        public event EventHandler<IEnumerable<INearable>> Nearables;
 
 		public IReadOnlyList<BeaconRegion> MonitoringRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
 		public IReadOnlyList<BeaconRegion> RangingRegions { get; } = new ReadOnlyCollection<BeaconRegion>(new List<BeaconRegion>(0));
@@ -37,6 +37,6 @@ namespace Estimotes {
         public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; } = Observable.Empty<BeaconRegionStatusChangedEventArgs>();
         public IObservable<IEnumerable<IBeacon>> WhenRanged { get; } = Observable.Empty<IEnumerable<IBeacon>>();
         public IObservable<IEnumerable<IEddystone>> WhenEddystone { get; } = Observable.Empty<IEnumerable<IEddystone>>();
-        public IObservable<IEnumerable<INearable>> WhenNearables { get; } = Observable.Empty<IEnumerable<INearable>>();
+//        public IObservable<IEnumerable<INearable>> WhenNearables { get; } = Observable.Empty<IEnumerable<INearable>>();
     }
 }

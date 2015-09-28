@@ -77,13 +77,13 @@ namespace Estimotes {
 				this.OnRanged(this.beaconsInRange);
             };
             this.beaconManager.Eddystone += (sender, args) => {
-                var list = args.Eddystones.Select(x => new Eddystone(x));
+				var list = args.Eddystones.Select(x => new Eddystone(x)).ToList();
                 this.OnEddystone(list);
             };
-            this.beaconManager.Nearable += (sender, args) => {
-                var list = args.Nearables.Select(x => new Nearable(x));
-                this.OnNearables(list);
-            };
+//            this.beaconManager.Nearable += (sender, args) => {
+//                var list = args.Nearables.Select(x => new Nearable(x));
+//                this.OnNearables(list);
+//            };
         }
 
 
@@ -133,17 +133,17 @@ namespace Estimotes {
         }
 
 
-        string nearableScanId;
-        public override void StartNearableDiscovery() {
-            if (this.nearableScanId == null)
-                this.nearableScanId = this.beaconManager.StartNearableDiscovery();
-        }
-
-
-        public override void StopNearableDiscovery() {
-            if (this.nearableScanId != null)
-                this.beaconManager.StopNearableDiscovery(this.nearableScanId);
-        }
+//        string nearableScanId;
+//        public override void StartNearableDiscovery() {
+//            if (this.nearableScanId == null)
+//                this.nearableScanId = this.beaconManager.StartNearableDiscovery();
+//        }
+//
+//
+//        public override void StopNearableDiscovery() {
+//            if (this.nearableScanId != null)
+//                this.beaconManager.StopNearableDiscovery(this.nearableScanId);
+//        }
 
 
         readonly ManualResetEvent locker = new ManualResetEvent(true);

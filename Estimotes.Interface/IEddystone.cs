@@ -10,7 +10,7 @@ namespace Estimotes {
         string Instance { get; }
         string Url { get; }
         int Rssi { get; }
-        double Temperature { get; }
+        double? Temperature { get; }
         Proximity Proximity { get; }
         EddystoneType Type { get; }
     }

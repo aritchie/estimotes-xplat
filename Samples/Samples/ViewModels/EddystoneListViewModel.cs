@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Acr;
@@ -12,8 +13,13 @@ namespace Samples.ViewModels {
         public override void OnActivate() {
             base.OnActivate();
             EstimoteManager.Instance.WhenEddystone.Subscribe(x => {
-                this.List = x.Select(y => new EddystoneViewModel(y)).ToList();
-                this.OnPropertyChanged(() => this.List);
+				try {
+                	this.List = x.Select(y => new EddystoneViewModel(y)).ToList();
+                	this.OnPropertyChanged(() => this.List);
+				}
+				catch (Exception ex) {
+					Debug.WriteLine("[eddystone]: {0}", ex);
+				}
             });
             EstimoteManager.Instance.StartEddystoneScan();
         }

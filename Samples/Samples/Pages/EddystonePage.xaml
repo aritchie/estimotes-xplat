@@ -6,10 +6,18 @@
 	x:Class="Samples.Pages.EddystonePage">
 
 	<ContentPage.Content>
-		<acr:ListView ItemsSource="{Binding List}">
+		<acr:ListView ItemsSource="{Binding List}" RowHeight="80">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Type}" />
+					<ViewCell>
+						<ViewCell.View>
+							<StackLayout>
+								<Label Text="{Binding Identifier}" />
+								<Label Text="{Binding Proximity, StringFormat='Proximity: {0}'}" />
+								<Label Text="{Binding Temperature, StringFormat='Temp: {0} C'}" />
+							</StackLayout>
+						</ViewCell.View>
+					</ViewCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</acr:ListView>
