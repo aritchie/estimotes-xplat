@@ -8,7 +8,7 @@ namespace Estimotes {
 
 
 		public EddystoneUrlFilter(string url, bool isDomain) {
-			this.Url = url;
+			this.Url = url.ToLower();
 			this.IsDomain = isDomain;
 		}
 

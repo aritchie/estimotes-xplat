@@ -25,6 +25,7 @@ namespace Estimotes {
             this.beaconManager = new BeaconManager(Application.Context);
 			this.rangeTimer = new Timer(500); // every second TODO: should coincide with foreground timer
 			this.beaconsInRange = new List<Beacon>();
+			this.filters = new Dictionary<string,IEddystoneFilter>();
 
 			this.rangeTimer.Elapsed += (sender, args) => {
 				this.rangeTimer.Stop();
@@ -256,7 +257,7 @@ namespace Estimotes {
 				if (this.filters.ContainsKey(eddystone.Url))
 					return true;
 			
-				var c = this.filters.Any(x => eddystone.Url.StartsWith(x.Key));
+				var c = this.filters.Any(x => eddystone.Url.StartsWith(x.Key, StringComparison.InvariantCultureIgnoreCase));
 				if (c)
 					return true;
 			} 

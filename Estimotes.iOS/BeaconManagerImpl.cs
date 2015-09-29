@@ -173,9 +173,12 @@ namespace Estimotes {
 
 		protected virtual Estimote.EddystoneFilter ToNative(IEddystoneFilter filter) {
 			var uid = filter as EddystoneUidFilter;
-			if (uid != null)
-				return new Estimote.EddystoneFilterUID(new EddystoneUID (uid.Namespace, uid.InstanceId));
-
+			if (uid != null) {
+				var nid = uid.InstanceId == null
+					? new EddystoneUID(uid.Namespace)
+					: new EddystoneUID(uid.Namespace, uid.InstanceId);
+				return new Estimote.EddystoneFilterUID(nid);
+			}
 			var url = (EddystoneUrlFilter)filter;
 			if (url.IsDomain)
 				return new Estimote.EddystoneFilterUrlDomain(url.Url);

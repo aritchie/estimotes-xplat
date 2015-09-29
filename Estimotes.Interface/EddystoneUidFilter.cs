@@ -8,8 +8,9 @@ namespace Estimotes {
 
 
 		public EddystoneUidFilter(string nameSpace, string instanceId = null) {
-			this.Namespace = nameSpace;
-			this.InstanceId = instanceId;
+			this.Namespace = nameSpace.ToLower();
+			if (instanceId != null)
+				this.InstanceId = instanceId.ToLower();
 		}
 
 

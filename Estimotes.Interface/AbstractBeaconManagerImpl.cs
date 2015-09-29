@@ -20,6 +20,8 @@ namespace Estimotes {
 			Settings.Local.KeysNotToClear.Add(SETTING_KEY);
 			this.monitoringRegions = Settings.Local.Get(SETTING_KEY, new List<BeaconRegion>());
 			this.rangingRegions = new List<BeaconRegion>();
+			this.eddystoneFilters = new List<IEddystoneFilter>();
+			this.EddystoneFilters = new ReadOnlyCollection<IEddystoneFilter>(this.eddystoneFilters);
 
 			this.UpdateMonitoringList();
 			this.UpdateRangingList();
