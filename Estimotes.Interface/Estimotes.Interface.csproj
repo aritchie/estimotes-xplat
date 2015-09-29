@@ -51,7 +51,6 @@
     <Compile Include="Proximity.cs" />
     <Compile Include="VoidBeaconManager.cs" />
     <Compile Include="EddystoneUidFilter.cs" />
-    <Compile Include="EddystoneScanEventArgs.cs" />
     <Compile Include="EddystoneUrlFilter.cs" />
     <Compile Include="IEddystoneFilter.cs" />
   </ItemGroup>

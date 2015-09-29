@@ -14,7 +14,8 @@ namespace Estimotes {
 
     public class BeaconManagerImpl : AbstractBeaconManagerImpl {
         const string DEBUG_TAG = "acrbeacons";
-        readonly IList<Beacon> beaconsInRange = new List<Beacon>();
+		readonly IDictionary<string, IEddystoneFilter> filters;
+		readonly IList<Beacon> beaconsInRange;
 		readonly BeaconManager beaconManager;
 		readonly Timer rangeTimer;
         bool isConnected;
@@ -23,6 +24,7 @@ namespace Estimotes {
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager(Application.Context);
 			this.rangeTimer = new Timer(500); // every second TODO: should coincide with foreground timer
+			this.beaconsInRange = new List<Beacon>();
 
 			this.rangeTimer.Elapsed += (sender, args) => {
 				this.rangeTimer.Stop();
@@ -77,9 +79,12 @@ namespace Estimotes {
 				this.OnRanged(this.beaconsInRange);
             };
             this.beaconManager.Eddystone += (sender, args) => {
-				// TODO: find the best filter or make sure it fits a filter
-				var eddystones = args.Eddystones.Select(x => new Eddystone(x)).ToList();
-				this.OnEddystone(new EddystoneScanEventArgs(null, eddystones));
+				var eddystones = args
+					.Eddystones
+					.Select(x => new Eddystone(x))
+					.Where(this.IsFiltered)
+					.ToList();
+				this.OnEddystone(eddystones);
             };
 //            this.beaconManager.Nearable += (sender, args) => {
 //                var list = args.Nearables.Select(x => new Nearable(x));
@@ -125,12 +130,16 @@ namespace Estimotes {
         public override void StartEddystoneScanNative(IEddystoneFilter filter) {
             if (this.esScanId == null)
                 this.esScanId = this.beaconManager.StartEddystoneScanning();
+
+			this.filters.Add(filter.ToString(), filter);
         }
 
 
         public override void StopEddystoneScanNative(IEddystoneFilter filter) {
             if (this.esScanId != null)
                 this.beaconManager.StopEddystoneScanning(this.esScanId);
+
+			this.filters.Add(filter.ToString(), filter);
         }
 
 
@@ -239,6 +248,27 @@ namespace Estimotes {
 					return i;
 			}
 			return -1;
+		}
+
+
+		bool IsFiltered(IEddystone eddystone) {
+			if (eddystone.Type == EddystoneType.Url) {
+				if (this.filters.ContainsKey(eddystone.Url))
+					return true;
+			
+				var c = this.filters.Any(x => eddystone.Url.StartsWith(x.Key));
+				if (c)
+					return true;
+			} 
+			else {
+				var key = eddystone.Namespace + eddystone.Instance;
+				if (this.filters.ContainsKey(key))
+					return true;
+
+				if (this.filters.ContainsKey(eddystone.Namespace))
+					return true;
+			}
+			return false;
 		}
     }
 }

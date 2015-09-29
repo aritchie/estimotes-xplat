@@ -35,9 +35,8 @@ namespace Estimotes {
 			this.eddystoneManager = new EddystoneManager();
 			this.eddystoneManager.Init();
 			this.eddystoneManager.DiscoveredEddystones += (sender, args) => {
-				var filter = this.FromNative(args.EddystoneFilter);
 				var eddystones = args.Eddystones.Select(x => new Eddystone(x));
-				this.OnEddystone(new EddystoneScanEventArgs(filter, eddystones));
+				this.OnEddystone(eddystones);
 			};
 
             // TODO
@@ -185,24 +184,24 @@ namespace Estimotes {
 		}
 
 
-		protected virtual IEddystoneFilter FromNative(Estimote.EddystoneFilter filter) {
-			if (filter == null)
-				return null;
-			
-			var uid = filter as EddystoneFilterUID;
-			if (uid != null)
-				return new EddystoneUidFilter(uid.EddystoneUID.NamespaceID, uid.EddystoneUID.InstanceID);
-
-			var url = filter as EddystoneFilterUrl;
-			if (url != null)
-				return new EddystoneUrlFilter(url.EddystoneUrl, false);
-
-			var dom = filter as EddystoneFilterUrlDomain;
-			if (dom != null)
-				return new EddystoneUrlFilter(url.EddystoneUrl, true);
-
-			throw new ArgumentException("Invalid eddystone filter");
-		}
+//		protected virtual IEddystoneFilter FromNative(Estimote.EddystoneFilter filter) {
+//			if (filter == null)
+//				return null;
+//			
+//			var uid = filter as EddystoneFilterUID;
+//			if (uid != null)
+//				return new EddystoneUidFilter(uid.EddystoneUID.NamespaceID, uid.EddystoneUID.InstanceID);
+//
+//			var url = filter as EddystoneFilterUrl;
+//			if (url != null)
+//				return new EddystoneUrlFilter(url.EddystoneUrl, false);
+//
+//			var dom = filter as EddystoneFilterUrlDomain;
+//			if (dom != null)
+//				return new EddystoneUrlFilter(url.EddystoneUrl, true);
+//
+//			throw new ArgumentException("Invalid eddystone filter");
+//		}
 
 
         protected virtual CLBeaconRegion ToNative(BeaconRegion region) {

@@ -110,8 +110,8 @@ namespace Estimotes {
         void StartEddystoneScan(IEddystoneFilter filter);
 		void StopEddystoneScan(IEddystoneFilter filter);
 		IReadOnlyList<IEddystoneFilter> EddystoneFilters { get; }
-		event EventHandler<EddystoneScanEventArgs> Eddystone;
-		IObservable<EddystoneScanEventArgs> WhenEddystone { get; }
+		event EventHandler<IEnumerable<IEddystone>> Eddystone;
+		IObservable<IEnumerable<IEddystone>> WhenEddystone { get; }
 
         #endregion
 

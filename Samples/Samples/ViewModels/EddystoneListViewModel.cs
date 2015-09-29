@@ -19,7 +19,7 @@ namespace Samples.ViewModels {
             base.OnActivate();
             EstimoteManager.Instance.WhenEddystone.Subscribe(x => {
 				try {
-					this.List = x.Eddystones.Select(y => new EddystoneViewModel(y)).ToList();
+					this.List = x.Select(y => new EddystoneViewModel(y)).ToList();
                 	this.OnPropertyChanged(() => this.List);
 				}
 				catch (Exception ex) {

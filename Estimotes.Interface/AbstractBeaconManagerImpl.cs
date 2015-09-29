@@ -39,7 +39,7 @@ namespace Estimotes {
                 .Select(x => x.EventArgs);
 
             this.WhenEddystone = Observable
-				.FromEventPattern<EddystoneScanEventArgs>(
+				.FromEventPattern<IEnumerable<IEddystone>>(
                     x => this.Eddystone += x,
                     x => this.Eddystone -= x
                 )
@@ -165,13 +165,13 @@ namespace Estimotes {
 
         public IObservable<BeaconRegionStatusChangedEventArgs> WhenRegionStatusChanges { get; }
         public IObservable<IEnumerable<IBeacon>> WhenRanged { get; }
-		public IObservable<EddystoneScanEventArgs> WhenEddystone { get; }
+		public IObservable<IEnumerable<IEddystone>> WhenEddystone { get; }
 //        public IObservable<IEnumerable<INearable>> WhenNearables { get; }
 
 
         public event EventHandler<IEnumerable<IBeacon>> Ranged;
         public event EventHandler<BeaconRegionStatusChangedEventArgs> RegionStatusChanged;
-		public event EventHandler<EddystoneScanEventArgs> Eddystone;
+		public event EventHandler<IEnumerable<IEddystone>> Eddystone;
 //        public event EventHandler<IEnumerable<INearable>> Nearables;
 
 
@@ -185,8 +185,8 @@ namespace Estimotes {
         }
 
 
-		protected virtual void OnEddystone(EddystoneScanEventArgs args) {
-            this.Eddystone?.Invoke(this, args);
+		protected virtual void OnEddystone(IEnumerable<IEddystone> eddystones) {
+			this.Eddystone?.Invoke(this, eddystones);
         }
 
 
