@@ -77,9 +77,6 @@
     <Reference Include="Humanizer">
       <HintPath>..\..\packages\Humanizer.1.37.7\lib\portable-win+net40+sl50+wp8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Humanizer.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\..\packages\Xamarin.Android.Support.v4.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
     <Reference Include="Acr.Support.Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Acr.Support.1.0.0\lib\MonoAndroid10\Acr.Support.Android.dll</HintPath>
     </Reference>
@@ -92,9 +89,6 @@
     <Reference Include="AndHUD, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Acr.UserDialogs.4.1.4\lib\MonoAndroid10\AndHUD.dll</HintPath>
     </Reference>
-    <Reference Include="Estimotes.Xamarin.Android, Version=1.0.8.7, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\Estimotes-Xamarin.1.1.0.0\lib\MonoAndroid43\Estimotes.Xamarin.Android.dll</HintPath>
-    </Reference>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Splat.1.6.2\lib\monoandroid\Splat.dll</HintPath>
     </Reference>
@@ -103,6 +97,10 @@
     </Reference>
     <Reference Include="Acr.Settings.Interface">
       <HintPath>..\..\packages\Acr.Settings.4.3.1\lib\MonoAndroid10\Acr.Settings.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v4.23.0.1.1\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.Android">
       <HintPath>..\..\packages\Xamarin.Forms.1.5.0.6447\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
