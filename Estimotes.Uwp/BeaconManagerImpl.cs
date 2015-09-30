@@ -11,8 +11,8 @@ namespace Estimotes {
         readonly BeaconManager beaconMgr;
 
 
-        public override async Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
-            return BeaconInitStatus.Unknown;
+        public override Task<BeaconInitStatus> Initialize(bool backgroundMonitoring) {
+            return Task.FromResult(BeaconInitStatus.Unknown);
         }
 
 
@@ -20,10 +20,10 @@ namespace Estimotes {
         protected override void StopRangingNative(BeaconRegion region) {}
         protected override void StartMonitoringNative(BeaconRegion region) {}
         protected override void StopMonitoringNative(BeaconRegion region) {}
-        public override void StartEddystoneScan() {}
-        public override void StopEddystoneScan() {}
-        public override void StartNearableDiscovery() {}
-        public override void StopNearableDiscovery() {}
+        public override void StartEddystoneScanNative(IEddystoneFilter filter) {}
+        public override void StopEddystoneScanNative(IEddystoneFilter filter) {}
+        //public override void StartNearableDiscovery() {}
+        //public override void StopNearableDiscovery() {}
 
 
         //https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/BluetoothAdvertisement/cs
