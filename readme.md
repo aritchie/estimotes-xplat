@@ -84,3 +84,6 @@ For anyone who loves RX, there are observables that can be used instead of event
 
 6. Can I range for beacons in the background?
 * Yes and no.  You can have you app awaken for a monitored beacon and then range it.  On iOS, you get 5 seconds from the time the monitor event is fired.  Use FetchNearbyBeacons(region) to listen for (default) 2 seconds to pick up what may have triggered the monitor event.
+
+7. Can I change the foreground and background scanning periods?
+* On iOS, no.  On Android - yes.  It requires a "hack".  In your android project, do the following to set the scanning period globally ((EstimoteManagerImpl)EstimoteManager.Instance).SetBackgroundScanPeriod(...) and .SetForegroundScanPeriod.  I am going to improve this in the near future.
