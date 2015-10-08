@@ -14,8 +14,7 @@ namespace Samples {
 		public static SampleDbConnection Data { get; private set; }
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
-            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-            new BeaconRegion("mine", "24D57072-274C-4B31-AB65-818A77B73D85")
+            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
         };
 
 

@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Estimotes {
-	
+
 	public class EddystoneUidFilter : IEddystoneFilter {
 		public string Namespace { get; }
 		public string InstanceId { get; }
@@ -31,6 +31,15 @@ namespace Estimotes {
 					StringComparison.CurrentCultureIgnoreCase
 				);
 		}
+
+
+	    public override int GetHashCode() {
+	        var hash = this.Namespace.GetHashCode();
+            if (this.InstanceId != null)
+                hash += this.InstanceId.GetHashCode();
+
+            return hash;
+	    }
 	}
 }
 

@@ -55,7 +55,11 @@ namespace Estimotes {
             };
             this.beaconManager.Ranging += (sender, args) => {
                 Log.Debug(DEBUG_TAG, "Ranging Event");
-				var beacons = args.Beacons.Select(x => new Beacon(x));
+				var beacons = args.Beacons.Select(x => new Beacon(x)).ToList();
+                if (beacons.Count == 0)
+                    return;
+
+                List<Beacon> copy;
 				lock (this.beaconsInRange) {
 					foreach (var beacon in beacons) {
 						var index = this.GetIndexOfBeacon(beacon);
@@ -76,8 +80,9 @@ namespace Estimotes {
 							}
 						}
 					}
+                    copy = this.beaconsInRange.ToList();
 				}
-				this.OnRanged(this.beaconsInRange);
+				this.OnRanged(copy);
             };
             this.beaconManager.Eddystone += (sender, args) => {
 				var eddystones = args
@@ -140,7 +145,7 @@ namespace Estimotes {
             if (this.esScanId != null)
                 this.beaconManager.StopEddystoneScanning(this.esScanId);
 
-			this.filters.Add(filter.ToString(), filter);
+			this.filters.Remove(filter.ToString());
         }
 
 
@@ -206,22 +211,34 @@ namespace Estimotes {
 
 
         protected virtual BeaconRegion FromNative(Region native) {
+            ushort major = 0;
+            ushort minor = 0;
+            try {
+                major = (ushort)native.Major;
+                minor = (ushort)native.Minor;
+            }
+            catch {}
             return new BeaconRegion(
                 native.Identifier,
                 native.ProximityUUID,
-			    (ushort)native.Major,
-			    (ushort)native.Minor
+			    major,
+			    minor
             );
         }
 
-
         protected virtual Region ToNative(BeaconRegion region) {
-			return new Region(
-				region.Identifier,
-				region.Uuid,
-			    region.Major ?? 0,
-			    region.Minor ?? 0
-			);
+			Region native = null;
+
+			if (region.Major > 0 && region.Minor > 0)
+				native = new Region(region.Identifier, region.Uuid, region.Major.Value, region.Minor.Value);
+
+			else if (region.Major > 0)
+				native = new Region(region.Identifier, region.Uuid, region.Major.Value);
+
+			else
+				native = new Region(region.Identifier, region.Uuid);
+
+            return native;
         }
 
 
@@ -256,11 +273,11 @@ namespace Estimotes {
 			if (eddystone.Type == EddystoneType.Url) {
 				if (this.filters.ContainsKey(eddystone.Url))
 					return true;
-			
+
 				var c = this.filters.Any(x => eddystone.Url.StartsWith(x.Key, StringComparison.InvariantCultureIgnoreCase));
 				if (c)
 					return true;
-			} 
+			}
 			else {
 				var key = eddystone.Namespace + eddystone.Instance;
 				if (this.filters.ContainsKey(key))

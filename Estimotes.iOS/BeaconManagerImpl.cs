@@ -18,7 +18,7 @@ namespace Estimotes {
         public BeaconManagerImpl() {
             this.beaconManager = new BeaconManager {
                 ReturnAllRangedBeaconsAtOnce = true
-            }; 
+            };
             this.beaconManager.EnteredRegion += (sender, args) => {
                 var region = this.FromNative(args.Region);
                 this.OnRegionStatusChanged(region, true);
@@ -72,7 +72,7 @@ namespace Estimotes {
             var funcPnt = new EventHandler<AuthorizationStatusChangedEventArgs>((sender, args) => {
 				if (args.Status == CLAuthorizationStatus.NotDetermined)
 					return; // not done yet
-			
+
 				var success = this.IsGoodStatus(args.Status, backgroundMonitoring);
                 tcs.TrySetResult(success ? BeaconInitStatus.Success : BeaconInitStatus.PermissionDenied);
 			});
@@ -182,7 +182,7 @@ namespace Estimotes {
 			var url = (EddystoneUrlFilter)filter;
 			if (url.IsDomain)
 				return new Estimote.EddystoneFilterUrlDomain(url.Url);
-			
+
 			return new Estimote.EddystoneFilterUrl(url.Url);
 		}
 
@@ -190,7 +190,7 @@ namespace Estimotes {
 //		protected virtual IEddystoneFilter FromNative(Estimote.EddystoneFilter filter) {
 //			if (filter == null)
 //				return null;
-//			
+//
 //			var uid = filter as EddystoneFilterUID;
 //			if (uid != null)
 //				return new EddystoneUidFilter(uid.EddystoneUID.NamespaceID, uid.EddystoneUID.InstanceID);

@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Estimotes {
-	
+
 	public class EddystoneUrlFilter : IEddystoneFilter {
 		public string Url { get; }
 		public bool IsDomain { get; }
@@ -26,9 +26,14 @@ namespace Estimotes {
 			return objA
 				.ToString()
 				.Equals(
-					this.ToString(), 
+					this.ToString(),
 					StringComparison.CurrentCultureIgnoreCase
 				);
 		}
+
+
+	    public override int GetHashCode() {
+	        return this.Url.GetHashCode();
+	    }
 	}
 }
