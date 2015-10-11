@@ -53,12 +53,13 @@
     <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Estimote.iOS, Version=1.0.5760.38401, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Estimote.iOS.3.7.0.0\lib\Xamarin.iOS10\Xamarin.Estimote.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.iOS" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Estimote.iOS, Version=1.0.5736.23486, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Xamarin.Estimote.iOS.3.6.0.0\lib\Xamarin.iOS10\Xamarin.Estimote.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

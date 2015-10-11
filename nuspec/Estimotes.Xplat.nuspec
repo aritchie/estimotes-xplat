@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.5.1</version>
+        <version>1.5.2</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -12,6 +12,9 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons proximity location eddystone ibeacon ble bluetooth</tags>
         <releaseNotes>
+1.5.2
+[update] latest xamarin bindings
+
 1.5.1
 [fix][droid] monitoring defect (appears as if ranging is problem) with android binding library NRE on major/minor reads
 [fix][droid] race condition on ranging collection
@@ -67,17 +70,17 @@ Initial Release
         </releaseNotes>
         <dependencies>
             <group>
-                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
+                <dependency id="Acr.Settings" version="[4.3.2, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
             </group>
             <group targetFramework="MonoAndroid10">
-                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
+                <dependency id="Acr.Settings" version="[4.3.2, 5)" />
                 <dependency id="Rx-Main" version="[2.2.5, 3)" />
-                <dependency id="Xamarin.Estimote.Android" version="[0.8.8, 2.0)" />
+                <dependency id="Xamarin.Estimote.Android" version="[0.9.1, 2.0)" />
             </group>
             <group targetFramework="xamarinios">
-                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
-                <dependency id="Xamarin.Estimote.iOS" version="[3.6, 4.0)" />
+                <dependency id="Acr.Settings" version="[4.3.2, 5)" />
+                <dependency id="Xamarin.Estimote.iOS" version="[3.7, 4.0)" />
             </group>
             <!--
             <group target="UAP10.0">

@@ -211,18 +211,11 @@ namespace Estimotes {
 
 
         protected virtual BeaconRegion FromNative(Region native) {
-            ushort major = 0;
-            ushort minor = 0;
-            try {
-                major = (ushort)native.Major;
-                minor = (ushort)native.Minor;
-            }
-            catch {}
             return new BeaconRegion(
                 native.Identifier,
-                native.ProximityUUID,
-			    major,
-			    minor
+                native.ProximityUUID.ToString(),
+			    (ushort?)native.Major,
+			    (ushort?)native.Minor
             );
         }
 

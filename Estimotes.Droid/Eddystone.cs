@@ -19,7 +19,7 @@ namespace Estimotes {
         public Proximity Proximity => this.native.GetProximity();
         public string Namespace => this.native.Namespace;
         public string Instance => this.native.Instance;
-        public string MacAddress => this.native.MacAddress;
+        public string MacAddress => this.native.MacAddress.ToStandardString();
         public string Url => this.native.Url;
     }
 }
