@@ -87,3 +87,6 @@ For anyone who loves RX, there are observables that can be used instead of event
 
 7. Can I change the foreground and background scanning periods?
 * On iOS, no.  On Android - yes.  It requires a "hack".  In your android project, do the following to set the scanning period globally ((EstimoteManagerImpl)EstimoteManager.Instance).SetBackgroundScanPeriod(...) and .SetForegroundScanPeriod.  I am going to improve this in the near future.
+
+8. When are you going to include nearables?
+* When the API from Estimote looks similar.  Android and iOS are nothing alike.

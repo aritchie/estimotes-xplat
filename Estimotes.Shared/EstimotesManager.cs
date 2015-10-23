@@ -4,15 +4,16 @@
 namespace Estimotes {
 
     public static class EstimoteManager {
-        private static readonly Lazy<IBeaconManager> instanceLoad = new Lazy<IBeaconManager>(() => {
+        static readonly Lazy<IBeaconManager> instanceLoad = new Lazy<IBeaconManager>(() => {
 #if __UNIFIED__ || __ANDROID__
             return new BeaconManagerImpl();
 #else
-            throw new NotSupportedException("");
+            throw new NotSupportedException("This is the PCL library, not the platform library.  You must install the nuget package in your main executable/application project");
 #endif
         });
 
-        private static IBeaconManager instance;
+
+        static IBeaconManager instance;
         public static IBeaconManager Instance {
             get { return instance ?? instanceLoad.Value; }
             set { instance = value; }

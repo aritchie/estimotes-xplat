@@ -12,6 +12,9 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons proximity location eddystone ibeacon ble bluetooth</tags>
         <releaseNotes>
+1.5.3
+[update] error message when bait-switch platform failure
+
 1.5.2
 [update] latest xamarin bindings
 
