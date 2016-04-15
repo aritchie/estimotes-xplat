@@ -8,30 +8,36 @@ using Xamarin.Forms;
 using Samples.Models;
 
 
-namespace Samples {
+namespace Samples
+{
 
-    public class App : Application {
-		public static SampleDbConnection Data { get; private set; }
+    public class App : Application
+    {
+        public static SampleDbConnection Data { get; private set; }
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
-            new BeaconRegion("whites", "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
+            new BeaconRegion("whites",  "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
+            new BeaconRegion("bewhere", "01777777-2E62-6577-6865-72652E636F6D")
         };
 
 
-		public App(string databasePath) {
-			Data = new SampleDbConnection(databasePath);
-			this.MainPage = new TabbedPage {
-				Children = {
-					new NavigationPage(new RangingPage { Title = "Estimotes - Ranging" }) { Title = "Ranging" },
-					new NavigationPage(new MonitorPage { Title = "Estimotes - Monitoring" }) { Title = "Monitoring" },
-					new NavigationPage(new EddystonePage { Title = "Estimotes - Eddystone" }) { Title = "Eddystones" }
+        public App(string databasePath)
+        {
+            Data = new SampleDbConnection(databasePath);
+            this.MainPage = new TabbedPage
+            {
+                Children = {
+                    new NavigationPage(new RangingPage { Title = "Estimotes - Ranging" }) { Title = "Ranging" },
+                    new NavigationPage(new MonitorPage { Title = "Estimotes - Monitoring" }) { Title = "Monitoring" },
+                    new NavigationPage(new EddystonePage { Title = "Estimotes - Eddystone" }) { Title = "Eddystones" }
 					//new NavigationPage(new NearablePage { Title = "Estimotes - Nearables" }) { Title = "Nearables" },
 				}
-			};
+            };
         }
 
 
-        protected override void OnStart() {
+        protected override void OnStart()
+        {
             base.OnStart();
             App.IsBackgrounded = false;
             EstimoteManager.Instance.Initialize().ContinueWith(x => OnBeaconMgrInit(x.Result));
@@ -39,64 +45,75 @@ namespace Samples {
         }
 
 
-        protected override void OnResume() {
+        protected override void OnResume()
+        {
             base.OnResume();
             App.IsBackgrounded = false;
         }
 
 
-        protected override void OnSleep() {
+        protected override void OnSleep()
+        {
             base.OnSleep();
             App.IsBackgrounded = true;
             EstimoteManager.Instance.StopAllRanging();
         }
 
 
-        static void OnBeaconMgrInit(BeaconInitStatus status) {
+        static void OnBeaconMgrInit(BeaconInitStatus status)
+        {
             Debug.WriteLine($"Beacon Init Status: {status}");
             if (status != BeaconInitStatus.Success)
                 return;
 
             EstimoteManager.Instance.RegionStatusChanged += OnBeaconRegionStatusChanged;
             EstimoteManager.Instance.StopAllMonitoring();
-			foreach (var region in Regions) {
+            foreach (var region in Regions)
+            {
                 Debug.WriteLine($"Start Monitoring Region: {region}");
-				EstimoteManager.Instance.StartMonitoring(region);
+                EstimoteManager.Instance.StartMonitoring(region);
             }
         }
 
 
-		static async void OnBeaconRegionStatusChanged(object sender, BeaconRegionStatusChangedEventArgs args) {
-			App.Data.Insert(new BeaconPing {
-				Identifier = args.Region.Identifier,
-				Uuid = args.Region.Uuid,
-				Major = args.Region.Major ?? 0,
-				Minor = args.Region.Minor ?? 0,
-				DateCreated = DateTime.Now,
-				Type = args.IsEntering ? BeaconPingType.MonitorEntering : BeaconPingType.MonitorExiting
-			});
+        static async void OnBeaconRegionStatusChanged(object sender, BeaconRegionStatusChangedEventArgs args)
+        {
+            App.Data.Insert(new BeaconPing
+            {
+                Identifier = args.Region.Identifier,
+                Uuid = args.Region.Uuid,
+                Major = args.Region.Major ?? 0,
+                Minor = args.Region.Minor ?? 0,
+                DateCreated = DateTime.Now,
+                Type = args.IsEntering ? BeaconPingType.MonitorEntering : BeaconPingType.MonitorExiting
+            });
 
-			if (!args.IsEntering)
-				Notifications.Instance.Send("Exited Region", $"You have exited {args.Region.Identifier}");
-			else {
-                try {
+            if (!args.IsEntering)
+                Notifications.Instance.Send("Exited Region", $"You have exited {args.Region.Identifier}");
+            else
+            {
+                try
+                {
                     var beacons = await EstimoteManager.Instance.FetchNearbyBeacons(args.Region);
-                    foreach (var beacon in beacons) {
-			            App.Data.Insert(new BeaconPing {
-				            Identifier = args.Region.Identifier,
-				            Uuid = beacon.Uuid,
-				            Major = beacon.Major,
-				            Minor = beacon.Minor,
-				            DateCreated = DateTime.Now,
-				            Type = App.IsBackgrounded ? BeaconPingType.RangedBackground : BeaconPingType.RangedForeground
-			            });
+                    foreach (var beacon in beacons)
+                    {
+                        App.Data.Insert(new BeaconPing
+                        {
+                            Identifier = args.Region.Identifier,
+                            Uuid = beacon.Uuid,
+                            Major = beacon.Major,
+                            Minor = beacon.Minor,
+                            DateCreated = DateTime.Now,
+                            Type = App.IsBackgrounded ? BeaconPingType.RangedBackground : BeaconPingType.RangedForeground
+                        });
                     }
                     Notifications.Instance.Send("Entered Region", $"You have entered {args.Region.Identifier}");
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     Debug.WriteLine(ex);
                 }
             }
-		}
+        }
     }
 }

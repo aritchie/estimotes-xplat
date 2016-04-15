@@ -40,9 +40,6 @@
       <HintPath>..\packages\Acr.Settings.5.1.0\lib\MonoAndroid10\Acr.Settings.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Estimote">
-      <HintPath>..\Components\estimotesdkios-3.3.3\lib\ios-unified\Estimote.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
