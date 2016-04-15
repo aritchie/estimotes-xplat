@@ -10,7 +10,6 @@
     <RootNamespace>Estimotes</RootNamespace>
     <AssemblyName>Estimotes</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
@@ -34,11 +33,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Acr.Settings, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Acr.Settings.4.3.9\lib\MonoAndroid10\Acr.Settings.dll</HintPath>
+      <HintPath>..\packages\Acr.Settings.5.1.0\lib\MonoAndroid10\Acr.Settings.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Acr.Settings.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Acr.Settings.4.3.9\lib\MonoAndroid10\Acr.Settings.Interface.dll</HintPath>
+      <HintPath>..\packages\Acr.Settings.5.1.0\lib\MonoAndroid10\Acr.Settings.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Estimote">
@@ -52,8 +51,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Estimote.Android, Version=1.0.8.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Estimote.Android.0.9.1.0\lib\MonoAndroid43\Xamarin.Estimote.Android.dll</HintPath>
@@ -66,7 +63,6 @@
     <Compile Include="Eddystone.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Nearable.cs" />
-    <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceReadyCallbackImpl.cs" />
   </ItemGroup>
@@ -76,16 +72,14 @@
       <Name>Estimotes.Interface</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Values\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\Estimotes.Shared\Estimotes.Shared.projitems" Label="Shared" Condition="Exists('..\Estimotes.Shared\Estimotes.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
