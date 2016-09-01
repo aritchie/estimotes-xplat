@@ -74,16 +74,16 @@ For anyone who loves RX, there are observables that can be used instead of event
 
 3. I'm monitoring by UUID, but the major and minor values do not come back for a beacon
     * This is how monitoring works.  It echos what you are monitoring.  If you want to get more info for the beacon(s) that triggered the monitor entry, you have to range to get additional details.
-  This is the purpose of FetchNearbyBeacons(BeaconRegion).  WARNING: On iOS, you only get about 5 seconds after a monitor event to do something.  Range and save, broadcasting to the server isn't always going to work if their is latency.
+  This is the purpose of FetchNearbyBeacons(BeaconRegion).  WARNING: On iOS, you only get about 5 seconds after a monitor event to do something.  Range and save, broadcasting to the server isn't always going to work if there is latency.
 
 4. How many regions can I monitor/range at one time?
-    * On android, I don't believe their is a limitation.  On iOS, the maximum is 20.  This library does not protect against errors around this maximum
+    * On android, I don't believe there is a limitation.  On iOS, the maximum is 20.  This library does not protect against errors around this maximum
 
 5. Can I monitor for eddystone on iOS in the background?
     * Yes, you need to enable "Use BLE accessories" in your iOS main project properties.  Careful with this though!
 
 6. Can I range for beacons in the background?
-    * Yes and no.  You can have you app awaken for a monitored beacon and then range it.  On iOS, you get 5 seconds from the time the monitor event is fired.  Use FetchNearbyBeacons(region) to listen for (default) 2 seconds to pick up what may have triggered the monitor event.
+    * Yes and no.  You can have your app awaken for a monitored beacon and then range it.  On iOS, you get 5 seconds from the time the monitor event is fired.  Use FetchNearbyBeacons(region) to listen for (default) 2 seconds to pick up what may have triggered the monitor event.
 
 7. Can I change the foreground and background scanning periods?
     * On iOS, no.  On Android - yes.  It requires a "hack".  In your android project, do the following to set the scanning period globally ((EstimoteManagerImpl)EstimoteManager.Instance).SetBackgroundScanPeriod(...) and .SetForegroundScanPeriod.  I am going to improve this in the near future.
