@@ -5,7 +5,7 @@ using Android.Content.PM;
 using Android.OS;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-
+using EstimoteSdk;
 
 namespace Samples.Droid {
 
@@ -18,6 +18,7 @@ namespace Samples.Droid {
 
             Forms.Init(this, bundle);
             UserDialogs.Init(() => (Activity)Forms.Context);
+            SystemRequirementsChecker.CheckWithDefaultDialogs(this);
             this.LoadApplication(new App(dbPath));
         }
     }

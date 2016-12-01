@@ -50,7 +50,7 @@ namespace Estimotes {
             };
             this.beaconManager.ExitedRegion += (sender, args) => {
                 Log.Debug(DEBUG_TAG, "ExitedRegion Event");
-                var region = this.FromNative(args.Region);
+                var region = this.FromNative(args.P0);
                 this.OnRegionStatusChanged(region, false);
             };
             this.beaconManager.Ranging += (sender, args) => {
@@ -113,14 +113,14 @@ namespace Estimotes {
             if (this.isConnected)
                 return BeaconInitStatus.Success;
 
-            if (!this.beaconManager.HasBluetooth)
+            if (!SystemRequirementsHelper.IsBluetoothLeAvailable(Application.Context))
                 return BeaconInitStatus.BluetoothMissing;
 
-            if (!this.beaconManager.IsBluetoothEnabled)
-				return BeaconInitStatus.BluetoothOff;
+            if (!SystemRequirementsHelper.IsBluetoothEnabled(Application.Context))
+                return BeaconInitStatus.BluetoothOff;
 
-			//if (!this.beaconManager.CheckPermissionsAndService())
-				//return BeaconInitStatus.PermissionDenied;
+            //if (!this.beaconManager.CheckPermissionsAndService())
+            //return BeaconInitStatus.PermissionDenied;
 
             await this.Connect();
 
