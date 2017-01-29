@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Estimotes.Xplat</id>
-        <version>1.6.0</version>
+        <version>2.0.0</version>
         <title>ACR Estimotes Plugin for Xamarin</title>
         <description>Estimotes Plugin for Xamarin to allow for cross platform development using the Estimote libraries</description>
         <authors>Allan Ritchie</authors>
@@ -12,6 +12,13 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin xam.pcl estimotes beacons proximity location eddystone ibeacon ble bluetooth</tags>
         <releaseNotes>
+2.0
+update to latest estimote bindings
+[breaking] remove RX methods - they didn't add much benefit
+[breaking] remove eddystones - interest for this project is nil.
+[fix][droid] simplify beacon init process
+[fix][droid] don't keep beacons in queue.  Beacons work on a scan wave.
+
 1.6.0
 nuget updates
 
@@ -75,25 +82,14 @@ many other minor bugfixes
 Initial Release
         </releaseNotes>
         <dependencies>
-            <group>
-                <dependency id="Acr.Settings" version="[5.1, 6)" />
-                <dependency id="Rx-Main" version="[2.2.5, 3)" />
-            </group>
             <group targetFramework="MonoAndroid10">
                 <dependency id="Acr.Settings" version="[5.1, 6)" />
-                <dependency id="Rx-Main" version="[2.2.5, 3)" />
                 <dependency id="Xamarin.Estimote.Android" version="[0.9.1, 2.0)" />
             </group>
             <group targetFramework="xamarinios">
                 <dependency id="Acr.Settings" version="[5.1, 6)" />
                 <dependency id="Xamarin.Estimote.iOS" version="[3.7, 4.0)" />
             </group>
-            <!--
-            <group target="UAP10.0">
-                <dependency id="Acr.Settings" version="[4.3.1, 5)" />
-                <dependency id="Rx-Main" version="[2.2.5, 3)" />
-                <dependency id="UniversalBeaconLibrary" version="[1.1, 2)" />
-            </group>-->
         </dependencies>
     </metadata>
     <files>
@@ -108,10 +104,5 @@ Initial Release
         <!-- ios -->
         <file src="..\Estimotes.iOS\bin\Release\Estimotes.dll" target="lib\Xamarin.iOS10\Estimotes.dll" />
         <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\Xamarin.iOS10\Estimotes.Interface.dll" />
-
-        <!-- uwp -->
-        <!--<file src="..\src\Estimotes.Uwp\bin\Release\Estimotes.Uwp.dll" target="lib\uap10.0\Estimotes.Uwp.dll" />
-        <file src="..\src\Estimotes.Uwp\bin\Release\Estimotes.Uwp.Interface.dll" target="lib\uap10.0\Estimotes.Uwp.Interface.dll" />
-        <file src="..\src\Estimotes.Uwp\Properties\Estimotes.Uwp.rd.xml" target="lib\uap10.0\Estimotes.Uwp.rd.xml" />-->
     </files>
 </package>

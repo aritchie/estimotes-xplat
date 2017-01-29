@@ -16,8 +16,7 @@ namespace Samples
         public static SampleDbConnection Data { get; private set; }
         public static bool IsBackgrounded { get; private set; }
         public static IList<BeaconRegion> Regions { get; } = new List<BeaconRegion> {
-            new BeaconRegion("whites",  "B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-            new BeaconRegion("bewhere", "01777777-2E62-6577-6865-72652E636F6D")
+            new BeaconRegion("estimote",  "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
         };
 
 
@@ -28,10 +27,8 @@ namespace Samples
             {
                 Children = {
                     new NavigationPage(new RangingPage { Title = "Estimotes - Ranging" }) { Title = "Ranging" },
-                    new NavigationPage(new MonitorPage { Title = "Estimotes - Monitoring" }) { Title = "Monitoring" },
-                    new NavigationPage(new EddystonePage { Title = "Estimotes - Eddystone" }) { Title = "Eddystones" }
-					//new NavigationPage(new NearablePage { Title = "Estimotes - Nearables" }) { Title = "Nearables" },
-				}
+                    new NavigationPage(new MonitorPage { Title = "Estimotes - Monitoring" }) { Title = "Monitoring" }
+                }
             };
         }
 
