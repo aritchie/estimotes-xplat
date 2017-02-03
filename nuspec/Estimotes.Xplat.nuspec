@@ -22,9 +22,9 @@ update to latest estimote bindings
         <dependencies>
             <group targetFramework="MonoAndroid10">
                 <dependency id="Acr.Settings" version="[5.1, 6)" />
-                <dependency id="Xamarin.Estimote.Android" version="[0.11.0.1, 0.2)" />
+                <dependency id="Xamarin.Estimote.Android" version="(,1.0]" />
             </group>
-            <group targetFramework="xamarinios">
+            <group targetFramework="Xamarin.iOS10">
                 <dependency id="Acr.Settings" version="[5.1, 6)" />
                 <dependency id="Xamarin.Estimote.iOS" version="[4.7.3.2, 5)" />
             </group>
@@ -32,15 +32,13 @@ update to latest estimote bindings
     </metadata>
     <files>
         <!-- PCL -->
-        <file src="..\Estimotes\bin\Release\Estimotes.dll" target="lib\portable-win+net45+wp8+win8+wpa81\Estimotes.dll" />
-        <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\portable-win+net45+wp8+win8+wpa81\Estimotes.Interface.dll" />
+        <file src="..\Estimotes\bin\Release\Estimotes.*" target="lib\portable-win+net45+wp8+win8+wpa81\" />
 
         <!-- android -->
-        <file src="..\Estimotes.Droid\bin\Release\Estimotes.dll" target="lib\MonoAndroid10\Estimotes.dll" />
-        <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\MonoAndroid10\Estimotes.Interface.dll" />
+        <file src="..\Estimotes.Droid\bin\Release\Estimotes.*" target="lib\MonoAndroid10\" />
 
         <!-- ios -->
-        <file src="..\Estimotes.iOS\bin\Release\Estimotes.dll" target="lib\Xamarin.iOS10\Estimotes.dll" />
-        <file src="..\Estimotes.Interface\bin\Release\Estimotes.Interface.dll" target="lib\Xamarin.iOS10\Estimotes.Interface.dll" />
+        <file src="..\Estimotes.iOS\bin\Release\Estimotes.*" target="lib\Xamarin.iOS10\" />
+        <file src="..\Estimotes.iOS\bin\Release\Estimotes.*" target="lib\Xamarin.iOS10\" />
     </files>
 </package>
