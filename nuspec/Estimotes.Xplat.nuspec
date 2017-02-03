@@ -18,68 +18,6 @@ update to latest estimote bindings
 [breaking] remove eddystones - interest for this project is nil.
 [fix][droid] simplify beacon init process
 [fix][droid] don't keep beacons in queue.  Beacons work on a scan wave.
-
-1.6.0
-nuget updates
-
-1.5.3
-[update] error message when bait-switch platform failure
-
-1.5.2
-[update] latest xamarin bindings
-
-1.5.1
-[fix][droid] monitoring defect (appears as if ranging is problem) with android binding library NRE on major/minor reads
-[fix][droid] race condition on ranging collection
-
-1.5
-[feature] EDDYSTONES!
-[fix] Switch to Xamarin Estimote bindings
-
-1.4.2
-[fix][#4][droid] fixes for init process
-[fix] minor doc additions
-[feature][droid] set foreground and background scanning peroids - can only be set from android project ((EstimoteManagerImpl)EstimoteManager.Instance).SetBackgroundScanPeriod(...)
-
-1.4
-[feature] Separate permission requests for background and foreground (only really applies to ios)
-[feature] Quick range nearby beacons via FetchNearbyBeacons(region, waitTimeSpan).  Useful for ranging in the background
-[feature] RX Observables
-[fix][droid] fix monitoring issues
-[fix][droid] init issues
-
-1.3.1
-[fix] Remove annoying checks to see if beacon region is already being scanned/monitored
-
-1.3
-improved samples for monitoring
-[fix] beacon is now an implemented interface with the setters made private
-[fix] several fixes around monitoring
-[android] restore monitoring regions on initialize
-[android] beacon ranging now works like iOS where it ranges all beacons at once
-[android] beacon service is started in code
-
-1.2
-[breaking] region monitoring event has been merged into one super event
-[feature] initialization function now returns reason for failure
-[feature] startranging/monitoring returns false if region is already being ranged/monitored
-[feature] stopranging/monitoring returns false if region was not already being ranged/monitored
-[fix] ranging list issues
-[android] updated estimote bindings to latest sdk
-
-1.1.1
-[fix] issue with stopallmonitoring and stopallranging
-
-1.1.0
-[android] update estimote sdk libraries
-update libraries to use uuid, major, and minor in scanning
-many other minor bugfixes
-
-1.0.1
-[android] fix initialization issues
-
-1.0.0
-Initial Release
         </releaseNotes>
         <dependencies>
             <group targetFramework="MonoAndroid10">

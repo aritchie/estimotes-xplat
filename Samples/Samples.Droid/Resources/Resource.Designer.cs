@@ -3032,12 +3032,6 @@ namespace Samples.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f080031
-			public const int ApplicationName = 2131230769;
-			
-			// aapt resource value: 0x7f080030
-			public const int Hello = 2131230768;
-			
 			// aapt resource value: 0x7f08000f
 			public const int abc_action_bar_home_description = 2131230735;
 			
