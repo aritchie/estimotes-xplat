@@ -39,6 +39,5 @@ update to latest estimote bindings
 
         <!-- ios -->
         <file src="..\Estimotes.iOS\bin\Release\Estimotes.*" target="lib\Xamarin.iOS10\" />
-        <file src="..\Estimotes.iOS\bin\Release\Estimotes.*" target="lib\Xamarin.iOS10\" />
     </files>
 </package>
