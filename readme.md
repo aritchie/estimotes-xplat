@@ -53,16 +53,6 @@ And to actually start or stop the process (optionally, you can also pass major/m
     EstimoteManager.Instance.StartMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
     EstimoteManager.Instance.StopMonitoring(new BeaconRegion("Beacon Identifier", "Your UUID"));
 
-For Eddystones
-
-    EstimoteManager.Instance.StartEddystoneScan();
-    EstimoteManager.Instance.StopEddystoneScan();
-    EstimoteManager.Instance.Eddystone += (sender, eddystones) => {};
-
-
-## Observables
-
-For anyone who loves RX, there are observables that can be used instead of events.  WhenEddystone, WhenRanged, WhenRegionStatusChanges, & WhenNearables
 
 ## FAQ
 
