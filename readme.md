@@ -1,5 +1,7 @@
 ﻿# ACR ESTIMOTES PLUGIN FOR XAMARIN
 
+## This project is not currently supported.  It remains live on nuget and working to the best of my knowledge.  I simply don't have the time to deal with the consistent (and often repeated) questions that come with this library, so I have suspended issues for the time being.
+
 ---
 
 This is a cross platform implementation of the estimote library for beacons.  It will allow you to make beacon calls for your PCL library.
